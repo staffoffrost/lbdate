@@ -1,0 +1,19 @@
+{
+  "name": "lbdate",
+  "version": "0.1.0-alpha",
+  "description": "JavaScript Date object serialization helper.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeonBernstein/LbDate.git"
+  },
+  "author": "Leon Bernstein",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LeonBernstein/LbDate/issues"
+  },
+  "homepage": "https://github.com/LeonBernstein/LbDate#readme"
+}
