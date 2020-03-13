@@ -1,2 +1,2 @@
 # LbDate
-JavaScript Date object's serialization helper.
+JavaScript Date object serialization helper.
