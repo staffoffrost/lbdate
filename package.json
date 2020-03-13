@@ -4,7 +4,11 @@
 	"description": "JavaScript Date object serialization helper.",
 	"main": "lib/index.js",
 	"scripts": {
-		"test": "jest"
+		"start": "webpack --watch -d",
+		"build": "webpack -p",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"test:watchAll": "jest --watchAll"
 	},
 	"repository": {
 		"type": "git",
