@@ -6,9 +6,12 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.ts$/,
+				test: /\.tsx?$/,
 				use: [{
-					loader: 'ts-loader?configFile=www/tsconfig.json',
+					loader: 'ts-loader',
+					options: {
+						configFile: "www/tsconfig.json"
+					}
 				}],
 				exclude: /node_modules/,
 			},
@@ -17,7 +20,7 @@ module.exports = {
 	resolve: {
 		extensions: ['.ts', '.js'],
 		alias: {
-			lbdate: path.resolve(__dirname, 'src')
+			lbrx: path.resolve(__dirname, 'src')
 		}
 	},
 	output: {

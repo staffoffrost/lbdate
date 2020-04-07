@@ -1,6 +1,7 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
+		"sourceMap": true,
 		"baseUrl": ".",
 		"paths": {
 			"lbdate": [
@@ -10,7 +11,7 @@
 		}
 	},
 	"include": [
-		"../src/**/*ts",
+		"../src/**/*.ts",
 		"**/*.ts"
 	]
 }

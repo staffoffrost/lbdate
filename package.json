@@ -2,38 +2,49 @@
 	"name": "lbdate",
 	"version": "0.1.0-alpha",
 	"description": "JavaScript Date object serialization helper.",
-	"main": "lib/index.js",
-	"scripts": {
-		"start": "webpack --watch -d",
-		"build": "webpack -p",
-		"test": "jest",
-		"test:watch": "jest --watch",
-		"test:watchAll": "jest --watchAll"
-	},
+	"author": "Leon Bernstein",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/LeonBernstein/LbDate.git"
+		"url": "https://github.com/LeonBernstein/LbDate"
+	},
+	"bugs": {
+		"url": "https://github.com/LeonBernstein/LbDate/issues"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
-	"author": "Leon Bernstein",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/LeonBernstein/LbDate/issues"
-	},
 	"homepage": "https://github.com/LeonBernstein/LbDate#readme",
+	"types": "lib",
+	"main": "lib/index.js",
+	"scripts": {
+		"start": "webpack --watch -d --progress",
+		"build": "webpack -p --progress",
+		"build:lib:base": "rimraf lib/* && tsc -p ./src/tsconfig.json && node build-success-log.js && node post-build-imports-test.js",
+		"build:lib:test": "npm run build:lib:base",
+		"build:lib": "npm run build:lib:base && node lib-build-helper.js",
+		"publish": "cd lib && npm publish",
+		"lint": "tslint --project tsconfig.json --config tslint.json --exclude **/*.d.ts --fix",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"test:watchAll": "jest --watchAll"
+	},
 	"dependencies": {},
 	"devDependencies": {
+		"@babel/cli": "^7.8.4",
+		"@babel/core": "^7.9.0",
+		"@babel/node": "^7.8.7",
+		"@babel/preset-env": "^7.9.0",
 		"@types/jest": "^25.1.4",
+		"babel-plugin-module-resolver": "^4.0.0",
 		"jest": "^25.1.0",
-		"jest-html-reporter": "^2.8.0",
+		"jest-html-reporter": "^2.8.2",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^25.2.1",
 		"ts-loader": "^6.2.1",
 		"tslint": "^6.1.0",
 		"typescript": "^3.8.3",
-		"webpack": "^4.42.0",
+		"webpack": "^4.42.1",
 		"webpack-cli": "^3.3.11"
 	},
 	"jest": {

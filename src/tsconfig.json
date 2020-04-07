@@ -4,13 +4,15 @@
 		"declaration": true,
 		"declarationMap": true,
 		"sourceMap": true,
-		"outDir": "lib",
+		"outDir": "../lib",
 		"baseUrl": ".",
 		"paths": {
 			"lbdate": [
 				"./index"
-			]
-		}
+			],
+		},
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
 	},
 	"include": [
 		"**/*.ts"

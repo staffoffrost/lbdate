@@ -48,24 +48,35 @@
 		],
 		"no-empty": false,
 		"no-inferrable-types": false,
-		"no-non-null-assertion": true,
-		"no-redundant-jsdoc": true,
+		"no-non-null-assertion": false,
+		"no-redundant-jsdoc": false,
 		"no-switch-case-fall-through": true,
 		"no-var-requires": false,
+		"no-string-literal": false,
+		"unified-signatures": false,
 		"object-literal-key-quotes": [
 			true,
 			"as-needed"
 		],
 		"object-literal-sort-keys": false,
 		"ordered-imports": false,
-		"quotemark": false,
+		"quotemark": [
+			true,
+			"single",
+			"backtick",
+			"avoid-escape",
+			"avoid-template"
+		],
 		"trailing-comma": false,
 		"indent": [
 			true,
 			"tabs",
 			2
 		],
-		"semicolon": false,
+		"semicolon": [
+			true,
+			"never"
+		],
 		"triple-equals": false,
 		"variable-name": {
 			"options": [
@@ -120,7 +131,8 @@
 			true,
 			"ignore-comments",
 			"ignore-blank-lines"
-		]
+		],
+		"eofline": true
 	},
 	"rulesDirectory": []
 }

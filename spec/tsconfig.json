@@ -2,15 +2,15 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"baseUrl": ".",
+		"esModuleInterop": true,
 		"paths": {
 			"lbdate": [
 				"../src",
-				"../src/*"
 			]
 		}
 	},
 	"include": [
-		"../src/**/*ts",
+		"../src/**/*.ts",
 		"**/*.ts"
 	]
 }

@@ -1,1 +1,1 @@
-export * from './lbdate-manager'
+export * from './public-api'
