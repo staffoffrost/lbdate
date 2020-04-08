@@ -4,9 +4,9 @@ import { objectAssign } from '../functions'
 let globalLbDateOptions: Partial<LbDateOptions> = {}
 
 export function setGlobalLbDateOptions(options: Partial<LbDateOptions>): void {
-	globalLbDateOptions = options
+  globalLbDateOptions = options
 }
 
 export function getGlobalLbDateConfig(): Partial<LbDateOptions> {
-	return objectAssign({}, globalLbDateOptions)
+  return objectAssign({}, globalLbDateOptions)
 }
