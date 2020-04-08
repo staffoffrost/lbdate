@@ -1,7 +1,7 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
 
 
-lbDate({ serialization: TimeZoneOptions.manual, precision: 1, manualTimeZoneOffset: -60 }).init()
+lbDate().init()
 console.log(new Date().toJSON())
 
 console.log('From run:')

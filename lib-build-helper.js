@@ -12,20 +12,24 @@ const FILES_TO_COPY = [
 main()
 
 async function main() {
-	// copy missing files
-	FILES_TO_COPY.forEach(fileName => copyFile(resolveSourcePath(fileName), resolveTargetPath(fileName)))
-	// get package.json obj from file
-	let packageJsonObj = readJsonFromFile(resolveSourcePath('package.json'))
-	// get last published version from npm
-	const lastPublishedVer = await getLastPublishedVerAsync().catch(e => { throw new Error(e) })
-	// update App version if needed
-	if (lastPublishedVer == packageJsonObj.version) updateAppVersion(packageJsonObj, lastPublishedVer)
-	// handle properties for prod version
-	packageJsonObj = handlePackageJsonProps(packageJsonObj)
-	// write package.json to target
-	writeJsonToFile(resolveTargetPath('package.json'), packageJsonObj)
-	// log success
-	logSuccess()
+	try {
+		// copy missing files
+		FILES_TO_COPY.forEach(fileName => copyFile(resolveSourcePath(fileName), resolveTargetPath(fileName)))
+		// get package.json obj from file
+		let packageJsonObj = readJsonFromFile(resolveSourcePath('package.json'))
+		// get last published version from npm
+		const lastPublishedVer = await getLastPublishedVerAsync().catch(e => { throw new Error(e) })
+		// update App version if needed
+		if (lastPublishedVer == packageJsonObj.version) packageJsonObj = updateAppVersion(packageJsonObj, lastPublishedVer)
+		// handle properties for prod version
+		packageJsonObj = handlePackageJsonProps(packageJsonObj)
+		// write package.json to target
+		writeJsonToFile(resolveTargetPath('package.json'), packageJsonObj)
+		// log success
+		logSuccess()
+	} catch (e) {
+		logError(e)
+	}
 }
 
 /**
@@ -121,7 +125,12 @@ function updateAppVersion(packageJsonObj, lastPublishedVer) {
 	}
 	// construct new version string
 	const newVersion = `${majorVersion}.${minorVersion}.${patchVersion}${versionType ? '-' + versionType : ''}`
+	// set new version to package json
 	packageJsonObj.version = newVersion
+	if (!packageJsonObj.scripts['git:post:publish'].includes(lastPublishedVer)) {
+		throw new Error(`git:post:publish doesn't include the current last published version.`)
+	}
+	packageJsonObj.scripts['git:post:publish'] = packageJsonObj.scripts['git:post:publish'].replace(lastPublishedVer, newVersion)
 	// clone packageJsonObj to disconnect reference
 	const packageJsonObjCloned = cloneJsonObject(packageJsonObj)
 	runAsync(() => {
@@ -132,6 +141,7 @@ function updateAppVersion(packageJsonObj, lastPublishedVer) {
 		packageLockJsonObj.version = newVersion
 		writeJsonToFile(resolveSourcePath('package-lock.json'), packageLockJsonObj)
 	})
+	return packageJsonObj
 }
 
 /**
@@ -158,5 +168,16 @@ function handlePackageJsonProps(packageJsonObj) {
 function logSuccess() {
 	console.log()
 	console.log("\x1b[32m", 'LbDate post build procedure was finished successfully.', "\x1b[0m")
+	console.log()
+}
+
+/**
+ * @param {Error} e
+ */
+function logError(e) {
+	console.log()
+	console.error("\x1b[31m", 'ERROR!!!')
+	console.log()
+	console.error(e, "\x1b[0m")
 	console.log()
 }
