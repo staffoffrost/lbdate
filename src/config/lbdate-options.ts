@@ -4,4 +4,5 @@ export interface LbDateOptions {
 	serialization: TimeZoneOptions
 	manualTimeZoneOffset: number | null
 	originalToJsonName: string
+	precision: number
 }
