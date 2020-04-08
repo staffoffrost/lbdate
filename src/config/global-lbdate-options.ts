@@ -1,5 +1,5 @@
-import { LbDateOptions } from './lbdate-options'
 import { objectAssign } from '../functions'
+import { LbDateOptions } from './lbdate-options'
 
 let globalLbDateOptions: Partial<LbDateOptions> = {}
 

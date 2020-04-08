@@ -1,6 +1,6 @@
-import { LbDateMethods } from './lbdate-methods'
+import { getDefaultLbDateConfig, getGlobalLbDateConfig, LbDateOptions, setGlobalLbDateOptions } from './config'
 import { cloneFunction, toJson } from './functions'
-import { getDefaultLbDateConfig, LbDateOptions, getGlobalLbDateConfig, setGlobalLbDateOptions } from './config'
+import { LbDateMethods } from './lbdate-methods'
 
 let lastOriginalToJsonName: string | null = null
 

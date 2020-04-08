@@ -1,8 +1,9 @@
 
 declare global {
-	interface Date {
-		toOriginalJSON(this: Date): string
-	}
+  interface Date {
+    toOriginalJSON(this: Date): string
+  }
 }
 
 export { }
+

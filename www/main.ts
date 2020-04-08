@@ -1,6 +1,5 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
 
-
 lbDate().init()
 console.log(new Date().toJSON())
 

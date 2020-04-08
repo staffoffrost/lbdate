@@ -13,6 +13,7 @@ Native serialization (UTC): 2020-04-08T02:47:13.261Z
     const myStringObj = JSON.stringify(myObj)
 
     console.log(myStringObj)
+
     // {"date":"2020-04-08T02:47:13.261Z"}
 
 LbDate serialization (+TimeZoneOffset): 2020-04-08T05:47:13.261+03:00
@@ -26,6 +27,7 @@ LbDate serialization (+TimeZoneOffset): 2020-04-08T05:47:13.261+03:00
     const myStringObj = JSON.stringify(myObj)
 
     console.log(myStringObj)
+
     // {"date":"2020-04-08T05:47:13.261+03:00"}
 
 ## Installation:
