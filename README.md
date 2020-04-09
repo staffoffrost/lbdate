@@ -30,6 +30,6 @@ LbDate serialization (+TimeZoneOffset): 2020-04-08T05:47:13.261+03:00
 
     // {"date":"2020-04-08T05:47:13.261+03:00"}
 
-## Installation
+### Installation
 
     npm i lbdate
