@@ -1,12 +1,44 @@
 import { getDefaultLbDateConfig, getGlobalLbDateConfig, LbDateOptions, setGlobalLbDateOptions } from './config'
 import { cloneFunction, toJson } from './functions'
-import { LbDateMethods } from './lbdate-methods'
+import { LbDateActions } from './lbdate-actions'
 
 let lastOriginalToJsonName: string | null = null
 
-export function lbDate(): LbDateMethods
-export function lbDate(options: Partial<LbDateOptions>): LbDateMethods
-export function lbDate(options?: Partial<LbDateOptions>): LbDateMethods {
+/**
+ * Will set the default options for date serialization.
+ * @example
+ * lbDate().init()
+ * // --or--
+ * lbDate().run(() => {
+ *  // You code here...
+ * })
+ * @default
+ * options = {
+ *  serialization: TimeZoneOptions.auto,
+ *  manualTimeZoneOffset: null,
+ *  originalToJsonName: 'originalToJSON',
+ *  precision: 3
+ * }
+ */
+export function lbDate(): LbDateActions
+/**
+ * Will set the provided options for date serialization merged with defaults.
+ * @example
+ * lbDate().init()
+ * // --or--
+ * lbDate().run(() => {
+ *  // You code here...
+ * })
+ * @default
+ * options = {
+ *  serialization: TimeZoneOptions.auto,
+ *  manualTimeZoneOffset: null,
+ *  originalToJsonName: 'originalToJSON',
+ *  precision: 3
+ * }
+ */
+export function lbDate(options: Partial<LbDateOptions>): LbDateActions
+export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
   const mergedOptions = Object.assign(getDefaultLbDateConfig(), getGlobalLbDateConfig(), options)
   const originalToJsonName = mergedOptions.originalToJsonName
   mergedOptions.precision = mergedOptions.precision > 3 ? 3 : mergedOptions.precision < 0 ? 0 : mergedOptions.precision
@@ -47,7 +79,7 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateMethods {
       if (error) throw error
       return jsonString!
     },
-    destroy: () => {
+    restore: () => {
       resetToJsonFunctions()
       setGlobalLbDateOptions({})
     },
