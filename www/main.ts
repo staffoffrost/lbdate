@@ -5,7 +5,7 @@ console.log(new Date().toJSON())
 
 console.log('From run:')
 
-lbDate({ timezone: TimeZoneOptions.default }).run(() => {
+lbDate({ timezone: TimeZoneOptions.auto }).run(() => {
   console.log(JSON.stringify({ date: new Date() }))
 })
 

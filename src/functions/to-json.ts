@@ -10,7 +10,7 @@ export function toJson(options: LbDateOptions): (this: Date) => string {
     options.originalToJsonName :
     Date.prototype.toISOString.name
   switch (options.timezone) {
-    case TimeZoneOptions.default:
+    case TimeZoneOptions.auto:
       return function (this: Date): string {
         const offSetMins = validateOffset(this.getTimezoneOffset())
         const date = cloneDate(this.getTime() - offSetMins * msInMin)

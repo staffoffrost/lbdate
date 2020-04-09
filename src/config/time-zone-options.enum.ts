@@ -7,7 +7,7 @@ export const enum TimeZoneOptions {
    * @example
    * "2020-04-08T05:47:13.261+03:00"
    */
-  default = 'Default',
+  auto = 'Auto',
   /**
    * @example
    * "2020-04-08T05:47:13.261Z"

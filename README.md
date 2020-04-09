@@ -40,7 +40,31 @@ LbDate will clone the native toJSON method to newly defined originalToJSON metho
 
 ## Documentation
 
-### Configuration
+### Initialization
+
+    import { lbDate } from 'lbdate'
+
+    lbDate({ precision: 0 }).init()
+
+### Options
+
+    interface LbDateOptions {
+      timezone: TimeZoneOptions
+      manualTimeZoneOffset: number | null
+      originalToJsonName: string
+      precision: number
+    }
+
+    const enum TimeZoneOptions {
+      auto = 'Auto',
+      utc = 'UTC',
+      none = 'None',
+      manual = 'Manual',
+    }
+
+### Restore
+
+    lbDate().restore()
 
 ## Browser Support
 
