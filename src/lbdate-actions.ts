@@ -16,9 +16,9 @@ export interface LbDateActions {
   init: () => void,
   /**
    * This method takes a function as a parameter, and runs it immediately with the provided options.
-   * The provided options will be temporary and scoped only for this method.
-   * The provided options will be merged with the global and the default ones.
-   * Use this method if you want to use different Date's serialization for different parts of your app.
+   * The provided options are temporary and scoped only for this run.
+   * The provided options will be merged with the global and the default options.
+   * Use this method if you want to use different time zone preferences for different sections in your app.
    * @example
    * lbDate(options).run(() => {
    *  result = JSON.parse(strResult)

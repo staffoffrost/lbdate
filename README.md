@@ -99,6 +99,14 @@ LbDate will clone the native toJSON method to newly defined originalToJSON metho
 
 ### Scoped Run
 
+The run method takes a function as a parameter and runs it immediately with the provided options.
+
+- The provided options are temporary and scoped only for this run.
+- The provided options will be merged with the global and the default options
+- Use this method if you want to use different time zone preferences for different sections in your app.
+
+Example:
+
     lbDate(options).run(() => {
       result = JSON.parse(strResult)
     })
