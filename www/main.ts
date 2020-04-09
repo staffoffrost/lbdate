@@ -1,7 +1,7 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
 
-lbDate().init()
-console.log(new Date().toJSON())
+lbDate({ timezone: TimeZoneOptions.manual, manualTimeZoneOffset: -90 }).init()
+console.log(new Date('2020-04-01T00:30:15.123Z').toJSON())
 
 console.log('From run:')
 

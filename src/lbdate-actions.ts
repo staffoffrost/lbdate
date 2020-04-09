@@ -30,9 +30,9 @@ export interface LbDateActions {
    */
   run: Run,
   /**
-   * * Restores native toJSON.
-   * * Restores the global configurations.
-   * * And basicity should undo any changes to your environment done by LbDate().init().
+   * Restores native **toJSON**.
+   * Restores the global configurations.
+   * Basicity should undo any changes to your environment done by **LbDate().init()**.
    */
   restore: () => void,
   /**

@@ -5,22 +5,21 @@
 export const enum TimeZoneOptions {
   /**
    * @example
-   * "2020-04-08T05:47:13.261+03:00"
+   * "2020-04-01T03:30:15.123+03:00"
    */
   auto = 'Auto',
   /**
    * @example
-   * "2020-04-08T05:47:13.261Z"
+   * "2020-04-01T00:30:15.123Z"
    */
   utc = 'UTC',
   /**
    * @example
-   * "2020-04-08T05:47:13.261"
+   * "2020-04-01T03:30:15.123"
    */
   none = 'None',
   /**
-   * @example
-   * "2020-04-08T05:47:13.261+11:17"
+   * Allow you to set manual time zone using **manualTimeZoneOffset** option.
    */
   manual = 'Manual',
 }
