@@ -4,9 +4,9 @@ JavaScript Date object ISO 8601 serialization helper. Provides an easy way of au
 
 ISO 8601 standards are supported by all current apis, including: Node.JS, DotNet, Java and more. You can read about it here: <https://en.wikipedia.org/wiki/ISO_8601>
 
-## Installation
+<!-- ## Installation
 
-    npm i lbdate
+    npm i lbdate -->
 
 ## Example
 
