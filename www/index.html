@@ -12,34 +12,114 @@
         rel="stylesheet"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
         crossorigin="anonymous">
+  <style>
+    .bg-dark .greyed-out,
+    .bg-dark .form-control:disabled,
+    .bg-dark .form-control[readonly] {
+      color: #434447;
+      border-color: #b5bbc2;
+      background-color: #c2c8cc;
+    }
+
+    .bg-dark .card-header {
+      background-color: rgba(0, 0, 0, .13);
+    }
+
+    @media (max-width: 575.98px) {
+      #dateSelectionCon {
+        display: block;
+      }
+
+      #dateSelectionCon>.input-group-prepend {
+        display: none;
+      }
+
+      #dateSelectionCon>.form-control {
+        border-radius: .25rem;
+        margin: 0;
+      }
+
+      #dateSelectionCon>.form-control:nth-of-type(1) {
+        margin-bottom: 1.25em;
+      }
+    }
+
+    @media (min-width: 768px) {
+      #dateTimeBtnsCon {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      #dateTimeBtnsCon button {
+        width: 156px;
+        margin-left: .75em;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .btn-md-block {
+        display: block;
+        width: 100%;
+      }
+
+      input[type="submit"].btn-md-block,
+      input[type="reset"].btn-md-block,
+      input[type="button"].btn-md-block {
+        width: 100%;
+      }
+
+      .btn-block+.btn-md-block,
+      .btn-md-block+.btn-block,
+      .btn-md-block+.btn-md-block {
+        margin-top: 0.5rem;
+      }
+    }
+
+  </style>
 </head>
 
-<body>
+<body class="bg-dark text-light">
   <div class="container py-5">
     <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="card">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="card bg-secondary">
           <div class="card-header">
             <h3 class="mb-0">LbDate Playground</h3>
           </div>
           <div class="card-body">
-            <h5 class="card-title">Date Selection</h5>
+            <h5 class="card-title">Date Selection (Local)</h5>
             <form>
-              <div class="input-group mb-3">
+              <div id="dateSelectionCon"
+                   class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Datetime</span>
+                  <span class="input-group-text greyed-out">Datetime</span>
                 </div>
                 <input type="date"
-                       class="form-control">
+                       class="form-control"
+                       name="date"
+                       id="dateInput">
                 <input type="time"
-                       class="form-control">
+                       class="form-control"
+                       name="time"
+                       id="timeInput"
+                       step="2">
               </div>
             </form>
             <h5 class="card-title">Serialization Result</h5>
             <div class="mb-3">
               <input type="text"
                      class="form-control"
-                     disabled>
+                     id="serializationResult"
+                     readonly>
+            </div>
+            <div class="mb-3"
+                 id="dateTimeBtnsCon">
+              <button type="button"
+                      class="btn btn-outline-light btn-md-block"
+                      id="clearDateTimeBtn">Clear Fields</button>
+              <button type="button"
+                      class="btn btn-info btn-md-block"
+                      id="setCurrentDateBtn">Date Now</button>
             </div>
             <hr>
             <h5 class="card-title">LbDate Options</h5>
@@ -48,7 +128,7 @@
                 <label for="timeZone">Time Zone</label>
                 <select class="form-control"
                         name="timeZone"
-                        id="timeZone">
+                        id="timeZoneInput">
                   <option value="Default"
                           selected>Default [Auto]</option>
                   <option value="Auto">Auto</option>
@@ -56,40 +136,42 @@
                   <option value="None">None</option>
                   <option value="Manual">Manual</option>
                 </select>
-                <small class="form-text text-muted">Time zone preference.</small>
+                <small class="form-text text-white-50">Time zone preference.</small>
               </div>
               <div class="form-group">
-                <label for="manualTimeZoneOffset">Manual Time Zone Offset</label>
+                <label for="manualTimeZoneOffsetInput">Manual Time Zone Offset</label>
                 <input class="form-control"
                        type="number"
                        name="manualTimeZoneOffset"
-                       id="manualTimeZoneOffset"
+                       id="manualTimeZoneOffsetInput"
                        placeholder="Default [null]"
                        min="-840"
                        max="840">
-                <small class="form-text text-muted">To take effect, manual time zone option must be selected.</small>
+                <small class="form-text text-white-50">To take effect, manual time zone option must be selected.</small>
               </div>
               <div class="form-group">
-                <label for="originalToJsonName">Original Yo Json Method Name</label>
+                <label for="originalToJsonNameInput">Original To Json Method Name</label>
                 <input class="form-control"
                        type="text"
                        name="originalToJsonName"
-                       id="originalToJsonName"
+                       id="originalToJsonNameInput"
                        placeholder="Default [originalToJSON]">
-                <small class="form-text text-muted">Run this in console:
-                  <code> new Date().originalToJSON()</code>
+                <small class="form-text text-white-50">
+                  <span>Run this in console:</span>
+                  <code
+                        class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span><span> </span><span class="text-success">Date</span><span class="text-light">().</span><span class="text-warning">originalToJSON</span><span class="text-light">()</span></code>
                 </small>
               </div>
               <div class="form-group">
-                <label for="precision">Precision</label>
+                <label for="precisionInput">Precision</label>
                 <input class="form-control"
                        type="number"
                        name="precision"
-                       id="precision"
+                       id="precisionInput"
                        placeholder="Default [3]"
                        min="0"
                        max="3">
-                <small class="form-text text-muted">The number of second fraction digits.</small>
+                <small class="form-text text-white-50">The number of second fraction digits.</small>
               </div>
             </form>
           </div>
@@ -111,11 +193,41 @@
           integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
           crossorigin="anonymous"></script>
   <script type="text/javascript"
-          src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <!-- <script type="text/javascript"
-          src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
-  <script type="text/javascript"
-          src="index.js"></script>
+          id="loadingScript">
+
+            function addScript(path) {
+              let done = false
+              const scr = document.createElement('script')
+              const handleLoad = () => {
+                if (!done) {
+                  done = true
+
+                }
+              }
+              const handleReadyStateChange = () => {
+                if (!done) {
+                  if (scr.readyState === 'complete') {
+                    handleLoad()
+                  }
+                }
+              }
+              const handleError = () => {
+                if (!done) {
+                  done = true
+                  console.error('Run "npm run start:www" or "npm run build:www" before launching this HTML.')
+                }
+              }
+              scr.onload = handleLoad
+              scr.onreadystatechange = handleReadyStateChange
+              scr.onerror = handleError
+              scr.src = path
+              scr.type = 'text/javascript'
+              document.body.appendChild(scr)
+            }
+            addScript('./index.js')
+            document.getElementById('loadingScript').remove()
+
+          </script>
 </body>
 
 </html>

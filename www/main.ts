@@ -1,12 +1,18 @@
-import { lbDate, TimeZoneOptions } from 'lbdate'
+import { lbDate } from 'lbdate'
+import { bindDomEvents, subscribeToObservables } from './app'
+import { onDomLoaded } from './dom'
+import { ObservableService } from './observable.service'
 
-lbDate({ timezone: TimeZoneOptions.manual, manualTimeZoneOffset: -90 }).init()
-console.log(new Date('2020-04-01T00:30:15.123Z').toJSON())
+const observableService = ObservableService.getObservableService()
 
-console.log('From run:')
-
-lbDate({ timezone: TimeZoneOptions.auto }).run(() => {
-  console.log(JSON.stringify({ date: new Date() }))
+onDomLoaded(() => {
+  main()
 })
 
-console.log(new Date().toJSON())
+function main(): void {
+  const options = observableService.lbDateOptions;
+  (options ? lbDate(options) : lbDate()).init()
+  if (!observableService.dateTime) observableService.dateTime = new Date()
+  bindDomEvents()
+  subscribeToObservables()
+}

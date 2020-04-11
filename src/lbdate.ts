@@ -10,7 +10,7 @@ let lastOriginalToJsonName: string | null = null
  * lbDate().init()
  * // --or--
  * lbDate().run(() => {
- *  // You code here...
+ *  // Your code here...
  * })
  * @default
  * options = {
@@ -24,10 +24,10 @@ export function lbDate(): LbDateActions
 /**
  * Will set the provided options for date serialization merged with defaults.
  * @example
- * lbDate().init()
+ * lbDate(options).init()
  * // --or--
- * lbDate().run(() => {
- *  // You code here...
+ * lbDate(options).run(() => {
+ *  // Your code here...
  * })
  * @default
  * options = {
