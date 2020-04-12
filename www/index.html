@@ -88,7 +88,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title">Date Selection (Local)</h5>
-            <form>
+            <form id="dateTimeSelectionForm">
               <div id="dateSelectionCon"
                    class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -109,7 +109,7 @@
             <div class="mb-3">
               <input type="text"
                      class="form-control"
-                     id="serializationResult"
+                     id="serializationResultField"
                      readonly>
             </div>
             <div class="mb-3"
@@ -122,12 +122,12 @@
                       id="setCurrentDateBtn">Date Now</button>
             </div>
             <hr>
-            <h5 class="card-title">Mode: <span id="activeStatus"
+            <h5 class="card-title">LbDate Options</h5>
+            <h5 class="card-title">Status: <span id="activeStatus"
                     class="text-success">Active</span><span id="notActiveStatus"
                     class="text-danger"
                     style="display: none;">Not Active</span></h5>
-            <h5 class="card-title">LbDate Options</h5>
-            <form>
+            <form id="lbDateOptionsForm">
               <div class="form-group">
                 <label for="timeZone">Time Zone</label>
                 <select class="form-control"
@@ -160,7 +160,8 @@
                        type="text"
                        name="originalToJsonName"
                        id="originalToJsonNameInput"
-                       placeholder="Default [originalToJSON]">
+                       placeholder="Default [originalToJSON]"
+                       autocomplete="off">
                 <small class="form-text text-white-50">
                   <span>Run this in console:</span>
                   <code

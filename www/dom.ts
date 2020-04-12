@@ -4,11 +4,11 @@ export function onDomLoaded(callBack: () => void): void {
   if (['complete', 'interactive'].includes(readyState)) {
     callBack()
   } else {
-    addEventListener('DOMContentLoaded', callBack)
+    setEventListener('DOMContentLoaded', callBack)
   }
 }
 
-export function getElementById(id: string): HTMLElement | null {
+export function getElementById<T extends HTMLElement>(id: string): T | HTMLElement | null {
   const elem = document.getElementById(id)
   if (!elem) console.error(`Can't find element by id: ${id}.`)
   return elem
@@ -39,25 +39,46 @@ export function showElem(elem: HTMLElement): void {
   elem.style.display = ''
 }
 
-export function addEventListener(
+export function setEventListener(
   type: string,
   listener: EventListenerOrEventListenerObject,
-  elem?: HTMLElement | Document,
+  element?: HTMLElement | Document,
   options?: boolean | AddEventListenerOptions,
 ): void
-export function addEventListener<K extends keyof DocumentEventMap>(
+export function setEventListener<K extends keyof DocumentEventMap>(
   type: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
-  elem?: HTMLElement | Document,
+  element?: HTMLElement | Document,
   options?: boolean | AddEventListenerOptions,
 ): void
-export function addEventListener<K extends keyof DocumentEventMap>(
+export function setEventListener(
+  type: string,
+  listener: EventListenerOrEventListenerObject,
+  elements?: HTMLElement[] | HTMLCollection | HTMLFormControlsCollection,
+  options?: boolean | AddEventListenerOptions,
+): void
+export function setEventListener<K extends keyof DocumentEventMap>(
+  type: K,
+  listener: (this: Document, ev: DocumentEventMap[K]) => any,
+  elements?: HTMLElement[] | HTMLCollection | HTMLFormControlsCollection,
+  options?: boolean | AddEventListenerOptions,
+): void
+export function setEventListener<K extends keyof DocumentEventMap>(
   type: string | K,
   listener: EventListenerOrEventListenerObject | ((this: Document, ev: DocumentEventMap[K]) => any),
-  elem: HTMLElement | Document = document,
+  elementOrElements: HTMLElement[] | HTMLCollection | HTMLFormControlsCollection | HTMLElement | Document = document,
   options?: boolean | AddEventListenerOptions,
 ): void {
-  elem.addEventListener(type as string, listener as EventListenerOrEventListenerObject, options)
+  if (Array.isArray(elementOrElements) ||
+    elementOrElements instanceof HTMLCollection ||
+    elementOrElements instanceof HTMLFormControlsCollection
+  ) {
+    for (const elem of elementOrElements) {
+      elem.addEventListener(type as string, listener as EventListenerOrEventListenerObject, options)
+    }
+  } else {
+    elementOrElements.addEventListener(type as string, listener as EventListenerOrEventListenerObject, options)
+  }
 }
 
 export function setValueToElement(elem: HTMLElement, value: string): void {
