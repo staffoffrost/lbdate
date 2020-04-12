@@ -1,4 +1,4 @@
-import { LbDateOptions, TimeZoneOptions } from '../config'
+import { LbDateOptions, TimeZoneOptions } from '../../config'
 import { cloneDate } from './clone-date'
 import { formatTimeZone } from './format-time-zone'
 import { validateOffset } from './validate-offset'
