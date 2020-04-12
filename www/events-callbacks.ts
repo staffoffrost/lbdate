@@ -1,13 +1,14 @@
-import { lbDate, TimeZoneOptions } from 'lbdate'
+import { lbDate } from 'lbdate'
+import { constructLbDateOptionsFromInputs, runAsync, setDateTimeInputs, setLbDateOptionsInput, setLbDateStatus } from './common-methods'
 import { getElementById, getValueFromElement, setValueToElement } from './dom'
 import { ObservableService } from './observable.service'
 
 const observableService = ObservableService.getObservableService()
 
 export function handleDateTimeChange(): void {
-  const dateInput = getElementById('dateInput') as HTMLInputElement
-  const timeInput = getElementById('timeInput') as HTMLInputElement
-  const serializationResult = getElementById('serializationResult') as HTMLInputElement
+  const dateInput = getElementById('dateInput')
+  const timeInput = getElementById('timeInput')
+  const serializationResult = getElementById('serializationResult')
   if (!dateInput || !timeInput || !serializationResult) return
   const date = getValueFromElement(dateInput)
   let time = getValueFromElement(timeInput)
@@ -27,9 +28,9 @@ export function handleDateTimeChange(): void {
 }
 
 export function clearDateTimeFields(): void {
-  const dateInput = getElementById('dateInput') as HTMLInputElement
-  const timeInput = getElementById('timeInput') as HTMLInputElement
-  const serializationResult = getElementById('serializationResult') as HTMLInputElement
+  const dateInput = getElementById('dateInput')
+  const timeInput = getElementById('timeInput')
+  const serializationResult = getElementById('serializationResult')
   if (!dateInput || !timeInput || !serializationResult) return
   setValueToElement(dateInput, '')
   setValueToElement(timeInput, '')
@@ -40,17 +41,37 @@ export function clearDateTimeFields(): void {
 export function setCurrentDate(): void {
   const dateTime = new Date()
   observableService.dateTime = dateTime
-  const dateInput = getElementById('dateInput') as HTMLInputElement
-  const timeInput = getElementById('timeInput') as HTMLInputElement
-  lbDate({ timezone: TimeZoneOptions.auto, precision: 3 }).run(() => {
-    const isoDateTime = dateTime.toJSON().split('T')
-    const date = isoDateTime[0]
-    if (getValueFromElement(dateInput) != date) setValueToElement(dateInput, date)
-    const time = isoDateTime[1].substr(0, 8)
-    if (getValueFromElement(timeInput) != time) setValueToElement(timeInput, time)
-  })
+  setDateTimeInputs(dateTime)
 }
 
 export function handleOptionsChange(): void {
+  const timeZoneInput = getElementById('timeZoneInput')
+  const manualTimeZoneOffsetInput = getElementById('manualTimeZoneOffsetInput')
+  const originalToJsonNameInput = getElementById('originalToJsonNameInput')
+  const precisionInput = getElementById('precisionInput')
+  if (!timeZoneInput || !manualTimeZoneOffsetInput || !originalToJsonNameInput || !precisionInput) return
+  const options = constructLbDateOptionsFromInputs(
+    timeZoneInput,
+    manualTimeZoneOffsetInput,
+    originalToJsonNameInput,
+    precisionInput,
+  )
+  observableService.lbDateOptions = options
+}
 
+export function clearLbDateOptions(): void {
+  observableService.lbDateOptions = null
+  setLbDateOptionsInput('Default', '', '', '')
+}
+
+export function restoreEnvironment(): void {
+  clearLbDateOptions()
+  runAsync(() => {
+    lbDate().restore()
+    const dateTime = observableService.dateTime
+    const serializationResult = getElementById('serializationResult')
+    if (!serializationResult || !dateTime) return
+    setValueToElement(serializationResult, dateTime.toJSON())
+    setLbDateStatus(false)
+  })
 }

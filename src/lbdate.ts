@@ -40,6 +40,9 @@ export function lbDate(): LbDateActions
 export function lbDate(options: Partial<LbDateOptions>): LbDateActions
 export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
   const mergedOptions = Object.assign(getDefaultLbDateConfig(), getGlobalLbDateConfig(), options)
+  mergedOptions.originalToJsonName = Date.prototype.hasOwnProperty(mergedOptions.originalToJsonName) ?
+    getDefaultLbDateConfig().originalToJsonName :
+    mergedOptions.originalToJsonName
   const originalToJsonName = mergedOptions.originalToJsonName
   mergedOptions.precision = mergedOptions.precision > 3 ? 3 : mergedOptions.precision < 0 ? 0 : mergedOptions.precision
   const resetToJsonFunctions = () => {

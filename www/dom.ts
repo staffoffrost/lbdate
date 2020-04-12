@@ -27,7 +27,7 @@ export function removeClassFromElem(elem: HTMLElement, className: string): void 
   elem.classList.remove(className)
 }
 
-export function addClassFromElem(elem: HTMLElement, className: string): void {
+export function addClassToElem(elem: HTMLElement, className: string): void {
   elem.classList.add(className)
 }
 
@@ -60,10 +60,18 @@ export function addEventListener<K extends keyof DocumentEventMap>(
   elem.addEventListener(type as string, listener as EventListenerOrEventListenerObject, options)
 }
 
-export function setValueToElement(elem: HTMLInputElement, value: string): void {
-  elem.value = value
+export function setValueToElement(elem: HTMLElement, value: string): void {
+  if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement) {
+    elem.value = value
+  } else {
+    elem.innerText = value
+  }
 }
 
-export function getValueFromElement(elem: HTMLInputElement): string {
-  return elem.value
+export function getValueFromElement(elem: HTMLElement): string {
+  if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement) {
+    return elem.value
+  } else {
+    return elem.innerText
+  }
 }

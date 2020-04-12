@@ -21,15 +21,15 @@ export class ObservableService {
     this._runCallBacks(this._dateTimeCallbacks, this.dateTime)
   }
 
-  private _lbDateOptionsCallbacks: ((options: LbDateOptions | null) => void)[] = []
-  private _lbDateOptions: LbDateOptions | null = null
-  public get lbDateOptions(): LbDateOptions | null {
+  private _lbDateOptionsCallbacks: ((options: Partial<LbDateOptions> | null) => void)[] = []
+  private _lbDateOptions: Partial<LbDateOptions> | null = null
+  public get lbDateOptions(): Partial<LbDateOptions> | null {
     if (this._lbDateOptions) return this._lbDateOptions
     const lbDateOptionsStr = localStorage.getItem(LBDATE_OPTIONS_KEY)
-    if (lbDateOptionsStr) this._lbDateOptions = JSON.parse(lbDateOptionsStr) as LbDateOptions
+    if (lbDateOptionsStr) this._lbDateOptions = JSON.parse(lbDateOptionsStr) as Partial<LbDateOptions>
     return this._lbDateOptions
   }
-  public set lbDateOptions(value: LbDateOptions | null) {
+  public set lbDateOptions(value: Partial<LbDateOptions> | null) {
     this._lbDateOptions = value
     value ? localStorage.setItem(LBDATE_OPTIONS_KEY, JSON.stringify(value)) : localStorage.removeItem(LBDATE_OPTIONS_KEY)
     this._runCallBacks(this._lbDateOptionsCallbacks, this.lbDateOptions)
@@ -59,7 +59,7 @@ export class ObservableService {
     this._runCallBackAsync(callBack, this.dateTime)
   }
 
-  public onLbDateOptionsChange(callBack: (options: LbDateOptions | null) => void): void {
+  public onLbDateOptionsChange(callBack: (options: Partial<LbDateOptions> | null) => void): void {
     this._lbDateOptionsCallbacks.push(callBack)
     this._runCallBackAsync(callBack, this.lbDateOptions)
   }

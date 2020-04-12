@@ -122,6 +122,10 @@
                       id="setCurrentDateBtn">Date Now</button>
             </div>
             <hr>
+            <h5 class="card-title">Mode: <span id="activeStatus"
+                    class="text-success">Active</span><span id="notActiveStatus"
+                    class="text-danger"
+                    style="display: none;">Not Active</span></h5>
             <h5 class="card-title">LbDate Options</h5>
             <form>
               <div class="form-group">
@@ -147,7 +151,8 @@
                        placeholder="Default [null]"
                        min="-840"
                        max="840">
-                <small class="form-text text-white-50">To take effect, manual time zone option must be selected.</small>
+                <small class="form-text text-white-50">Manual time zone option must be selected to use this
+                  feature. Valid range: <strong>-840</strong> - <strong>840</strong>.</small>
               </div>
               <div class="form-group">
                 <label for="originalToJsonNameInput">Original To Json Method Name</label>
@@ -159,7 +164,7 @@
                 <small class="form-text text-white-50">
                   <span>Run this in console:</span>
                   <code
-                        class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span><span> </span><span class="text-success">Date</span><span class="text-light">().</span><span class="text-warning">originalToJSON</span><span class="text-light">()</span></code>
+                        class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span><span> </span><span class="text-success">Date</span><span class="text-light">().</span><span id="originalToJsonMethodCode" class="text-warning">originalToJSON</span><span class="text-light">()</span></code>
                 </small>
               </div>
               <div class="form-group">
@@ -171,9 +176,19 @@
                        placeholder="Default [3]"
                        min="0"
                        max="3">
-                <small class="form-text text-white-50">The number of second fraction digits.</small>
+                <small class="form-text text-white-50">The number of second fraction digits. Valid range:
+                  <strong>0</strong> - <strong>3</strong>.</small>
               </div>
             </form>
+            <div class="pt-3"
+                 id="lbDateOptionsBtns">
+              <button type="button"
+                      class="btn btn-outline-light btn-md-block"
+                      id="clearLbDateOptionsBtn">Clear Fields</button>
+              <button type="button"
+                      class="btn btn-danger btn-md-block"
+                      id="restoreBtn">Restore</button>
+            </div>
           </div>
         </div>
       </div>
