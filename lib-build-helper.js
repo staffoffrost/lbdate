@@ -75,7 +75,7 @@ function writeJsonToFile(filePath, jsonObj) {
 }
 
 /**
- * @returns {string}
+ * @returns {Promise<string>}
  */
 function getLastPublishedVerAsync() {
   return new Promise((resolve, reject) => {
