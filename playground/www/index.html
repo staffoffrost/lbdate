@@ -330,42 +330,8 @@
           integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
           crossorigin="anonymous"></script>
   <script type="text/javascript"
-          id="loadingScript">
+          src="./index.js"></script>
 
-            function addScript(path) {
-              let done = false
-              const scr = document.createElement('script')
-              const handleLoad = () => {
-                if (!done) {
-                  done = true
-
-                }
-              }
-              const handleReadyStateChange = () => {
-                if (!done) {
-                  if (scr.readyState === 'complete') {
-                    handleLoad()
-                  }
-                }
-              }
-              const handleError = () => {
-                if (!done) {
-                  done = true
-                  console.error('Run "npm run start:www" or "npm run build:www" before launching this HTML.')
-                }
-              }
-              scr.onload = handleLoad
-              scr.onreadystatechange = handleReadyStateChange
-              scr.onerror = handleError
-              scr.src = path
-              scr.type = 'text/javascript'
-              document.body.appendChild(scr)
-            }
-            addScript('./index.js')
-
-            document.getElementById('loadingScript').remove()
-
-          </script>
 </body>
 
 </html>

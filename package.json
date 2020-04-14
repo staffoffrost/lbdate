@@ -18,7 +18,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "npm run test:watch",
-    "start:www": "webpack --watch -d --progress",
+    "start:www": "webpack -d --progress --watch",
     "build:www": "webpack -p --progress",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -42,12 +42,14 @@
     "jest": "^25.1.0",
     "jest-html-reporter": "^2.8.2",
     "rimraf": "^3.0.2",
+    "terser-webpack-plugin": "^2.3.5",
     "ts-jest": "^25.2.1",
     "ts-loader": "^6.2.1",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
   },
   "jest": {
     "preset": "ts-jest"
