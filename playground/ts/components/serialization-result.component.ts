@@ -1,5 +1,5 @@
-import { getElementById, hideElem, setEventListener, setValueToElement, showElem } from './dom'
-import { ObservablesService } from './observables.service'
+import { ObservablesService } from '../services/observables.service'
+import { getElementById, hideElem, setEventListener, setValueToElement, showElem } from '../utils/dom'
 
 export class SerializationResultComponent {
 

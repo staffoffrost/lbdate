@@ -1,8 +1,8 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
+import { ObservablesService } from '../services/observables.service'
+import { getElementById, setValueToElement } from '../utils/dom'
 import { DateSelectionComponent } from './date-selections.component'
-import { getElementById, setValueToElement } from './dom'
 import { LbDateOptionsComponent } from './lbdate-options.component'
-import { ObservablesService } from './observables.service'
 import { SerializationResultComponent } from './serialization-result.component'
 
 export class AppComponent {
@@ -39,6 +39,7 @@ export class AppComponent {
     this._setObservers()
     this._scopedRun()
     this._setVersion()
+    this._setBaseUrl()
   }
 
   private _setObservers(): void {
@@ -69,5 +70,10 @@ export class AppComponent {
     } catch {
       this._elements.lbDateVersion.parentElement?.remove()
     }
+  }
+
+  private _setBaseUrl(): void {
+    const baseUrl = document.getElementsByTagName('base')[0].href
+    window.history.pushState({}, document.title, baseUrl)
   }
 }

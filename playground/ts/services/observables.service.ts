@@ -1,5 +1,5 @@
 import { LbDateOptions } from 'lbdate'
-import { runAsync } from './utils'
+import { runAsync } from '../utils/helpers'
 
 const DATE_TIME_KEY = 'lbdate-dateTime'
 const LBDATE_OPTIONS_KEY = 'lbdate-options'

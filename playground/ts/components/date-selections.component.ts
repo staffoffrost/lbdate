@@ -1,6 +1,6 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
-import { getElementById, getValueFromElement, setEventListener, setValueToElement } from './dom'
-import { ObservablesService } from './observables.service'
+import { ObservablesService } from '../services/observables.service'
+import { getElementById, getValueFromElement, setEventListener, setValueToElement } from '../utils/dom'
 import { SerializationResultComponent } from './serialization-result.component'
 
 export class DateSelectionComponent {

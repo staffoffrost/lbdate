@@ -1,8 +1,8 @@
 import { lbDate, LbDateOptions, TimeZoneOptions } from 'lbdate'
-import { addClassToElem, getElementById, getValueFromElement, hideElem, removeClassFromElem, setEventListener, setValueToElement, showElem } from './dom'
-import { LbDateOptionsForm } from './lbdate-options-form.model'
-import { ObservablesService } from './observables.service'
-import { getCurrentToJsonMethodName, isMethodInDatesPrototype, isNullable } from './utils'
+import { ObservablesService } from '../services/observables.service'
+import { addClassToElem, getElementById, getValueFromElement, hideElem, removeClassFromElem, setEventListener, setValueToElement, showElem } from '../utils/dom'
+import { getCurrentToJsonMethodName, isMethodInDatesPrototype, isNullable } from '../utils/helpers'
+import { LbDateOptionsForm } from '../utils/lbdate-options-form.model'
 
 const IS_INVALID_CLASS = 'is-invalid'
 

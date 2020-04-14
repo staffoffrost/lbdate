@@ -1,5 +1,5 @@
-import { AppComponent } from './app.component'
-import { onDomLoaded } from './dom'
+import { AppComponent } from './components/app.component'
+import { onDomLoaded } from './utils/dom'
 
 onDomLoaded(() => {
   main()
