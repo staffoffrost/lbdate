@@ -126,7 +126,7 @@
             <label class="card-title">Date Selection (Local)</label>
             <form id="dateTimeSelectionForm">
               <div id="dateSelectionCon"
-                   class="input-group mb-3">
+                   class="input-group mb-4">
                 <div class="input-group-prepend">
                   <span class="input-group-text greyed-out">Datetime</span>
                 </div>
@@ -142,13 +142,19 @@
               </div>
             </form>
             <label class="card-title">Serialization Result</label>
-            <div class="mb-3">
+            <div class="mb-2">
               <input type="text"
                      class="form-control"
                      id="serializationResultField"
                      readonly>
+              <small class="form-text text-white-50">
+                <span>This is the result of:</span>
+                <code
+                      class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span>&nbsp;<span class="text-success">Date</span><span class="text-light">().</span><span id="originalToJsonMethodCode" class="text-warning">toJSON</span><span class="text-light">()</span></code>
+              </small>
             </div>
-            <div id="scopedRunResult"
+            <div class="pt-1"
+                 id="scopedRunResult"
                  style="display: none;">
               <label class="card-title">Scoped Run Result</label>
               <div class="mb-2">
@@ -238,7 +244,7 @@
                   <strong>0</strong> - <strong>3</strong>.</small>
               </div>
             </form>
-            <div class="custom-control custom-checkbox mb-3">
+            <div class="custom-control custom-checkbox mb-3 pt-2">
               <input type="checkbox"
                      class="custom-control-input"
                      id="showScopedRunCheckbox">
