@@ -47,6 +47,7 @@ export class LbDateOptionsComponent {
       this._clearLbDateOptionsFields()
       this._observables.setLbDateOptions(null)
       this._setLbDateStatus(true)
+      this._validateFormFields()
     },
       this._elements.clearLbDateOptionsBtn)
     setEventListener('click', () => {
