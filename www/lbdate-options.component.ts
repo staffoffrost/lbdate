@@ -1,11 +1,11 @@
 import { lbDate, LbDateOptions, TimeZoneOptions } from 'lbdate'
-import { CommonService } from './common.service'
 import { addClassToElem, getElementById, getValueFromElement, hideElem, removeClassFromElem, setEventListener, setValueToElement, showElem } from './dom'
 import { LbDateOptionsForm } from './lbdate-options-form.model'
 import { ObservablesService } from './observables.service'
-import { isNullable } from './utils'
+import { getCurrentToJsonMethodName, isMethodInDatesPrototype, isNullable } from './utils'
 
 const IS_INVALID_CLASS = 'is-invalid'
+const LBDATE_IS_SHOW_SCOPED_RUN = 'lbdate-isShowScopedRun'
 
 export class LbDateOptionsComponent {
 
@@ -20,11 +20,24 @@ export class LbDateOptionsComponent {
     activeStatus: getElementById('activeStatus') as HTMLSpanElement,
     notActiveStatus: getElementById('notActiveStatus') as HTMLSpanElement,
     originalToJsonMethodCode: getElementById('originalToJsonMethodCode') as HTMLSpanElement,
+    showScopedRunCheckbox: getElementById('showScopedRunCheckbox') as HTMLInputElement,
+  }
+
+  private _isShowScopedRun: boolean | null = null
+  private get isShowScopedRun(): boolean {
+    if (this._isShowScopedRun === null) {
+      const storedVal = localStorage.getItem(LBDATE_IS_SHOW_SCOPED_RUN)
+      this._isShowScopedRun = storedVal ? !!JSON.parse(storedVal) : false
+    }
+    return this._isShowScopedRun
+  }
+  private set isShowScopedRun(value: boolean) {
+    localStorage.setItem(LBDATE_IS_SHOW_SCOPED_RUN, JSON.stringify(value))
+    this._isShowScopedRun = value
   }
 
   constructor(
     private _observables: ObservablesService,
-    private _common: CommonService,
   ) { }
 
   public init(): void {
@@ -56,6 +69,13 @@ export class LbDateOptionsComponent {
       this._setLbDateStatus(false)
     },
       this._elements.restoreBtn)
+    setEventListener('input', event => {
+      if (event.target instanceof HTMLInputElement) {
+        this.isShowScopedRun = event.target.checked
+        this._showHideScopedRun(event.target.checked)
+      }
+    },
+      this._elements.showScopedRunCheckbox)
   }
 
   private _setObservers(): void {
@@ -77,10 +97,11 @@ export class LbDateOptionsComponent {
 
   private _getValuesFromForm(): LbDateOptionsForm {
     return {
-      timeZone: getValueFromElement(this._elements.timeZoneInput),
-      manualTimeZoneOffset: getValueFromElement(this._elements.manualTimeZoneOffsetInput),
-      originalToJsonName: getValueFromElement(this._elements.originalToJsonNameInput),
-      precision: getValueFromElement(this._elements.precisionInput)
+      timeZone: getValueFromElement(this._elements.timeZoneInput) as string,
+      manualTimeZoneOffset: getValueFromElement(this._elements.manualTimeZoneOffsetInput) as string,
+      originalToJsonName: getValueFromElement(this._elements.originalToJsonNameInput) as string,
+      precision: getValueFromElement(this._elements.precisionInput) as string,
+      isShowScopedRun: getValueFromElement(this._elements.showScopedRunCheckbox) as boolean
     }
   }
 
@@ -90,6 +111,7 @@ export class LbDateOptionsComponent {
       manualTimeZoneOffset: '',
       originalToJsonName: '',
       precision: '',
+      isShowScopedRun: this.isShowScopedRun,
     }
     if (options) {
       if (options.timezone) form.timeZone = options.timezone
@@ -105,6 +127,7 @@ export class LbDateOptionsComponent {
     setValueToElement(this._elements.manualTimeZoneOffsetInput, form.manualTimeZoneOffset)
     setValueToElement(this._elements.originalToJsonNameInput, form.originalToJsonName)
     setValueToElement(this._elements.precisionInput, form.precision)
+    setValueToElement(this._elements.showScopedRunCheckbox, form.isShowScopedRun)
   }
 
   private _clearLbDateOptionsFields(): void {
@@ -123,7 +146,7 @@ export class LbDateOptionsComponent {
   }
 
   private _updateOriginalToJsonCodeElem(): void {
-    const currentToJsonMethodName = this._common.getCurrentToJsonMethodName()
+    const currentToJsonMethodName = getCurrentToJsonMethodName()
     setValueToElement(this._elements.originalToJsonMethodCode, currentToJsonMethodName)
   }
 
@@ -168,9 +191,9 @@ export class LbDateOptionsComponent {
   }
 
   private _validateOriginalToJsonNameInput(value: string): void {
-    const currentToJsonMethodName = this._common.getCurrentToJsonMethodName()
-    const isMethodInDatesPrototype = this._common.isMethodInDatesPrototype(value)
-    if ((isMethodInDatesPrototype && currentToJsonMethodName !== value) || value.length > 32) {
+    const currentToJsonMethodName = getCurrentToJsonMethodName()
+    const isMethodInDatesPrototypeResult = isMethodInDatesPrototype(value)
+    if ((isMethodInDatesPrototypeResult && currentToJsonMethodName !== value) || value.length > 32) {
       addClassToElem(this._elements.originalToJsonNameInput, IS_INVALID_CLASS)
     } else {
       removeClassFromElem(this._elements.originalToJsonNameInput, IS_INVALID_CLASS)
@@ -184,5 +207,9 @@ export class LbDateOptionsComponent {
     } else {
       removeClassFromElem(this._elements.precisionInput, IS_INVALID_CLASS)
     }
+  }
+
+  private _showHideScopedRun(show: boolean): void {
+    console.log(show)
   }
 }

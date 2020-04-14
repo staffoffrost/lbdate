@@ -1,4 +1,3 @@
-import { CommonService } from './common.service'
 import { getElementById, setValueToElement } from './dom'
 import { ObservablesService } from './observables.service'
 
@@ -6,7 +5,6 @@ export class SerializationResultComponent {
 
   constructor(
     private _observables: ObservablesService,
-    private _common: CommonService,
   ) { }
 
   public init(): void {

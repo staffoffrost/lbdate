@@ -1,5 +1,4 @@
 import { lbDate } from 'lbdate'
-import { CommonService } from './common.service'
 import { DateSelectionComponent } from './date-selections.component'
 import { LbDateOptionsComponent } from './lbdate-options.component'
 import { ObservablesService } from './observables.service'
@@ -11,7 +10,6 @@ export class AppComponent {
 
   private constructor(
     private _observables: ObservablesService,
-    private _common: CommonService,
     private _dateSelection: DateSelectionComponent,
     private _lbDateOptions: LbDateOptionsComponent,
   ) { }
@@ -19,16 +17,13 @@ export class AppComponent {
   public static buildApp(): AppComponent {
     if (this._app) return this._app
     const observablesService = ObservablesService.getObservableService()
-    const commonService = CommonService.getService()
     this._app = new AppComponent(
       observablesService,
-      commonService,
       new DateSelectionComponent(
         observablesService,
-        commonService,
-        new SerializationResultComponent(observablesService, commonService),
+        new SerializationResultComponent(observablesService),
       ),
-      new LbDateOptionsComponent(observablesService, commonService),
+      new LbDateOptionsComponent(observablesService),
     )
     return this._app
   }

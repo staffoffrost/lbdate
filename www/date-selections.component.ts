@@ -1,5 +1,4 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
-import { CommonService } from './common.service'
 import { getElementById, getValueFromElement, setEventListener, setValueToElement } from './dom'
 import { ObservablesService } from './observables.service'
 import { SerializationResultComponent } from './serialization-result.component'
@@ -16,7 +15,6 @@ export class DateSelectionComponent {
 
   constructor(
     private _observables: ObservablesService,
-    private _common: CommonService,
     private _serializationResult: SerializationResultComponent,
   ) { }
 
@@ -49,12 +47,12 @@ export class DateSelectionComponent {
   }
 
   private _updateDateTimeFromInputs(): void {
-    const date = getValueFromElement(this._elements.dateInput)
+    const date = getValueFromElement(this._elements.dateInput) as string
     if (!date) {
       this._observables.setDateTime(null)
       return
     }
-    let time = getValueFromElement(this._elements.timeInput)
+    let time = getValueFromElement(this._elements.timeInput) as string
     if (time) {
       let msStr = new Date().getMilliseconds().toString()
       if (msStr.length == 1) msStr = `00${msStr}`

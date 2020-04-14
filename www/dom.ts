@@ -81,16 +81,28 @@ export function setEventListener<K extends keyof DocumentEventMap>(
   }
 }
 
-export function setValueToElement(elem: HTMLElement, value: string): void {
-  if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement) {
-    elem.value = value
+export function setValueToElement(elem: HTMLElement, value: string | boolean): void {
+  if (elem instanceof HTMLInputElement) {
+    if (elem.type == 'checkbox') {
+      elem.checked = value as boolean
+    } else {
+      elem.value = value as string
+    }
+  } else if (elem instanceof HTMLSelectElement) {
+    elem.value = value as string
   } else {
-    elem.innerText = value
+    elem.innerText = value as string
   }
 }
 
-export function getValueFromElement(elem: HTMLElement): string {
-  if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement) {
+export function getValueFromElement(elem: HTMLElement): string | boolean {
+  if (elem instanceof HTMLInputElement) {
+    if (elem.type == 'checkbox') {
+      return elem.checked
+    } else {
+      return elem.value
+    }
+  } else if (elem instanceof HTMLSelectElement) {
     return elem.value
   } else {
     return elem.innerText

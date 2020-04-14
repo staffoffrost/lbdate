@@ -4,4 +4,5 @@ export interface LbDateOptionsForm {
   manualTimeZoneOffset: string,
   originalToJsonName: string,
   precision: string,
+  isShowScopedRun: boolean,
 }
