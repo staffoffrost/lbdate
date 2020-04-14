@@ -62,9 +62,12 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
   if (precision > 3) precision = 3
   else if (precision < 0) precision = 0
   mergedOptions.precision = precision
+  const setDateToJson = (method: (key?: any) => string): void => {
+    Date.prototype.toJSON = method
+  }
   const restoreToJsonFunctions = () => {
     if (lastOriginalToJsonName) {
-      Date.prototype.toJSON = Date.prototype[lastOriginalToJsonName]
+      setDateToJson(Date.prototype[lastOriginalToJsonName])
       delete Date.prototype[lastOriginalToJsonName]
       lastOriginalToJsonName = null
     }
@@ -113,7 +116,7 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
       lastOriginalToJsonName = originalToJsonName
       setGlobalLbDateOptions(mergedOptions)
       Date.prototype[originalToJsonName] = cloneFunction(Date.prototype.toJSON)
-      Date.prototype.toJSON = createToJson()
+      setDateToJson(createToJson())
     },
     run: <T = string | void>(fn: () => T): T => {
       const clonedToJson = cloneFunction(Date.prototype.toJSON) as (key?: any) => string
@@ -121,7 +124,7 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
       if (!isSameOriginalToJsonName) {
         Date.prototype[originalToJsonName] = clonedToJson
       }
-      Date.prototype.toJSON = createToJson()
+      setDateToJson(createToJson())
       let error: Error | null = null
       let jsonString: T
       try {
@@ -132,7 +135,7 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
       if (!isSameOriginalToJsonName) {
         delete Date.prototype[originalToJsonName]
       }
-      Date.prototype.toJSON = clonedToJson
+      setDateToJson(clonedToJson)
       if (error) throw error
       return jsonString!
     },
