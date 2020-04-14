@@ -20,7 +20,7 @@ export class DateSelectionComponent {
 
   public init(): void {
     this._serializationResult.init()
-    if (!this._observables.getDateTime()) this._observables.setDateTime(new Date())
+    if (!this._observables.getDateTime()) this._observables.nextDateTime(new Date())
     this._setDateTimeToFields(this._observables.getDateTime())
     this._bindDomeEvents()
   }
@@ -49,7 +49,7 @@ export class DateSelectionComponent {
   private _updateDateTimeFromInputs(): void {
     const date = getValueFromElement(this._elements.dateInput) as string
     if (!date) {
-      this._observables.setDateTime(null)
+      this._observables.nextDateTime(null)
       return
     }
     let time = getValueFromElement(this._elements.timeInput) as string
@@ -61,17 +61,17 @@ export class DateSelectionComponent {
     } else {
       time = '00:00:00'
     }
-    this._observables.setDateTime(new Date(`${date}T${time}`))
+    this._observables.nextDateTime(new Date(`${date}T${time}`))
   }
 
   private _clearDateTime(): void {
-    this._observables.setDateTime(null)
+    this._observables.nextDateTime(null)
     this._setDateTimeToFields()
   }
 
   private _setCurrentDate(): void {
     const dateTime = new Date()
-    this._observables.setDateTime(dateTime)
+    this._observables.nextDateTime(dateTime)
     this._setDateTimeToFields(dateTime)
   }
 }

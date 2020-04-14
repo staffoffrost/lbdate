@@ -5,7 +5,6 @@ import { ObservablesService } from './observables.service'
 import { getCurrentToJsonMethodName, isMethodInDatesPrototype, isNullable } from './utils'
 
 const IS_INVALID_CLASS = 'is-invalid'
-const LBDATE_IS_SHOW_SCOPED_RUN = 'lbdate-isShowScopedRun'
 
 export class LbDateOptionsComponent {
 
@@ -21,19 +20,9 @@ export class LbDateOptionsComponent {
     notActiveStatus: getElementById('notActiveStatus') as HTMLSpanElement,
     originalToJsonMethodCode: getElementById('originalToJsonMethodCode') as HTMLSpanElement,
     showScopedRunCheckbox: getElementById('showScopedRunCheckbox') as HTMLInputElement,
-  }
-
-  private _isShowScopedRun: boolean | null = null
-  private get isShowScopedRun(): boolean {
-    if (this._isShowScopedRun === null) {
-      const storedVal = localStorage.getItem(LBDATE_IS_SHOW_SCOPED_RUN)
-      this._isShowScopedRun = storedVal ? !!JSON.parse(storedVal) : false
-    }
-    return this._isShowScopedRun
-  }
-  private set isShowScopedRun(value: boolean) {
-    localStorage.setItem(LBDATE_IS_SHOW_SCOPED_RUN, JSON.stringify(value))
-    this._isShowScopedRun = value
+    scopedRunContent: getElementById('scopedRunContent') as HTMLDivElement,
+    scopedRunCodeResult: getElementById('scopedRunCodeResult') as HTMLSpanElement,
+    scopedRunRequestCodeBtn: getElementById('scopedRunRequestCodeBtn') as HTMLButtonElement,
   }
 
   constructor(
@@ -47,6 +36,7 @@ export class LbDateOptionsComponent {
     const formFieldsValues = this._createLbDateOptionsFormValues(options)
     this._setLbDateOptionsFields(formFieldsValues)
     this._validateFormFields()
+    this._showHideScopedRun(formFieldsValues.isShowScopedRun)
   }
 
   private _setDomeEvents(): void {
@@ -58,30 +48,32 @@ export class LbDateOptionsComponent {
       this._elements.lbDateOptionsForm.elements)
     setEventListener('click', () => {
       this._clearLbDateOptionsFields()
-      this._observables.setLbDateOptions(null)
+      this._observables.nextLbDateOptions(null)
       this._setLbDateStatus(true)
       this._validateFormFields()
     },
       this._elements.clearLbDateOptionsBtn)
     setEventListener('click', () => {
       lbDate().restore()
-      this._observables.lbDateUpdated()
+      this._observables.nextLbDateChange()
       this._setLbDateStatus(false)
     },
       this._elements.restoreBtn)
     setEventListener('input', event => {
       if (event.target instanceof HTMLInputElement) {
-        this.isShowScopedRun = event.target.checked
-        this._showHideScopedRun(event.target.checked)
+        this._observables.nextIsShowScopedRun(event.target.checked)
       }
     },
       this._elements.showScopedRunCheckbox)
+    setEventListener('click', () => this._observables.nextNewScopedRunRequest(), this._elements.scopedRunRequestCodeBtn)
   }
 
   private _setObservers(): void {
-    this._observables.onLbDateUpdate(() => {
+    this._observables.onLbDateChange(() => {
       this._updateOriginalToJsonCodeElem()
     })
+    this._observables.onIsShowScopedRunChange(this._showHideScopedRun.bind(this))
+    this._observables.onScopedRunResultChange(this._setScopedRunSerializationResult.bind(this))
   }
 
   private _updateLbDateOptionsFromInputs(): void {
@@ -92,7 +84,7 @@ export class LbDateOptionsComponent {
     if (form.originalToJsonName) options.originalToJsonName = form.originalToJsonName
     if (form.precision) options.precision = +form.precision
     if (!Object.keys(options).length) options = null
-    this._observables.setLbDateOptions(options)
+    this._observables.nextLbDateOptions(options)
   }
 
   private _getValuesFromForm(): LbDateOptionsForm {
@@ -111,7 +103,7 @@ export class LbDateOptionsComponent {
       manualTimeZoneOffset: '',
       originalToJsonName: '',
       precision: '',
-      isShowScopedRun: this.isShowScopedRun,
+      isShowScopedRun: this._observables.getIsShowScopedRun(),
     }
     if (options) {
       if (options.timezone) form.timeZone = options.timezone
@@ -132,7 +124,9 @@ export class LbDateOptionsComponent {
 
   private _clearLbDateOptionsFields(): void {
     const formFieldsValues = this._createLbDateOptionsFormValues()
+    formFieldsValues.isShowScopedRun = false
     this._setLbDateOptionsFields(formFieldsValues)
+    this._observables.nextIsShowScopedRun(false)
   }
 
   private _setLbDateStatus(isActive: boolean): void {
@@ -210,6 +204,10 @@ export class LbDateOptionsComponent {
   }
 
   private _showHideScopedRun(show: boolean): void {
-    console.log(show)
+    show ? showElem(this._elements.scopedRunContent) : hideElem(this._elements.scopedRunContent)
+  }
+
+  private _setScopedRunSerializationResult(value: string | null): void {
+    setValueToElement(this._elements.scopedRunCodeResult, value || '')
   }
 }
