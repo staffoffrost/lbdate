@@ -19,7 +19,7 @@
   "scripts": {
     "start": "npm run test:watch",
     "start:www": "webpack -d --progress --watch",
-    "build:www": "webpack -p --progress",
+    "build:www": "webpack -p --progress && node log-success.js \"Playground WWW build\" && node tools/scripts/post-dist-build.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:watchAll": "jest --watchAll",

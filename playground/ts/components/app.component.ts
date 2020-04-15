@@ -63,11 +63,10 @@ export class AppComponent {
   }
 
   private async _setVersion(): Promise<void> {
-    try {
-      const version: string = (await fetch('version.json').then(r => r.json())).version
-      if (!version) throw new Error()
+    const version = document.body.getAttribute('lbdate-version')
+    if (version) {
       setValueToElement(this._elements.lbDateVersion, version)
-    } catch {
+    } else {
       this._elements.lbDateVersion.parentElement?.remove()
     }
   }

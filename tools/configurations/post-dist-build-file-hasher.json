@@ -1,0 +1,10 @@
+{
+  "rootFolder": "dist",
+  "extensions": [
+    ".js"
+  ],
+  "excludedFiles": [],
+  "includedFiles": [],
+  "excludedSubFolders": [],
+  "includedSubFolders": []
+}

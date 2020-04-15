@@ -1,0 +1,11 @@
+[
+  {
+    "filePath": "playground/www/index.html",
+    "replacementsList": [
+      {
+        "subStr": "lbdate-version=\"[**]\"",
+        "newSubStr": "lbdate-version=\"[version]\""
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "filePath": "dist/index.html",
+    "replacementsList": [
+      {
+        "subStr": "<base href=\"/playground/www/\">",
+        "newSubStr": "<base href=\"/playgrounds/lbdate/\">"
+      },
+      {
+        "subStr": "src=\"./index.js\"",
+        "newSubStr": "src=\"./index.[hash].js\""
+      }
+    ]
+  }
+]
