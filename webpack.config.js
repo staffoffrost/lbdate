@@ -1,6 +1,8 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const COMMON_CONFIG = {
   entry: './playground/ts/main.ts',
@@ -25,14 +27,14 @@ const COMMON_CONFIG = {
       lbdate: path.resolve(__dirname, 'src'),
     }
   },
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'playground/www'),
-  },
 }
 
 const DEV_CONFIG = {
   devtool: 'inline-source-map',
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'playground/www'),
+  },
 }
 
 const PROD_CONFIG = {
@@ -47,6 +49,20 @@ const PROD_CONFIG = {
         },
       })
     ],
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyPlugin([
+      {
+        from: 'playground/www/',
+        to: './',
+        ignore: ['index.js']
+      },
+    ]),
+  ],
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
   },
 }
 
