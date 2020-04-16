@@ -1,7 +1,5 @@
 const { getRndInteger } = require('./get-random-int')
-
-const HASH_LENGTH = 20
-const CHAR_POOL = 'abcdefghijklmnopqrstvuwxyzABCDEFGHIJKLMNOPQRSTVUWXYZ0123456789'
+const { HASH_LENGTH, HASH_CHAR_POOL } = require('./constants')
 
 /** @type {?string} */
 let hash = null
@@ -21,8 +19,8 @@ function getHash() {
 function generateHash() {
   let localHash = ''
   for (let i = 0; i < HASH_LENGTH; i++) {
-    const charIndex = getRndInteger(0, CHAR_POOL.length - 1)
-    localHash += CHAR_POOL[charIndex]
+    const charIndex = getRndInteger(0, HASH_CHAR_POOL.length - 1)
+    localHash += HASH_CHAR_POOL[charIndex]
   }
   return localHash
 }

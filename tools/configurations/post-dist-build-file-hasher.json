@@ -1,6 +1,6 @@
 {
   "rootFolder": "dist",
-  "extensions": [
+  "fileExtensions": [
     ".js"
   ],
   "excludedFiles": [],

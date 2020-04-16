@@ -12,4 +12,7 @@ module.exports = {
   ...require('./register-babel'),
   ...require('./app-name'),
   ...require('./app-version'),
+  ...require('./constants'),
+  ...require('./file-hasher'),
+  ...require('./file-system-extension'),
 }

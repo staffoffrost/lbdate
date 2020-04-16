@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const { getHash } = require('./hash-generator')
+const { HASH_BLOCK, ENCODING } = require('./constants')
 
 /**
  * @typedef ReplacementItem
@@ -15,9 +16,6 @@ const { getHash } = require('./hash-generator')
  * @property {string} filePath
  * @property {ReplacementItem[]} replacementsList
  */
-
-const HASH_BLOCK = '[hash]'
-const UTF8 = 'utf8'
 
 /**
  * @param {FileStringReplacementSet[]} fileStringReplacementSets
@@ -38,7 +36,7 @@ function replaceFileStrings(fileStringReplacementSets) {
  */
 function getStringFromFile(filePath) {
   filePath = path.resolve(filePath)
-  return fs.readFileSync(filePath, UTF8)
+  return fs.readFileSync(filePath, ENCODING)
 }
 
 /**
@@ -46,7 +44,7 @@ function getStringFromFile(filePath) {
  * @param {string} str
  */
 function writeStringToFile(filePath, str) {
-  fs.writeFileSync(filePath, str, UTF8)
+  fs.writeFileSync(filePath, str, ENCODING)
 }
 
 /**
