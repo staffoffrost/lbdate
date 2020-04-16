@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { getAllFilesFromDirectory } = require('./file-system-extension')
 const { getHash } = require('./hash-generator')
+const { resolvePath, resolvePathsList } = require('./path-extension')
 
 /**
  * @typedef FileHasherConfig
@@ -20,12 +21,11 @@ const { getHash } = require('./hash-generator')
  */
 function hashFiles(config) {
   config = prepareConfig(config)
-  const rootDir = path.resolve(config.rootFolder)
+  const rootDir = resolvePath(config.rootFolder)
   const allFiles = getAllFilesFromDirectory(rootDir)
   for (const file of allFiles) {
-    const rootRelativePath = file.split(rootDir)[1].substring(1)
-    if (config.excludedFiles.includes(rootRelativePath)) continue
-    if (config.includedFiles.includes(rootRelativePath)) {
+    if (config.excludedFiles.some(x => x === file)) continue
+    if (config.includedFiles.some(x => x === file)) {
       hashFileName(file)
     } else if (config.excludedSubFolders.some(x => file.includes(x) &&
       (config.includedSubFolders.every(y => !file.includes(y)) ||
@@ -44,35 +44,11 @@ function hashFiles(config) {
  * @returns {FileHasherConfig}
  */
 function prepareConfig(config) {
-  config.excludedFiles = config.excludedFiles
-    .map(file => trimFileName(file).replace(/\//g, '\\'))
-  config.includedFiles = config.includedFiles
-    .map(file => trimFileName(file).replace(/\//g, '\\'))
-  config.excludedSubFolders = config.excludedSubFolders
-    .map(folderPath => trimFolderPath(folderPath).replace(/\//g, '\\'))
-  config.includedSubFolders = config.includedSubFolders
-    .map(folderPath => trimFolderPath(folderPath).replace(/\//g, '\\'))
+  config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)
+  config.includedFiles = resolvePathsList(config.includedFiles, config.rootFolder)
+  config.excludedSubFolders = resolvePathsList(config.excludedSubFolders, config.rootFolder)
+  config.includedSubFolders = resolvePathsList(config.includedSubFolders, config.rootFolder)
   return config
-}
-
-/**
- * @param {string} fileName
- * @return {string}
- */
-function trimFileName(fileName) {
-  if (fileName.startsWith('/')) return fileName.substring(1)
-  if (fileName.startsWith('./')) return fileName.substring(2)
-  return fileName
-}
-
-/**
- * @param {string} folderPath
- * @return {string}
- */
-function trimFolderPath(folderPath) {
-  if (folderPath.startsWith('/')) folderPath = folderPath.substring(1)
-  if (folderPath.endsWith('/')) folderPath = folderPath.slice(0, -1)
-  return folderPath
 }
 
 /**
@@ -83,7 +59,7 @@ function hashFileName(fileName) {
   const pureFileName = path.basename(fileName, fileExtension)
   const directoryPath = path.dirname(fileName)
   const newPureFileName = `${pureFileName}.${getHash()}${fileExtension}`
-  const newFileName = path.resolve(directoryPath, newPureFileName)
+  const newFileName = resolvePath(directoryPath, newPureFileName)
   fs.renameSync(fileName, newFileName)
 }
 
