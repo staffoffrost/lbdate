@@ -20,7 +20,7 @@
     "start": "npm run test:watch",
     "www:start": "webpack -d --progress --watch",
     "_www:build": "rimraf dist/* && webpack -p --progress && node log-success.js \"Playground build\"",
-    "_www:post-build-script": "node tools/scripts/post-dist-build.js",
+    "_www:post-build-script": "node tools/scripts/post-pg-build.js",
     "_www:minify-html": "html-minifier dist/index.html --collapse-whitespace --minify-js --minify-css -o dist/index.html && node log-success.js \"Html minification\"",
     "www:build": "run-s -s --silent _www:build _www:post-build-script _www:minify-html",
     "test": "jest",
