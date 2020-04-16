@@ -28,8 +28,9 @@ function hashFiles(config) {
     if (config.includedFiles.includes(rootRelativePath)) {
       hashFileName(file)
     } else if (config.excludedSubFolders.some(x => file.includes(x) &&
-      !config.includedSubFolders.some(y => file.some(y) &&
-        config.fileExtensions.some(z => file.endsWith(z))))
+      (config.includedSubFolders.every(y => !file.includes(y)) ||
+        config.includedSubFolders.some(y => file.includes(y) &&
+          x.length >= y.length)))
     ) {
       continue
     } else if (config.fileExtensions.some(x => file.endsWith(x))) {
@@ -43,10 +44,14 @@ function hashFiles(config) {
  * @returns {FileHasherConfig}
  */
 function prepareConfig(config) {
-  config.excludedFiles.map(file => trimFileName(file))
-  config.includedFiles.map(file => trimFileName(file))
-  config.excludedSubFolders.map(folderPath => trimFolderPath(folderPath))
-  config.includedSubFolders.map(folderPath => trimFolderPath(folderPath))
+  config.excludedFiles = config.excludedFiles
+    .map(file => trimFileName(file).replace(/\//g, '\\'))
+  config.includedFiles = config.includedFiles
+    .map(file => trimFileName(file).replace(/\//g, '\\'))
+  config.excludedSubFolders = config.excludedSubFolders
+    .map(folderPath => trimFolderPath(folderPath).replace(/\//g, '\\'))
+  config.includedSubFolders = config.includedSubFolders
+    .map(folderPath => trimFolderPath(folderPath).replace(/\//g, '\\'))
   return config
 }
 
@@ -55,8 +60,8 @@ function prepareConfig(config) {
  * @return {string}
  */
 function trimFileName(fileName) {
-  if (fileName.startsWith('/')) return file.substring(1)
-  if (fileName.startsWith('./')) return file.substring(2)
+  if (fileName.startsWith('/')) return fileName.substring(1)
+  if (fileName.startsWith('./')) return fileName.substring(2)
   return fileName
 }
 
@@ -67,7 +72,7 @@ function trimFileName(fileName) {
 function trimFolderPath(folderPath) {
   if (folderPath.startsWith('/')) folderPath = folderPath.substring(1)
   if (folderPath.endsWith('/')) folderPath = folderPath.slice(0, -1)
-  return fileName
+  return folderPath
 }
 
 /**
