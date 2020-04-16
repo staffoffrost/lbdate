@@ -10,7 +10,7 @@ function main() {
     logError(e)
     process.exit(1)
   }
-  logSuccess('Post dist procedure')
+  logSuccess('Post build procedure')
   process.exit(0)
 }
 
