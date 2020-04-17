@@ -1,5 +1,7 @@
 const fs = require('fs')
 const path = require('path')
+const { isString } = require('./is-string')
+const { ENCODING } = require('./constants')
 
 /**
  * @param {string} rootFolder
@@ -40,19 +42,45 @@ function getAllFoldersFromDirectory(rootFolder) {
 }
 
 /**
- * @param {string} path
+ * @param {string} resolvedPath
  * @returns {boolean}
  */
-function isDirectory(path) {
-  return fs.statSync(path).isDirectory()
+function isDirectory(resolvedPath) {
+  return fs.statSync(resolvedPath).isDirectory()
 }
 
 /**
- * @param {string} path
+ * @param {string} resolvedPath
  * @returns {boolean}
  */
-function isFile(path) {
-  return fs.statSync(path).isFile()
+function isFile(resolvedPath) {
+  return fs.statSync(resolvedPath).isFile()
 }
 
-module.exports = { getAllFilesFromDirectory, getAllFoldersFromDirectory, isDirectory, isFile }
+/**
+ * @param {string} resolvedPath
+ * @returns {boolean}
+ */
+function isPathExist(resolvedPath) {
+  return fs.existsSync(resolvedPath)
+}
+
+/**
+ * @param {string} fileName
+ * @param {string} newFileName
+ */
+function renameFile(fileName, newFileName) {
+  fs.renameSync(fileName, newFileName)
+}
+
+/**
+ * @param {string} filePath
+ * @returns {string}
+ */
+function readFile(filePath) {
+  const str = fs.readFileSync(filePath, ENCODING)
+  if (!isString(str)) throw new Error(`Can't read file: "${filePath}" as a string.`)
+  return str
+}
+
+module.exports = { getAllFilesFromDirectory, getAllFoldersFromDirectory, isDirectory, isFile, isPathExist, renameFile, readFile }

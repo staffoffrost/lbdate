@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { getAllFilesFromDirectory } = require('./file-system-extension')
+const { getAllFilesFromDirectory, isPathExist, renameFile } = require('./file-system-extension')
 const { getHash } = require('./hash-generator')
 const { resolvePath, resolvePathsList } = require('./path-extension')
 
@@ -21,12 +21,12 @@ const { resolvePath, resolvePathsList } = require('./path-extension')
  */
 function hashFiles(config) {
   config = prepareConfig(config)
-  const rootDir = resolvePath(config.rootFolder)
-  const allFiles = getAllFilesFromDirectory(rootDir)
+  validatePathsExist(config)
+  const allFiles = getAllFilesFromDirectory(config.rootFolder)
   for (const file of allFiles) {
     if (config.excludedFiles.some(x => x === file)) continue
     if (config.includedFiles.some(x => x === file)) {
-      hashFileName(file)
+      renameFile(file, hashFileName(file))
     } else if (config.excludedSubFolders.some(x => file.includes(x) &&
       (config.includedSubFolders.every(y => !file.includes(y)) ||
         config.includedSubFolders.some(y => file.includes(y) &&
@@ -34,7 +34,7 @@ function hashFiles(config) {
     ) {
       continue
     } else if (config.fileExtensions.some(x => file.endsWith(x))) {
-      hashFileName(file)
+      renameFile(file, hashFileName(file))
     }
   }
 }
@@ -44,6 +44,7 @@ function hashFiles(config) {
  * @returns {FileHasherConfig}
  */
 function prepareConfig(config) {
+  config.rootFolder = resolvePath(config.rootFolder)
   config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)
   config.includedFiles = resolvePathsList(config.includedFiles, config.rootFolder)
   config.excludedSubFolders = resolvePathsList(config.excludedSubFolders, config.rootFolder)
@@ -52,7 +53,25 @@ function prepareConfig(config) {
 }
 
 /**
+ * @param {FileHasherConfig} config
+ */
+function validatePathsExist(config) {
+  /** @type {string[]} */
+  const allPaths = [
+    config.rootFolder,
+    config.excludedFiles,
+    config.includedFiles,
+    config.excludedSubFolders,
+    config.includedSubFolders,
+  ].flat()
+  allPaths.forEach(resolvedPath => {
+    if (!isPathExist(resolvedPath)) throw new Error(`Path: ${resolvedPath} doesn't exist.`)
+  })
+}
+
+/**
  * @param {string} fileName
+ * @returns {string}
  */
 function hashFileName(fileName) {
   const fileExtension = path.extname(fileName)
@@ -60,7 +79,7 @@ function hashFileName(fileName) {
   const directoryPath = path.dirname(fileName)
   const newPureFileName = `${pureFileName}.${getHash()}${fileExtension}`
   const newFileName = resolvePath(directoryPath, newPureFileName)
-  fs.renameSync(fileName, newFileName)
+  return newFileName
 }
 
-module.exports = { hashFiles }
+module.exports = { hashFiles, hashFileName }

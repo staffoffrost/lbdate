@@ -32,7 +32,7 @@ const COMMON_CONFIG = {
 const DEV_CONFIG = {
   devtool: 'inline-source-map',
   output: {
-    filename: 'index.js',
+    filename: 'main.js',
     path: path.resolve(__dirname, 'playground/www'),
   },
 }
@@ -56,12 +56,12 @@ const PROD_CONFIG = {
       {
         from: 'playground/www/',
         to: './',
-        ignore: ['index.js']
+        ignore: ['main.js']
       },
     ]),
   ],
   output: {
-    filename: 'index.js',
+    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
 }

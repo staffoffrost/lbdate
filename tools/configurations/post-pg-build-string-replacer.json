@@ -7,8 +7,8 @@
         "newSubStr": "<base href=\"/playgrounds/lbdate/\">"
       },
       {
-        "subStr": "src=\"./index.js\"",
-        "newSubStr": "src=\"./index.[hash].js\""
+        "subStr": "src=\"./main.js\"",
+        "newSubStr": "src=\"./main.[hash].js\""
       }
     ]
   }

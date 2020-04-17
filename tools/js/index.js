@@ -15,5 +15,6 @@ module.exports = {
   ...require('./constants'),
   ...require('./file-hasher'),
   ...require('./file-system-extension'),
+  ...require('./path-extension'),
   ...require('./hash-verifier'),
 }

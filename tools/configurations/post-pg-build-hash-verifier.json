@@ -1,6 +1,17 @@
 {
   "rootFolder": "dist",
+  "indexHtml": "index.html",
   "excludedFiles": [],
   "excludedSubFolders": [],
-  "hashingSets": []
+  "hashingSets": [
+    {
+      "hashedFile": "main.js",
+      "initiatorFile": "index.html"
+    }
+  ],
+  "errorNonHashedFiles": false,
+  "extensionForNonHashedFilesValidation": [
+    ".js",
+    ".css"
+  ]
 }

@@ -12,6 +12,7 @@ function resolvePath(...pathSegments) {
 /**
  * @param {string[]} pathsList
  * @param {?string} rootFolder
+ * @exported
  */
 function resolvePathsList(pathsList, rootFolder = null) {
   if (rootFolder !== null) {
