@@ -1,12 +1,14 @@
 const path = require('path')
+const { exec } = require('child_process')
 const { getJsonFromFile, logError, logSuccess, replaceFileStrings, verifyHashing, SETTINGS_FOLDER, POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH, POST_PG_BUILD_FILE_HASHER_CONFIG_PATH, hashFiles, POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH } = require('../js')
 
 main()
-function main() {
+async function main() {
   try {
     fileStringsReplacementProcedure()
     hashFilesInDist()
     verifyHashingInDist()
+    await runMinifyHtml()
   } catch (e) {
     logError(e)
     process.exit(1)
@@ -34,4 +36,16 @@ function verifyHashingInDist() {
   /** @type {import('../js/file-hasher').HashVerifierConfig} */
   const hashingVerifierConfig = getJsonFromFile(hashingVerifierConfigPath)
   verifyHashing(hashingVerifierConfig)
+}
+
+/**
+ * @returns {Promise<void>}
+ */
+function runMinifyHtml() {
+  const command = 'html-minifier dist/index.html --collapse-whitespace --minify-js --minify-css -o dist/index.html'
+  return new Promise((resolve, reject) => {
+    exec(command, error => {
+      error ? reject(error) : resolve()
+    })
+  })
 }
