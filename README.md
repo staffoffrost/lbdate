@@ -72,8 +72,8 @@ LbDate will clone the native toJSON method to newly defined originalToJSON metho
 
 - **timezone**: {\*\*TimeZoneOptions or string} Allows you to configure time zone presences.
   - **auto**: (default) Will add time zone offset to date's ISO string based on host's environment time zone. \*"2020-04-01T03:30:15.123+03:00"
-  - **UTC**: Will add the _\*\*'Z' letter to the end of the ISO string. This is actually the default of a JavaScript. _"2020-04-01T00:30:15.123Z"
-  - **none**: Will remove the _\*\*'Z' symbol from the end of the ISO string and will not add any time zone to it. _"2020-04-01T03:30:15.123"
+  - **UTC**: Will add the \*\*'Z' letter to the end of the ISO string. This is actually the default of a JavaScript. "2020-04-01T00:30:15.123Z"
+  - **none**: Will remove the \*\*'Z' symbol from the end of the ISO string and will not add any time zone to it. "2020-04-01T03:30:15.123"
   - **manual**: Will allow you to set the time zone manually using **manualTimeZoneOffset** option.
 - **manualTimeZoneOffset**: {number} (default = null) (range: **-840** - **840**) Allows you to configure manually the preferred time zone offset in **Minutes**. For example: -90 minutes will result: \*"2020-04-01T02:00:15.123+01:30"
 - **originalToJsonName**: {string} (default = 'originalToJSON') While LbDate is initializing, it will clone the native **toJSON** method to this given name and will store it on the Date prototype so you can still access the original method in you app if you need to. \*\*\*\*

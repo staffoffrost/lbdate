@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { getAllFilesFromDirectory, isPathExist, renameFile } = require('./file-system-extension')
 const { getHash } = require('./hash-generator')
-const { resolvePath, resolvePathsList } = require('./path-extension')
+const { resolvePath, resolvePathsList, getDirName } = require('./path-extension')
 
 /**
  * @typedef FileHasherConfig
@@ -27,9 +27,9 @@ function hashFiles(config) {
     if (config.excludedFiles.some(x => x === file)) continue
     if (config.includedFiles.some(x => x === file)) {
       renameFile(file, hashFileName(file))
-    } else if (config.excludedSubFolders.some(x => file.includes(x) &&
-      (config.includedSubFolders.every(y => !file.includes(y)) ||
-        config.includedSubFolders.some(y => file.includes(y) &&
+    } else if (config.excludedSubFolders.some(x => getDirName(file).includes(x) &&
+      (config.includedSubFolders.every(y => !getDirName(file).includes(y)) ||
+        config.includedSubFolders.some(y => getDirName(file).includes(y) &&
           x.length >= y.length)))
     ) {
       continue

@@ -1,6 +1,5 @@
-const path = require('path')
 const { exec } = require('child_process')
-const { getJsonFromFile, logError, logSuccess, replaceFileStrings, verifyHashing, SETTINGS_FOLDER, POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH, POST_PG_BUILD_FILE_HASHER_CONFIG_PATH, hashFiles, POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH } = require('../js')
+const { resolvePath, getJsonFromFile, logError, logSuccess, replaceFileStrings, verifyHashing, addBanners, SETTINGS_FOLDER, POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH, POST_PG_BUILD_FILE_HASHER_CONFIG_PATH, hashFiles, POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH, BANNER_ADDER_CONFIG_PATH } = require('../js')
 
 main()
 async function main() {
@@ -9,6 +8,7 @@ async function main() {
     hashFilesInDist()
     verifyHashingInDist()
     await runMinifyHtml()
+    addBannersInDist()
   } catch (e) {
     logError(e)
     process.exit(1)
@@ -18,21 +18,21 @@ async function main() {
 }
 
 function fileStringsReplacementProcedure() {
-  const stringReplacerConfigPath = path.resolve(SETTINGS_FOLDER, POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH)
+  const stringReplacerConfigPath = resolvePath(SETTINGS_FOLDER, POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH)
   /** @type {import('../js/html-string-replacer').FileStringReplacementSet[]} */
   const stringReplacerConfig = getJsonFromFile(stringReplacerConfigPath)
   replaceFileStrings(stringReplacerConfig)
 }
 
 function hashFilesInDist() {
-  const fileHasherConfigPath = path.resolve(SETTINGS_FOLDER, POST_PG_BUILD_FILE_HASHER_CONFIG_PATH)
+  const fileHasherConfigPath = resolvePath(SETTINGS_FOLDER, POST_PG_BUILD_FILE_HASHER_CONFIG_PATH)
   /** @type {import('../js/file-hasher').FileHasherConfig} */
   const fileHasherConfig = getJsonFromFile(fileHasherConfigPath)
   hashFiles(fileHasherConfig)
 }
 
 function verifyHashingInDist() {
-  const hashingVerifierConfigPath = path.resolve(SETTINGS_FOLDER, POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH)
+  const hashingVerifierConfigPath = resolvePath(SETTINGS_FOLDER, POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH)
   /** @type {import('../js/file-hasher').HashVerifierConfig} */
   const hashingVerifierConfig = getJsonFromFile(hashingVerifierConfigPath)
   verifyHashing(hashingVerifierConfig)
@@ -48,4 +48,11 @@ function runMinifyHtml() {
       error ? reject(error) : resolve()
     })
   })
+}
+
+function addBannersInDist() {
+  const bannerAdderConfigPath = resolvePath(SETTINGS_FOLDER, BANNER_ADDER_CONFIG_PATH)
+  /** @type {import('../js/banner-adder').BannerAdderConfig} */
+  const bannerAdderConfig = getJsonFromFile(bannerAdderConfigPath)
+  addBanners(bannerAdderConfig)
 }

@@ -9,7 +9,7 @@
       "initiatorFile": "index.html"
     }
   ],
-  "errorNonHashedFiles": false,
+  "errorNonHashedFiles": true,
   "extensionForNonHashedFilesValidation": [
     ".js",
     ".css"

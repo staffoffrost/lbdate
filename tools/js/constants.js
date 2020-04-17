@@ -17,6 +17,7 @@ const SETTINGS_FOLDER = 'tools/configurations'
 const POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH = 'post-pg-build-string-replacer.json'
 const POST_PG_BUILD_FILE_HASHER_CONFIG_PATH = 'post-pg-build-file-hasher.json'
 const POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH = 'post-pg-build-hash-verifier.json'
+const BANNER_ADDER_CONFIG_PATH = 'banner-adder.json'
 const HASH_BLOCK = '[hash]'
 const ENCODING = 'utf8'
 const HASH_LENGTH = 20
@@ -29,6 +30,7 @@ module.exports = {
   POST_PG_BUILD_STRING_REPLACER_CONFIG_PATH,
   POST_PG_BUILD_FILE_HASHER_CONFIG_PATH,
   POST_PG_BUILD_HASH_VERIFIER_CONFIG_PATH,
+  BANNER_ADDER_CONFIG_PATH,
   HASH_BLOCK,
   ENCODING,
   HASH_LENGTH,

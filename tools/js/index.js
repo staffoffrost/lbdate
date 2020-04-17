@@ -17,4 +17,5 @@ module.exports = {
   ...require('./file-system-extension'),
   ...require('./path-extension'),
   ...require('./hash-verifier'),
+  ...require('./banner-adder'),
 }

@@ -22,4 +22,12 @@ function resolvePathsList(pathsList, rootFolder = null) {
   }
 }
 
-module.exports = { resolvePath, resolvePathsList }
+/**
+ * @param {string} filePath
+ * @returns {string}
+ */
+function getDirName(filePath) {
+  return path.dirname(filePath)
+}
+
+module.exports = { resolvePath, resolvePathsList, getDirName }

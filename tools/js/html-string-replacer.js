@@ -1,7 +1,9 @@
 const path = require('path')
 const fs = require('fs')
 const { getHash } = require('./hash-generator')
-const { HASH_BLOCK, ENCODING } = require('./constants')
+const { HASH_BLOCK } = require('./constants')
+const { writeToFile, readFile } = require('./file-system-extension')
+const { resolvePath } = require('./path-extension')
 
 /**
  * @typedef ReplacementItem
@@ -23,28 +25,11 @@ const { HASH_BLOCK, ENCODING } = require('./constants')
  */
 function replaceFileStrings(fileStringReplacementSets) {
   fileStringReplacementSets.forEach(config => {
-    let fileStr = getStringFromFile(config.filePath)
+    let fileStr = readFile(resolvePath(config.filePath))
     if (!fileStr) throw new Error(`This file is empty: ${config.filePath}`)
     fileStr = replaceStrings(fileStr, config.replacementsList, config.filePath)
-    writeStringToFile(config.filePath, fileStr)
+    writeToFile(config.filePath, fileStr)
   })
-}
-
-/**
- * @param {string} filePath
- * @returns {string}
- */
-function getStringFromFile(filePath) {
-  filePath = path.resolve(filePath)
-  return fs.readFileSync(filePath, ENCODING)
-}
-
-/**
- * @param {string} filePath
- * @param {string} str
- */
-function writeStringToFile(filePath, str) {
-  fs.writeFileSync(filePath, str, ENCODING)
 }
 
 /**

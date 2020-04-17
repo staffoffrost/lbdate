@@ -1,0 +1,21 @@
+{
+  "rootFolder": "dist",
+  "isSeparateRow": true,
+  "banners": [
+    {
+      "fileType": ".js",
+      "banner": "/*! == Copyright 2020 Leon Bernstein | StaffOfFrost == */"
+    },
+    {
+      "fileType": ".css",
+      "banner": "/*! == Copyright 2020 Leon Bernstein | StaffOfFrost == */"
+    },
+    {
+      "fileType": ".html",
+      "banner": "<!-- Copyright 2020 Leon Bernstein | StaffOfFrost -->"
+    }
+  ],
+  "excludedFiles": [],
+  "excludedSubFolders": [],
+  "includedSubFolders": []
+}

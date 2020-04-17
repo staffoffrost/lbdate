@@ -100,7 +100,6 @@ function validatePathsExist(config) {
   if (!config.errorNonHashedFiles) return
   const allFiles = getAllFilesFromDirectory(config.rootFolder)
   allFiles.forEach(file => {
-    console.log(file)
     if ((config.extensionForNonHashedFilesValidation &&
       config.extensionForNonHashedFilesValidation.length &&
       config.extensionForNonHashedFilesValidation.some(x => file.endsWith(x)) &&

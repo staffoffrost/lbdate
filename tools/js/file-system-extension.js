@@ -83,4 +83,12 @@ function readFile(filePath) {
   return str
 }
 
-module.exports = { getAllFilesFromDirectory, getAllFoldersFromDirectory, isDirectory, isFile, isPathExist, renameFile, readFile }
+/**
+ * @param {string} filePath
+ * @param {string} str
+ */
+function writeToFile(filePath, str) {
+  fs.writeFileSync(filePath, str, ENCODING)
+}
+
+module.exports = { getAllFilesFromDirectory, getAllFoldersFromDirectory, isDirectory, isFile, isPathExist, renameFile, readFile, writeToFile }
