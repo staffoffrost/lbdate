@@ -11,7 +11,7 @@ export function runAsync(callback: () => void): void {
 }
 
 export function getCurrentToJsonMethodName(): string {
-  return lbDate().getGlobalConfig().originalToJsonName ?? lbDate().getDefaultConfig().originalToJsonName
+  return lbDate().getGlobalConfig().toNativeJsonName ?? lbDate().getDefaultConfig().toNativeJsonName
 }
 
 export function isMethodInDatesPrototype(methodName: string): boolean {

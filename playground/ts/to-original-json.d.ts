@@ -1,7 +1,7 @@
 
 declare global {
   interface Date {
-    toOriginalJSON(this: Date): string
+    toNativeJSON(this: Date): string
   }
 }
 

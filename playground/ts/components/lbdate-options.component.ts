@@ -12,13 +12,13 @@ export class LbDateOptionsComponent {
     lbDateOptionsForm: getElementById('lbDateOptionsForm') as HTMLFormElement,
     timeZoneInput: getElementById('timeZoneInput') as HTMLSelectElement,
     manualTimeZoneOffsetInput: getElementById('manualTimeZoneOffsetInput') as HTMLInputElement,
-    originalToJsonNameInput: getElementById('originalToJsonNameInput') as HTMLInputElement,
+    toNativeJsonNameInput: getElementById('toNativeJsonNameInput') as HTMLInputElement,
     precisionInput: getElementById('precisionInput') as HTMLInputElement,
     clearLbDateOptionsBtn: getElementById('clearLbDateOptionsBtn') as HTMLButtonElement,
     restoreBtn: getElementById('restoreBtn') as HTMLButtonElement,
     activeStatus: getElementById('activeStatus') as HTMLSpanElement,
     notActiveStatus: getElementById('notActiveStatus') as HTMLSpanElement,
-    originalToJsonMethodCode: getElementById('originalToJsonMethodCode') as HTMLSpanElement,
+    toNativeJsonMethodCode: getElementById('toNativeJsonMethodCode') as HTMLSpanElement,
     showScopedRunCheckbox: getElementById('showScopedRunCheckbox') as HTMLInputElement,
     scopedRunContent: getElementById('scopedRunContent') as HTMLDivElement,
     scopedRunCodeResult: getElementById('scopedRunCodeResult') as HTMLSpanElement,
@@ -70,7 +70,7 @@ export class LbDateOptionsComponent {
 
   private _setObservers(): void {
     this._observables.onLbDateChange(() => {
-      this._updateOriginalToJsonCodeElem()
+      this._updateToNativeJsonCodeElem()
     })
     this._observables.onIsShowScopedRunChange(this._showHideScopedRun.bind(this))
     this._observables.onScopedRunResultChange(this._setScopedRunSerializationResult.bind(this))
@@ -81,7 +81,7 @@ export class LbDateOptionsComponent {
     let options: Partial<LbDateOptions> | null = {}
     if (!form.timeZone.toLowerCase().includes('default')) options.timezone = form.timeZone as TimeZoneOptions
     if (form.manualTimeZoneOffset) options.manualTimeZoneOffset = +form.manualTimeZoneOffset
-    if (form.originalToJsonName) options.originalToJsonName = form.originalToJsonName
+    if (form.toNativeJsonName) options.toNativeJsonName = form.toNativeJsonName
     if (form.precision) options.precision = +form.precision
     if (!Object.keys(options).length) options = null
     this._observables.nextLbDateOptions(options)
@@ -91,7 +91,7 @@ export class LbDateOptionsComponent {
     return {
       timeZone: getValueFromElement(this._elements.timeZoneInput) as string,
       manualTimeZoneOffset: getValueFromElement(this._elements.manualTimeZoneOffsetInput) as string,
-      originalToJsonName: getValueFromElement(this._elements.originalToJsonNameInput) as string,
+      toNativeJsonName: getValueFromElement(this._elements.toNativeJsonNameInput) as string,
       precision: getValueFromElement(this._elements.precisionInput) as string,
       isShowScopedRun: getValueFromElement(this._elements.showScopedRunCheckbox) as boolean
     }
@@ -101,14 +101,14 @@ export class LbDateOptionsComponent {
     const form: LbDateOptionsForm = {
       timeZone: 'Default',
       manualTimeZoneOffset: '',
-      originalToJsonName: '',
+      toNativeJsonName: '',
       precision: '',
       isShowScopedRun: this._observables.getIsShowScopedRun(),
     }
     if (options) {
       if (options.timezone) form.timeZone = options.timezone
       if (!isNullable(options.manualTimeZoneOffset)) form.manualTimeZoneOffset = options.manualTimeZoneOffset.toString()
-      if (options.originalToJsonName) form.originalToJsonName = options.originalToJsonName
+      if (options.toNativeJsonName) form.toNativeJsonName = options.toNativeJsonName
       if (!isNullable(options.precision)) form.precision = options.precision.toString()
     }
     return form
@@ -117,7 +117,7 @@ export class LbDateOptionsComponent {
   private _setLbDateOptionsFields(form: LbDateOptionsForm): void {
     setValueToElement(this._elements.timeZoneInput, form.timeZone)
     setValueToElement(this._elements.manualTimeZoneOffsetInput, form.manualTimeZoneOffset)
-    setValueToElement(this._elements.originalToJsonNameInput, form.originalToJsonName)
+    setValueToElement(this._elements.toNativeJsonNameInput, form.toNativeJsonName)
     setValueToElement(this._elements.precisionInput, form.precision)
     setValueToElement(this._elements.showScopedRunCheckbox, form.isShowScopedRun)
   }
@@ -139,9 +139,9 @@ export class LbDateOptionsComponent {
     }
   }
 
-  private _updateOriginalToJsonCodeElem(): void {
+  private _updateToNativeJsonCodeElem(): void {
     const currentToJsonMethodName = getCurrentToJsonMethodName()
-    setValueToElement(this._elements.originalToJsonMethodCode, currentToJsonMethodName)
+    setValueToElement(this._elements.toNativeJsonMethodCode, currentToJsonMethodName)
   }
 
   private _handleRandomFieldValidation(element: HTMLElement): void {
@@ -157,7 +157,7 @@ export class LbDateOptionsComponent {
     const form = this._getValuesFromForm()
     this._validateTimeZoneInput(form.timeZone)
     this._validateManualTimeZoneOffsetInput(form.manualTimeZoneOffset)
-    this._validateOriginalToJsonNameInput(form.originalToJsonName)
+    this._validateToNativeJsonNameInput(form.toNativeJsonName)
     this._validatePrecisionInput(form.precision)
   }
 
@@ -184,13 +184,13 @@ export class LbDateOptionsComponent {
     }
   }
 
-  private _validateOriginalToJsonNameInput(value: string): void {
+  private _validateToNativeJsonNameInput(value: string): void {
     const currentToJsonMethodName = getCurrentToJsonMethodName()
     const isMethodInDatesPrototypeResult = isMethodInDatesPrototype(value)
     if ((isMethodInDatesPrototypeResult && currentToJsonMethodName !== value) || value.length > 32) {
-      addClassToElem(this._elements.originalToJsonNameInput, IS_INVALID_CLASS)
+      addClassToElem(this._elements.toNativeJsonNameInput, IS_INVALID_CLASS)
     } else {
-      removeClassFromElem(this._elements.originalToJsonNameInput, IS_INVALID_CLASS)
+      removeClassFromElem(this._elements.toNativeJsonNameInput, IS_INVALID_CLASS)
     }
   }
 

@@ -2,7 +2,7 @@ import { getDefaultLbDateConfig, getGlobalLbDateConfig, LbDateOptions, setGlobal
 import { cloneDate, cloneFunction, formatTimeZone, objectAssign } from './functions'
 import { LbDateActions } from './lbdate-actions'
 
-let lastOriginalToJsonName: string | null = null
+let lastToNativeJsonName: string | null = null
 
 /**
  * Will set the default options for date serialization.
@@ -16,7 +16,7 @@ let lastOriginalToJsonName: string | null = null
  * options = {
  *  serialization: TimeZoneOptions.auto,
  *  manualTimeZoneOffset: null,
- *  originalToJsonName: 'originalToJSON',
+ *  toNativeJsonName: 'toNativeJSON',
  *  precision: 3
  * }
  */
@@ -33,7 +33,7 @@ export function lbDate(): LbDateActions
  * options = {
  *  serialization: TimeZoneOptions.auto,
  *  manualTimeZoneOffset: null,
- *  originalToJsonName: 'originalToJSON',
+ *  toNativeJsonName: 'toNativeJSON',
  *  precision: 3
  * }
  */
@@ -45,12 +45,12 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
     timezone = TimeZoneOptions.auto
     mergedOptions.timezone = timezone
   }
-  let originalToJsonName = mergedOptions.originalToJsonName
-  if (lastOriginalToJsonName !== originalToJsonName &&
-    Date.prototype.hasOwnProperty(originalToJsonName)
+  let toNativeJsonName = mergedOptions.toNativeJsonName
+  if (lastToNativeJsonName !== toNativeJsonName &&
+    Date.prototype.hasOwnProperty(toNativeJsonName)
   ) {
-    originalToJsonName = getDefaultLbDateConfig().originalToJsonName
-    mergedOptions.originalToJsonName = originalToJsonName
+    toNativeJsonName = getDefaultLbDateConfig().toNativeJsonName
+    mergedOptions.toNativeJsonName = toNativeJsonName
   }
   let manualTimeZoneOffset = mergedOptions.manualTimeZoneOffset
   if (manualTimeZoneOffset) {
@@ -66,26 +66,26 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
     Date.prototype.toJSON = method
   }
   const restoreToJsonFunctions = () => {
-    if (lastOriginalToJsonName) {
-      setDateToJson(Date.prototype[lastOriginalToJsonName])
-      delete Date.prototype[lastOriginalToJsonName]
-      lastOriginalToJsonName = null
+    if (lastToNativeJsonName) {
+      setDateToJson(Date.prototype[lastToNativeJsonName])
+      delete Date.prototype[lastToNativeJsonName]
+      lastToNativeJsonName = null
     }
   }
   const createToJson = (): (this: Date) => string => {
     const msInMin = 6e4
     const charsToRemove = precision == 0 ? -4 : precision - 3
-    const originalJsonFuncKey: string =
-      lastOriginalToJsonName ||
-        Date.prototype.hasOwnProperty(originalToJsonName) ?
-        originalToJsonName :
+    const nativeToJsonFuncKey: string =
+      lastToNativeJsonName ||
+        Date.prototype.hasOwnProperty(toNativeJsonName) ?
+        toNativeJsonName :
         Date.prototype.toISOString.name
     switch (timezone) {
       case TimeZoneOptions.auto:
         return function (this: Date): string {
           const offSetMins = this.getTimezoneOffset()
           const date = cloneDate(this.getTime() - offSetMins * msInMin)
-          let stringDate: string = date[originalJsonFuncKey]()
+          let stringDate: string = date[nativeToJsonFuncKey]()
           stringDate = stringDate.slice(0, -1 + charsToRemove)
           return stringDate + formatTimeZone(offSetMins)
         }
@@ -93,7 +93,7 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
         return function (this: Date): string {
           const offSetMins = manualTimeZoneOffset || 0
           const date = cloneDate(this.getTime() - offSetMins * msInMin)
-          let stringDate: string = date[originalJsonFuncKey]()
+          let stringDate: string = date[nativeToJsonFuncKey]()
           stringDate = stringDate.slice(0, -1 + charsToRemove)
           return stringDate + formatTimeZone(offSetMins)
         }
@@ -101,28 +101,28 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
         return function (this: Date): string {
           const offSetMins = this.getTimezoneOffset()
           const date = cloneDate(this.getTime() - offSetMins * msInMin)
-          const stringDate: string = date[originalJsonFuncKey]()
+          const stringDate: string = date[nativeToJsonFuncKey]()
           return stringDate.slice(0, -1 + charsToRemove)
         }
       case TimeZoneOptions.utc:
         return function (this: Date): string {
-          return this[originalJsonFuncKey]()
+          return this[nativeToJsonFuncKey]()
         }
     }
   }
   return {
     init: () => {
       restoreToJsonFunctions()
-      lastOriginalToJsonName = originalToJsonName
+      lastToNativeJsonName = toNativeJsonName
       setGlobalLbDateOptions(mergedOptions)
-      Date.prototype[originalToJsonName] = cloneFunction(Date.prototype.toJSON)
+      Date.prototype[toNativeJsonName] = cloneFunction(Date.prototype.toJSON)
       setDateToJson(createToJson())
     },
     run: <T = string | void>(fn: () => T): T => {
       const clonedToJson = cloneFunction(Date.prototype.toJSON) as (key?: any) => string
-      const isSameOriginalToJsonName = originalToJsonName === lastOriginalToJsonName
-      if (!isSameOriginalToJsonName) {
-        Date.prototype[originalToJsonName] = clonedToJson
+      const isSameToNativeJsonName = toNativeJsonName === lastToNativeJsonName
+      if (!isSameToNativeJsonName) {
+        Date.prototype[toNativeJsonName] = clonedToJson
       }
       setDateToJson(createToJson())
       let error: Error | null = null
@@ -132,8 +132,8 @@ export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
       } catch (e) {
         error = e
       }
-      if (!isSameOriginalToJsonName) {
-        delete Date.prototype[originalToJsonName]
+      if (!isSameToNativeJsonName) {
+        delete Date.prototype[toNativeJsonName]
       }
       setDateToJson(clonedToJson)
       if (error) throw error

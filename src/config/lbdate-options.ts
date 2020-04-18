@@ -22,9 +22,9 @@ export interface LbDateOptions {
    * While LbDate is initializing, it will clone the native **toJSON** method
    * to this given name and will store it on the Date's prototype.
    * @default
-   * originalToJsonName = 'originalToJSON'
+   * toNativeJsonName = 'toNativeJSON'
    */
-  originalToJsonName: string
+  toNativeJsonName: string
   /**
    * The number of second fraction digits.
    * Supported range: **0** - **3**.

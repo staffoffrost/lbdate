@@ -2,7 +2,7 @@
 export interface LbDateOptionsForm {
   timeZone: string,
   manualTimeZoneOffset: string,
-  originalToJsonName: string,
+  toNativeJsonName: string,
   precision: string,
   isShowScopedRun: boolean,
 }

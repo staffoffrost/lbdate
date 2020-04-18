@@ -5,7 +5,7 @@ import { TimeZoneOptions } from './time-zone-options.enum'
 const DEFAULT_LBDATE_OPTIONS: LbDateOptions = {
   timezone: TimeZoneOptions.auto,
   manualTimeZoneOffset: null,
-  originalToJsonName: 'originalToJSON',
+  toNativeJsonName: 'toNativeJSON',
   precision: 3,
 }
 
