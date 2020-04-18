@@ -41,10 +41,13 @@ function addBanners(config) {
     return true
   })
   filteredFiles.forEach(file => {
-    const banner = config.banners.find(x => file.endsWith(x.fileType)).banner
-    let rawFile = readFile(file)
-    rawFile = `${banner}${config.isSeparateRow ? '\n' : ''}${rawFile}`
-    writeToFile(file, rawFile)
+    const bannerSet = config.banners.find(x => file.endsWith(x.fileType))
+    if (bannerSet) {
+      const banner = bannerSet.banner
+      let rawFile = readFile(file)
+      rawFile = `${banner}${config.isSeparateRow ? '\n' : ''}${rawFile}`
+      writeToFile(file, rawFile)
+    }
   })
 }
 
