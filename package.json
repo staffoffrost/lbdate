@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/LeonBernstein/LbDate#readme",
   "main": "src/index.ts",
+  "sideEffects": false,
   "scripts": {
     "start": "npm run test:watch",
     "www:start": "webpack -d --progress --watch",

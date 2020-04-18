@@ -5,6 +5,8 @@
   ],
   "excludedFiles": [],
   "includedFiles": [],
-  "excludedSubFolders": [],
+  "excludedSubFolders": [
+    "icons"
+  ],
   "includedSubFolders": []
 }

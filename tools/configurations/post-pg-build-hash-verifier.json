@@ -2,7 +2,9 @@
   "rootFolder": "dist",
   "indexHtml": "index.html",
   "excludedFiles": [],
-  "excludedSubFolders": [],
+  "excludedSubFolders": [
+    "icons"
+  ],
   "hashingSets": [
     {
       "hashedFile": "main.js",

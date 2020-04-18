@@ -4,6 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+/** @type {import('webpack').Configuration} */
 const COMMON_CONFIG = {
   entry: './playground/ts/main.ts',
   devtool: 'inline-source-map',
@@ -29,6 +30,7 @@ const COMMON_CONFIG = {
   },
 }
 
+/** @type {import('webpack').Configuration} */
 const DEV_CONFIG = {
   devtool: 'inline-source-map',
   output: {
@@ -37,6 +39,7 @@ const DEV_CONFIG = {
   },
 }
 
+/** @type {import('webpack').Configuration} */
 const PROD_CONFIG = {
   optimization: {
     minimize: true,
@@ -64,6 +67,11 @@ const PROD_CONFIG = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  performance: {
+    assetFilter: function (assetFilename) {
+      return assetFilename.endsWith('.js') || assetFilename.endsWith('.css') || assetFilename.endsWith('.html')
+    }
+  }
 }
 
 module.exports = (env, argv) => merge(COMMON_CONFIG, argv.mode === 'production' ? PROD_CONFIG : DEV_CONFIG)

@@ -1,6 +1,6 @@
 import { lbDate, TimeZoneOptions } from 'lbdate'
 import { ObservablesService } from '../services/observables.service'
-import { getElementById, setValueToElement } from '../utils/dom'
+import { getElementById, setEventListener, setValueToElement } from '../utils/dom'
 import { DateSelectionComponent } from './date-selections.component'
 import { LbDateOptionsComponent } from './lbdate-options.component'
 import { SerializationResultComponent } from './serialization-result.component'
@@ -36,6 +36,7 @@ export class AppComponent {
   public init(): void {
     this._dateSelection.init()
     this._lbDateOptions.init()
+    this._setDomEvents()
     this._setObservers()
     this._scopedRun()
     this._setVersion()
@@ -50,6 +51,16 @@ export class AppComponent {
     })
     this._observables.onIsShowScopedRunChange(this._scopedRun.bind(this), false)
     this._observables.onNewScopedRunRequest(this._scopedRun.bind(this), false)
+  }
+
+  private _setDomEvents(): void {
+    setEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() == 'enter' &&
+        event.target instanceof HTMLInputElement
+      ) {
+        event.target.blur()
+      }
+    })
   }
 
   private _scopedRun(): void {
