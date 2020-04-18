@@ -61,6 +61,15 @@
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
   },
+  "keywords": [
+    "date",
+    "time",
+    "timezone",
+    "json",
+    "ISO",
+    "8601",
+    "UTC"
+  ],
   "jest": {
     "preset": "ts-jest"
   },
