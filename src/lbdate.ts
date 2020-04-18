@@ -5,7 +5,7 @@ import { LbDateActions } from './lbdate-actions'
 let lastToNativeJsonName: string | null = null
 
 /**
- * Will set the default options for date serialization.
+ * Will set the default options for date's serialization.
  * @example
  * lbDate().init()
  * // --or--
@@ -22,7 +22,7 @@ let lastToNativeJsonName: string | null = null
  */
 export function lbDate(): LbDateActions
 /**
- * Will set the provided options for date serialization merged with defaults.
+ * Will set the provided options for date's serialization merged with defaults.
  * @example
  * lbDate(options).init()
  * // --or--

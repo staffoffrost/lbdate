@@ -10,13 +10,13 @@ export interface Run {
  */
 export interface LbDateActions {
   /**
-   * Sets the default or the provided options as the global configuration
-   * and then override the native toJSON method based on the given options.
+   * Sets the provided or default options to global configuration
+   * and then overrides the native toJSON method based on the given options.
    */
   init: () => void,
   /**
    * This method takes a function as a parameter, and runs it immediately with the provided options.
-   * The provided options are temporary and scoped only for this run.
+   * The provided options are temporary and are scoped only for this run.
    * The provided options will be merged with the global and the default options.
    * Use this method if you want to use different time zone preferences for different sections in your app.
    * @example
@@ -30,9 +30,9 @@ export interface LbDateActions {
    */
   run: Run,
   /**
-   * Restores native **toJSON**.
-   * Restores the global configurations.
-   * Basicity should undo any changes to your environment done by **LbDate().init()**.
+   * Restores the native _toJSON_ method,
+   * removes the global configurations,
+   * and basicity should undo any changes to your environment done by **LbDate().init()**.
    */
   restore: () => void,
   /**

@@ -12,8 +12,8 @@ export interface LbDateOptions {
    */
   timezone: TimeZoneOptions
   /**
-   * Configure manual time zone offset in Minutes if the timezone option is set to manual.
-   * Otherwise this setting will be ignored. Supported range: **-840** - **840**.
+   * Set time zone offset in Minutes and the _timezone_ option to manual,
+   * otherwise this setting will be ignored. Supported range: **-840** - **840**.
    * @default
    * manualTimeZoneOffset = null
    */
