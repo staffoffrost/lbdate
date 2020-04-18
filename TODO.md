@@ -2,7 +2,7 @@
 
 ## src
 
-- [ ] Multiples module type support.
+- [ ] Multiple module types support.
 - [ ] Post build procedure refactoring.
 
 ## playground
