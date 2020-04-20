@@ -10,7 +10,6 @@ const COMMON_CONFIG = {
     main: './playground/ts/main.ts',
     "loading-script": './playground/ts/loading-script.ts'
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
