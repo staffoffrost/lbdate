@@ -9,6 +9,10 @@
       {
         "subStr": "src=\"./main.js\"",
         "newSubStr": "src=\"./main.[hash].js\""
+      },
+      {
+        "subStr": "src=\"./loading-script.js\"",
+        "newSubStr": "src=\"./loading-script.[hash].js\""
       }
     ]
   }

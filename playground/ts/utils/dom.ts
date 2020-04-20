@@ -4,7 +4,7 @@ export function onDomLoaded(callBack: () => void): void {
   if (['complete', 'interactive'].includes(readyState)) {
     callBack()
   } else {
-    setEventListener('DOMContentLoaded', callBack)
+    window.addEventListener('DOMContentLoaded', callBack, { once: true })
   }
 }
 

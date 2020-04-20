@@ -6,7 +6,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 /** @type {import('webpack').Configuration} */
 const COMMON_CONFIG = {
-  entry: './playground/ts/main.ts',
+  entry: {
+    main: './playground/ts/main.ts',
+    "loading-script": './playground/ts/loading-script.ts'
+  },
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -15,7 +18,7 @@ const COMMON_CONFIG = {
         use: [{
           loader: 'ts-loader',
           options: {
-            configFile: 'playground/ts/tsconfig.json',
+            configFile: 'playground/tsconfig.json',
           }
         }],
         exclude: /node_modules/,
@@ -25,7 +28,7 @@ const COMMON_CONFIG = {
   resolve: {
     extensions: ['.ts', '.js'],
     alias: {
-      lbdate: path.resolve(__dirname, 'src'),
+      lbdate: path.resolve(__dirname, '../src'),
     }
   },
 }
@@ -34,8 +37,8 @@ const COMMON_CONFIG = {
 const DEV_CONFIG = {
   devtool: 'inline-source-map',
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'playground/www'),
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'www'),
   },
 }
 
@@ -64,8 +67,8 @@ const PROD_CONFIG = {
     ]),
   ],
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    path: path.resolve(__dirname, '../dist'),
   },
   performance: {
     assetFilter: function (assetFilename) {

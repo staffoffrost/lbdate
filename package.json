@@ -19,8 +19,8 @@
   "sideEffects": false,
   "scripts": {
     "start": "npm run test:watch",
-    "www:start": "webpack -d --progress --watch",
-    "_www:build": "rimraf dist/* && webpack -p --progress && node log-success.js \"Playground build\"",
+    "www:start": "webpack -d --progress --config playground/webpack.config.js --watch",
+    "_www:build": "rimraf dist/* && webpack -p --progress --config playground/webpack.config.js && node log-success.js \"Playground build\"",
     "_www:post-build-script": "node tools/scripts/post-pg-build.js",
     "www:build": "run-s -s --silent _www:build _www:post-build-script",
     "test": "jest",

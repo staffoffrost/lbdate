@@ -1,17 +1,17 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
       "lbdate": [
-        "../../src",
-        "../../src/*"
+        "../src",
+        "../src/*"
       ]
     }
   },
   "include": [
-    "../../src/**/*.ts",
-    "**/*.ts"
+    "../src/**/*.ts",
+    "./ts/**/*.ts"
   ]
 }

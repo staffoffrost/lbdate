@@ -9,6 +9,10 @@
     {
       "hashedFile": "main.js",
       "initiatorFile": "index.html"
+    },
+    {
+      "hashedFile": "loading-script.js",
+      "initiatorFile": "index.html"
     }
   ],
   "errorNonHashedFiles": true,

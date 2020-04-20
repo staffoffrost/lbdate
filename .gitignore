@@ -14,4 +14,4 @@ dist
 
 # Individual files
 spec/test-results-output/test-report.html
-playground/www/main.js
+playground/www/*.js

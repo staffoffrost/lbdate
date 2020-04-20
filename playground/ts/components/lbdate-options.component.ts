@@ -59,7 +59,7 @@ export class LbDateOptionsComponent {
       this._setLbDateStatus(false)
     },
       this._elements.restoreBtn)
-    setEventListener('input', event => {
+    setEventListener('click', event => {
       if (event.target instanceof HTMLInputElement) {
         this._observables.nextIsShowScopedRun(event.target.checked)
       }
