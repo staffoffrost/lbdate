@@ -15,3 +15,6 @@ dist
 # Individual files
 spec/test-results-output/test-report.html
 playground/www/*.js
+
+# Temp / Cache folders
+Temp
