@@ -121,7 +121,7 @@ or:
 
 ### Get Current Configurations
 
-Get current global configuration that was set by the last init.
+Get current global configuration that were set by the last init.
 
     lbDate().getGlobalConfig()
 
