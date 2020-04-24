@@ -19,6 +19,7 @@ export interface PostPgBuildConfig {
   },
   hashLength?: number,
   hashCharPool?: string,
+  minifyHtmlCommand?: string,
   fileStringReplacer?: {
     rootFolder: string,
     sets: StringReplacementData[]

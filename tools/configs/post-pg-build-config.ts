@@ -2,6 +2,7 @@ import { PostPgBuildConfig } from '../models'
 import { LOGGER_CONFIG } from './logger-config'
 
 const rootFolder = 'dist'
+const indexHtml = 'index.html'
 const excludedDubFoldersForHashing = [
   'icons'
 ]
@@ -10,11 +11,13 @@ export const POST_PG_BUILD_CONFIG: PostPgBuildConfig = {
   logger: LOGGER_CONFIG,
   hashLength: 20,
   hashCharPool: 'abcdefghijklmnopqrstvuwxyzABCDEFGHIJKLMNOPQRSTVUWXYZ0123456789',
+  // tslint:disable-next-line: max-line-length
+  minifyHtmlCommand: `html-minifier ${rootFolder}/${indexHtml} --collapse-whitespace --minify-js --minify-css -o ${rootFolder}/${indexHtml}`,
   fileStringReplacer: {
     rootFolder,
     sets: [
       {
-        filePath: 'index.html',
+        filePath: indexHtml,
         replacementSets: [
           {
             currStr: '<base href="/playground/www/">',
@@ -45,7 +48,7 @@ export const POST_PG_BUILD_CONFIG: PostPgBuildConfig = {
   },
   hashVerifier: {
     rootFolder,
-    indexHtml: 'index.html',
+    indexHtml,
     excludedFiles: [],
     excludedSubFolders: excludedDubFoldersForHashing,
     hashSets: [],
