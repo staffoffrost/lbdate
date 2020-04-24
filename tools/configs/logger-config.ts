@@ -1,7 +1,7 @@
 import { LogLevels } from '../enums'
-import { PostPgBuildConfig } from '../models'
+import { LoggerConfig } from '../models/logger'
 
-export const LOGGER_CONFIG: PostPgBuildConfig['logger'] = {
+export const LOGGER_CONFIG: LoggerConfig = {
   isActive: true,
   consoleLogLevel: LogLevels.log,
   fileLogLevel: LogLevels.none,

@@ -7,8 +7,8 @@ import replaceString from './replace-string-in-files'
 import verifyHashes from './verify-hashes'
 
 export default async function main(): Promise<void> {
-  const logger = Provider.getLoggerHandler()
   setConfiguration()
+  const logger = Provider.getLoggerHandler()
   await replaceString()
   await hashFileNames()
   await verifyHashes()

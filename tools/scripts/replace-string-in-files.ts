@@ -1,5 +1,4 @@
-import { resolve as resolvePath } from 'path'
-import { readStrFromFile, writeStrToFile } from '../extensions'
+import { readStrFromFile, resolvePath, writeStrToFile } from '../extensions'
 import { StringReplacementSet } from '../models'
 import { Provider } from '../provider'
 

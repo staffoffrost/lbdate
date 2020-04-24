@@ -1,9 +1,11 @@
 import { LOGGER_CONFIG } from './configs'
 import { ConfigHandler, LoggerHandler } from './handlers'
+import { AppDetails } from './handlers/app-details.handler'
 import { HashHandler } from './handlers/hash.handler'
-import { PostPgBuildConfig } from './models'
+import { PostPgBuildConfig, PostSrcBuildConfig } from './models'
 
 export class Provider {
+
   private static container: { [key: string]: {} } = {}
 
   public static getPostPgBuildConfigHandler = (): ConfigHandler<PostPgBuildConfig> => {
@@ -11,6 +13,12 @@ export class Provider {
       Provider.container[ConfigHandler.name] = new ConfigHandler<PostPgBuildConfig>()
     }
     return Provider.container[ConfigHandler.name] as ConfigHandler<PostPgBuildConfig>
+  }
+  public static getPostSrcBuildConfigHandler = (): ConfigHandler<PostSrcBuildConfig> => {
+    if (!Provider.container[ConfigHandler.name]) {
+      Provider.container[ConfigHandler.name] = new ConfigHandler<PostSrcBuildConfig>()
+    }
+    return Provider.container[ConfigHandler.name] as ConfigHandler<PostSrcBuildConfig>
   }
   public static getLoggerHandler = (): LoggerHandler => {
     if (!Provider.container[LoggerHandler.name]) {
@@ -23,6 +31,12 @@ export class Provider {
       Provider.container[HashHandler.name] = new HashHandler()
     }
     return Provider.container[HashHandler.name] as HashHandler
+  }
+  public static getAppDetailsHandler = (): AppDetails => {
+    if (!Provider.container[AppDetails.name]) {
+      Provider.container[AppDetails.name] = new AppDetails()
+    }
+    return Provider.container[AppDetails.name] as AppDetails
   }
 
   private constructor() { }

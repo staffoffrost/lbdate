@@ -1,7 +1,7 @@
 import { dirname } from 'path'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList, writeStrToFile } from '../extensions'
 import { assertNotEmpty } from '../helpers/assert-not-empty'
-import { PostPgBuildConfig } from '../models'
+import { BannerAdder } from '../models'
 import { Provider } from '../provider'
 import { hashFileName } from './hash-file-names'
 
@@ -37,8 +37,7 @@ export default async function main(): Promise<void> {
   })
 }
 
-function resolveConfigPaths(config: PostPgBuildConfig['bannerAdder']): PostPgBuildConfig['bannerAdder'] {
-  assertNotEmpty(config)
+function resolveConfigPaths(config: BannerAdder): BannerAdder {
   config.rootFolder = resolvePath(config.rootFolder)
   config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)
   config.excludedSubFolders = resolvePathsList(config.excludedSubFolders, config.rootFolder)

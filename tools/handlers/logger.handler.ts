@@ -1,17 +1,18 @@
 import { LogLevels } from '../enums'
 import { isError, isString } from '../helpers'
-import { AppError, PostPgBuildConfig } from '../models'
+import { AppError } from '../models'
+import { LoggerConfig } from '../models/logger'
 
 export class LoggerHandler {
 
   private static _wasLastEmptyLine = false
 
-  private _config: PostPgBuildConfig['logger']
-  public set config(value: PostPgBuildConfig['logger']) {
+  private _config: LoggerConfig
+  public set config(value: LoggerConfig) {
     this._config = value
   }
 
-  constructor(config: PostPgBuildConfig['logger']) {
+  constructor(config: LoggerConfig) {
     this._config = config
     if (this._config.fileLogLevel !== LogLevels.none && this._config.isActive) {
       console.warn('\x1b[33m', 'File logging is not implemented yet', '\x1b[0m')

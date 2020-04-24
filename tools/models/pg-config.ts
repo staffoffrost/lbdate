@@ -1,4 +1,4 @@
-import { LogLevels } from '../enums'
+import { LoggerConfig } from './logger'
 
 export interface StringReplacementSet {
   currStr: string,
@@ -10,20 +10,29 @@ export interface StringReplacementData {
   replacementSets: StringReplacementSet[]
 }
 
+export interface FileStringReplacer {
+  rootFolder: string,
+  sets: StringReplacementData[]
+}
+
+export interface BannerAdder {
+  rootFolder: string,
+  isSeparateRow: boolean,
+  bannerSets: {
+    fileType: string,
+    banner: string
+  }[],
+  excludedFiles: string[],
+  excludedSubFolders: string[],
+  includedSubFolders: string[],
+}
+
 export interface PostPgBuildConfig {
-  logger: {
-    isActive: boolean,
-    consoleLogLevel: LogLevels,
-    fileLogLevel: LogLevels,
-    logFolderLocation: string,
-  },
+  logger: LoggerConfig,
   hashLength?: number,
   hashCharPool?: string,
   minifyHtmlCommand?: string,
-  fileStringReplacer?: {
-    rootFolder: string,
-    sets: StringReplacementData[]
-  },
+  fileStringReplacer?: FileStringReplacer,
   fileHasher?: {
     rootFolder: string,
     fileExtensions: string[],
@@ -46,15 +55,5 @@ export interface PostPgBuildConfig {
       extensionToCheck: string[],
     }
   },
-  bannerAdder?: {
-    rootFolder: string,
-    isSeparateRow: boolean,
-    bannerSets: {
-      fileType: string,
-      banner: string
-    }[],
-    excludedFiles: string[],
-    excludedSubFolders: string[],
-    includedSubFolders: string[],
-  }
+  bannerAdder?: BannerAdder
 }
