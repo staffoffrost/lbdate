@@ -19,10 +19,10 @@
   "sideEffects": false,
   "scripts": {
     "start": "npm run test:watch",
-    "www:start": "webpack -d --progress --config playground/webpack.config.js --watch",
-    "_www:build": "rimraf dist/* && webpack -p --progress --config playground/webpack.config.js && ts-node -s tools/log-success.ts \"Playground build\"",
-    "_www:post-build-script": "ts-node -s tools/run.ts  --post-pg-build",
-    "www:build": "run-s -s --silent _www:build _www:post-build-script",
+    "pg:start": "webpack -d --progress --config playground/webpack.config.js --watch",
+    "_pg:build": "rimraf dist/* && webpack -p --progress --config playground/webpack.config.js && ts-node -s tools/log-success.ts \"Playground build\"",
+    "_pg:post-build-script": "ts-node -s tools/run.ts  --post-pg-build",
+    "pg:build": "run-s -s --silent _pg:build _pg:post-build-script",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:watchAll": "jest --watchAll",
@@ -32,7 +32,7 @@
     "src:test-build": "run-s -s _src:build-base _src:post-build-script",
     "src:build": "run-s -s _src:build-base \"_src:post-build-script -- --increment-version\"",
     "src:publish": "cd build && npm publish",
-    "src:CI-CD": "run-s -s lint test www:build src:build src:publish git:*",
+    "src:CI-CD": "run-s -s lint test pg:build src:build src:publish git:*",
     "git:stage&commit-ver-up": "git add . && git commit -S -m \"ver up\"",
     "git:tag&push&push-tag": "git tag 1.0.0-beta.0 && git push && git push --tags"
   },
