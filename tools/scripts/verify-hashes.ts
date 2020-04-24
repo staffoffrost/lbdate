@@ -6,7 +6,7 @@ import { Provider } from '../provider'
 import { hashFileName } from './hash-file-names'
 
 export default async function main(): Promise<void> {
-  let config = Provider.getPostPgBuildConfigHandler().appConfig.hashVerifier
+  let config = Provider.getPostPgBuildConfigHandler().config.hashVerifier
   if (!config) throw new Error('Hash verifier was requested without configuration.')
   config = resolveConfigPaths(config)
   assertNotEmpty(config)

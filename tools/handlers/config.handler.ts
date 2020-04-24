@@ -1,12 +1,12 @@
 import { LOGGER_CONFIG } from '../configs'
 
 export class ConfigHandler<T extends object> {
-  private _appConfig: T = { LOGGER_CONFIG } as T
-  public get appConfig(): T {
-    return JSON.parse(JSON.stringify(this._appConfig))
+  private _config: T = { LOGGER_CONFIG } as T
+  public get config(): T {
+    return JSON.parse(JSON.stringify(this._config))
   }
-  public set appConfig(value: T) {
-    this._appConfig = value
+  public set config(value: T) {
+    this._config = value
   }
 
   constructor() { }

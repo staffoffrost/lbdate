@@ -12,7 +12,7 @@ export class HashHandler {
   constructor() { }
 
   private _generateHash(): string {
-    const config = Provider.getPostPgBuildConfigHandler().appConfig
+    const config = Provider.getPostPgBuildConfigHandler().config
     const getRandomInteger = (min: number, max: number): number => {
       return Math.floor(Math.random() * (max - min + 1)) + min
     }

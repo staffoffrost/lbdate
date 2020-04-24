@@ -7,7 +7,7 @@ import { PostPgBuildConfig } from '../models'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
-  let config = Provider.getPostPgBuildConfigHandler().appConfig.fileHasher
+  let config = Provider.getPostPgBuildConfigHandler().config.fileHasher
   if (!config) throw new Error('File hasher was requested without configuration.')
   config = resolveConfigPaths(config)
   assertNotEmpty(config)

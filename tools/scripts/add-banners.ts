@@ -6,7 +6,7 @@ import { Provider } from '../provider'
 import { hashFileName } from './hash-file-names'
 
 export default async function main(): Promise<void> {
-  let config = Provider.getPostPgBuildConfigHandler().appConfig.bannerAdder
+  let config = Provider.getPostPgBuildConfigHandler().config.bannerAdder
   if (!config) throw new Error('Banner adder was requested without configuration.')
   config = resolveConfigPaths(config)
   assertNotEmpty(config)

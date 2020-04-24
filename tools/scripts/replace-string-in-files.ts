@@ -4,7 +4,7 @@ import { StringReplacementSet } from '../models'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
-  const config = Provider.getPostPgBuildConfigHandler().appConfig.fileStringReplacer
+  const config = Provider.getPostPgBuildConfigHandler().config.fileStringReplacer
   if (!config) throw new Error('File string replacer was requested without configuration.')
   const hash = Provider.getHashHandler().hash
   config.sets.forEach(dataSet => {

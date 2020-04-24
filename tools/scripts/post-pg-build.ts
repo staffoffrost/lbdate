@@ -19,7 +19,7 @@ export default async function main(): Promise<void> {
 
 function setConfiguration(): void {
   const config = Provider.getPostPgBuildConfigHandler()
-  config.appConfig = POST_PG_BUILD_CONFIG
+  config.config = POST_PG_BUILD_CONFIG
   const logger = Provider.getLoggerHandler()
   logger.config = POST_PG_BUILD_CONFIG.logger
 }
