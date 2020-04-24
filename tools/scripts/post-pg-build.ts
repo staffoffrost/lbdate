@@ -1,5 +1,6 @@
 import { POST_PG_BUILD_CONFIG } from '../configs'
 import { Provider } from '../provider'
+import addBanners from './add-banners'
 import hashFileNames from './hash-file-names'
 import minifyHtml from './minify-html'
 import replaceString from './replace-string-in-files'
@@ -12,6 +13,7 @@ export default async function main(): Promise<void> {
   await hashFileNames()
   await verifyHashes()
   await minifyHtml()
+  await addBanners()
   logger.logSuccess('Post build procedure')
 }
 

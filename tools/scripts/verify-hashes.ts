@@ -22,20 +22,19 @@ export default async function main(): Promise<void> {
     if (!fileStr.includes(hashedFile)) throw new Error(`Initiator file: "${set.initiatorFile}" does not include "${hashedFile}".`)
   })
   if (!config.indexHtml) return
-  const filteredFiles = getAllFilesFromDirectory(config.rootFolder)
-    .filter(x => {
-      if (x.includes(hash)
-        && (x.endsWith('.js')
-          || x.endsWith('.css'))
-        && !config!.excludedFiles.some(y => y === x
-          || (!y.includes(hash)
-            && hashFileName(y, hash) === x))
-        && !config!.excludedSubFolders.some(y => x.includes(y))
-      ) {
-        return true
-      }
-      return false
-    })
+  const filteredFiles = getAllFilesFromDirectory(config.rootFolder).filter(x => {
+    if (x.includes(hash)
+      && (x.endsWith('.js')
+        || x.endsWith('.css'))
+      && !config!.excludedFiles.some(y => y === x
+        || (!y.includes(hash)
+          && hashFileName(y, hash) === x))
+      && !config!.excludedSubFolders.some(y => x.includes(y))
+    ) {
+      return true
+    }
+    return false
+  })
   for (const file of filteredFiles) {
     if (!file.includes(hash)) continue
     const rawHtmlFile = readStrFromFile(config.indexHtml)

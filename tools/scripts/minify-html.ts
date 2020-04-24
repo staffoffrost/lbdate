@@ -3,7 +3,7 @@ import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
   const command = Provider.getPostPgBuildConfigHandler().appConfig.minifyHtmlCommand
-  if (!command) throw new Error('File string replacer was requested without configuration.')
+  if (!command) throw new Error('Html minifier was requested without command configuration.')
   await minifyHtml(command)
 }
 

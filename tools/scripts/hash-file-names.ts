@@ -8,7 +8,7 @@ import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
   let config = Provider.getPostPgBuildConfigHandler().appConfig.fileHasher
-  if (!config) throw new Error('File string replacer was requested without configuration.')
+  if (!config) throw new Error('File hasher was requested without configuration.')
   config = resolveConfigPaths(config)
   assertNotEmpty(config)
   validateConfigPaths(config)
