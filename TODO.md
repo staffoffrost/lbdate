@@ -3,8 +3,9 @@
 ## src
 
 - [ ] Multiple module types support.
-- [ ] Post build procedure refactoring.
+- [x] Post build procedure refactoring.
+- [ ] Spec.
 
 ## playground
 
-- [ ] Post build procedure refactoring.
+- [x] Post build procedure refactoring.
