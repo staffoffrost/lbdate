@@ -1,4 +1,5 @@
 import { copyFileSync, existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
+import { readJsonSync, writeJsonSync } from 'fs-extra'
 import { base } from 'path-extra'
 import { isString } from '../helpers'
 import { resolvePath } from './path'
@@ -60,4 +61,12 @@ export function copyFilesList(filesList: string[], target: string): void {
     const fileName = base(file, true)
     copyFileSync(file, resolvePath(target, fileName))
   })
+}
+
+export function readJsonFromFile(filePath: string): { [key: string]: any } {
+  return readJsonSync(filePath, { encoding: 'utf8' })
+}
+
+export function writeJsonToFile(filePath: string, obj: { [key: string]: any }): void {
+  writeJsonSync(filePath, obj, { encoding: 'utf8', spaces: 2 })
 }

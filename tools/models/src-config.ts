@@ -12,6 +12,8 @@ export interface PostSrcBuildConfig {
   logger: LoggerConfig,
   rootFolder: string,
   buildFolder: string,
+  packageJsonPath: string,
+  packageLockJsonPath: string,
   filesToCopy: string[],
   npmGetVerCommand: string,
   buildPackageJsonConfig: PackageJsonConfig,

@@ -5,6 +5,8 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
   logger: LOGGER_CONFIG,
   rootFolder: './',
   buildFolder: 'build',
+  packageJsonPath: 'package.json',
+  packageLockJsonPath: 'package-lock.json',
   filesToCopy: [
     'README.md',
     'LICENSE',

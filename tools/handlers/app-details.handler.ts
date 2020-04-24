@@ -1,4 +1,5 @@
-import { readJsonSync } from 'fs-extra'
+import { readJsonFromFile, resolvePath } from '../extensions'
+import { Provider } from '../provider'
 
 export class AppDetails {
 
@@ -20,13 +21,15 @@ export class AppDetails {
   constructor() { }
 
   private _getAppName(): string {
-    const pkgJson: any = readJsonSync('./package.json', { encoding: 'utf8' })
+    const pkgJsonPath = Provider.getPostSrcBuildConfigHandler().config.packageJsonPath
+    const pkgJson: { [key: string]: any } = readJsonFromFile(resolvePath(pkgJsonPath))
     if (!pkgJson || !pkgJson.name) throw new Error('Package json is invalid.')
     return pkgJson.name.trim()
   }
 
   private _getAppVer(): string {
-    const pkgJson: any = readJsonSync('./package.json', { encoding: 'utf8' })
+    const pkgJsonPath = Provider.getPostSrcBuildConfigHandler().config.packageJsonPath
+    const pkgJson: { [key: string]: any } = readJsonFromFile(resolvePath(pkgJsonPath))
     if (!pkgJson || !pkgJson.version) throw new Error('Package json is invalid.')
     return pkgJson.version.trim()
   }
