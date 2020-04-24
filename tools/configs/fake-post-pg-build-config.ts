@@ -1,7 +1,7 @@
 import { LogLevels } from '../enums'
-import { PgConfig } from '../models'
+import { PostPgBuildConfig } from '../models'
 
-export const DEFAULT_PG_BUILD_CONFIG: PgConfig = {
+export const FAKE_POST_PG_BUILD_CONFIG: PostPgBuildConfig = {
   logger: {
     isActive: true,
     consoleLogLevel: LogLevels.log,
