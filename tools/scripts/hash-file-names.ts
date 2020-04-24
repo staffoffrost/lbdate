@@ -54,6 +54,6 @@ function validateConfigPaths(config: PostPgBuildConfig['fileHasher']): void {
   })
 }
 
-function hashFileName(filePath: string, hash: string): string {
+export function hashFileName(filePath: string, hash: string): string {
   return fileNameWithPostfix(filePath, `.${hash}`)
 }
