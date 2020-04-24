@@ -4,7 +4,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "../lib",
+    "outDir": "../build",
     "baseUrl": ".",
     "paths": {
       "lbdate": [

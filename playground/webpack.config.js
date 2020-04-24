@@ -2,7 +2,6 @@ const path = require('path')
 const merge = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 /** @type {import('webpack').Configuration} */
 const COMMON_CONFIG = {
@@ -56,7 +55,6 @@ const PROD_CONFIG = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new CopyPlugin([
       {
         from: 'playground/www/',

@@ -11,6 +11,7 @@ node_modules/
 # Build directories
 lib
 dist
+build
 
 # Individual files
 spec/test-results-output/test-report.html
