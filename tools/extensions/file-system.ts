@@ -1,5 +1,6 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { isString } from '../helpers'
+import { resolvePath } from './path'
 
 export function isDirEmpty(fullPath: string): boolean {
   return !readdirSync(fullPath).length
@@ -17,4 +18,38 @@ export function readStrFromFile(filePath: string): string {
 
 export function writeStrToFile(filePath: string, str: string): void {
   writeFileSync(filePath, str, 'utf8')
+}
+
+export function getAllFilesFromDirectory(rootFolder: string): string[] {
+  rootFolder = resolvePath(rootFolder)
+  let allFolders = [rootFolder]
+  allFolders = allFolders.concat(getAllFoldersFromDirectory(rootFolder))
+  let allFiles: string[] = []
+  allFolders.forEach(folder => {
+    const partialPaths = readdirSync(folder)
+    const resolvedPaths = partialPaths.map(partialPath => resolvePath(folder, partialPath))
+    allFiles = allFiles.concat(resolvedPaths.filter(resolvedPath => isFile(resolvedPath)))
+  })
+  return allFiles
+}
+
+export function getAllFoldersFromDirectory(rootFolder: string): string[] {
+  const partialPaths = readdirSync(rootFolder)
+  let dirs: string[] = []
+  partialPaths.forEach(partialPAth => {
+    const resolvedPath = resolvePath(rootFolder, partialPAth)
+    if (isDirectory(resolvedPath)) {
+      dirs.push(resolvedPath)
+      dirs = dirs.concat(getAllFoldersFromDirectory(resolvedPath))
+    }
+  })
+  return dirs
+}
+
+function isFile(resolvedPath: string): boolean {
+  return statSync(resolvedPath).isFile()
+}
+
+function isDirectory(resolvedPath: string): boolean {
+  return statSync(resolvedPath).isDirectory()
 }

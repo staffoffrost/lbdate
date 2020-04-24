@@ -1,5 +1,4 @@
 import { isNumber, isString } from '../helpers'
-import { PostPgBuildConfig } from '../models'
 import { Provider } from '../provider'
 
 export class HashHandler {
@@ -13,7 +12,7 @@ export class HashHandler {
   constructor() { }
 
   private _generateHash(): string {
-    const config = Provider.getConfigHandler<PostPgBuildConfig>().appConfig
+    const config = Provider.getPostPgBuildConfigHandler().appConfig
     const getRandomInteger = (min: number, max: number): number => {
       return Math.floor(Math.random() * (max - min + 1)) + min
     }

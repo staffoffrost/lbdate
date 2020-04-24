@@ -1,15 +1,16 @@
 import { LOGGER_CONFIG } from './configs'
 import { ConfigHandler, LoggerHandler } from './handlers'
 import { HashHandler } from './handlers/hash.handler'
+import { PostPgBuildConfig } from './models'
 
 export class Provider {
   private static container: { [key: string]: {} } = {}
 
-  public static getConfigHandler = <T extends object>(): ConfigHandler<T> => {
+  public static getPostPgBuildConfigHandler = (): ConfigHandler<PostPgBuildConfig> => {
     if (!Provider.container[ConfigHandler.name]) {
-      Provider.container[ConfigHandler.name] = new ConfigHandler()
+      Provider.container[ConfigHandler.name] = new ConfigHandler<PostPgBuildConfig>()
     }
-    return Provider.container[ConfigHandler.name] as ConfigHandler<T>
+    return Provider.container[ConfigHandler.name] as ConfigHandler<PostPgBuildConfig>
   }
   public static getLoggerHandler = (): LoggerHandler => {
     if (!Provider.container[LoggerHandler.name]) {
