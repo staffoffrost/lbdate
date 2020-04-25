@@ -21,3 +21,11 @@ export interface PostSrcBuildConfig {
   rootPackageJsonConfig: PackageJsonConfig,
   packageLockJsonConfig: PackageJsonConfig,
 }
+
+export interface SrsBuildConfig {
+  logger: LoggerConfig,
+  rootFolder: string,
+  buildFolder: string,
+  srcFilesToCopy: FileCopyConfig,
+  tscFilesToCopy: FileCopyConfig,
+}
