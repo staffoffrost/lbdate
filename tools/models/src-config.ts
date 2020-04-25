@@ -1,4 +1,4 @@
-import { LoggerConfig } from './logger'
+import { LoggerConfig } from './logger-config'
 
 export interface PackageJsonConfig {
   propertiesToDelete: string[],

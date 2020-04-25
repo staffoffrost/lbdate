@@ -1,7 +1,7 @@
 import { LogLevels } from '../enums'
 import { isError, isString } from '../helpers'
 import { AppError } from '../models'
-import { LoggerConfig } from '../models/logger'
+import { LoggerConfig } from '../models/logger-config'
 
 export class LoggerHandler {
 

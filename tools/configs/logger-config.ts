@@ -1,5 +1,5 @@
 import { LogLevels } from '../enums'
-import { LoggerConfig } from '../models/logger'
+import { LoggerConfig } from '../models/logger-config'
 
 export const LOGGER_CONFIG: LoggerConfig = {
   isActive: true,
