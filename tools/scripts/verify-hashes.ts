@@ -7,16 +7,14 @@ import { hashFileName } from './hash-file-names'
 
 export default async function main(): Promise<void> {
   let config = Provider.getPostPgBuildConfigHandler().config.hashVerifier
-  if (!config) throw new Error('Hash verifier was requested without configuration.')
   config = resolveConfigPaths(config)
-  assertNotEmpty(config)
   const hash = Provider.getHashHandler().hash
   validatePathsExist(config, hash)
   config.hashSets.forEach(set => {
     if (pathExistsSync(set.hashedFile)) throw new Error(`File: "${set.hashedFile}" is not hashed.`)
     const fileStr = readStrFromFile(set.initiatorFile)
     const hashedFile = hashFileName(set.hashedFile, hash)
-      .split(config!.rootFolder)[1]
+      .split(config.rootFolder)[1]
       .substring(1)
       .replace(/\\/g, '/')
     if (!fileStr.includes(hashedFile)) throw new Error(`Initiator file: "${set.initiatorFile}" does not include "${hashedFile}".`)
@@ -26,10 +24,10 @@ export default async function main(): Promise<void> {
     if (x.includes(hash)
       && (x.endsWith('.js')
         || x.endsWith('.css'))
-      && !config!.excludedFiles.some(y => y === x
+      && !config.excludedFiles.some(y => y === x
         || (!y.includes(hash)
           && hashFileName(y, hash) === x))
-      && !config!.excludedSubFolders.some(y => x.includes(y))
+      && !config.excludedSubFolders.some(y => x.includes(y))
     ) {
       return true
     }
@@ -46,7 +44,6 @@ export default async function main(): Promise<void> {
 }
 
 function resolveConfigPaths(config: PostPgBuildConfig['hashVerifier']): PostPgBuildConfig['hashVerifier'] {
-  assertNotEmpty(config)
   config.rootFolder = resolvePath(config.rootFolder)
   if (config.indexHtml) config.indexHtml = resolvePath(config.rootFolder, config.indexHtml)
   config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)

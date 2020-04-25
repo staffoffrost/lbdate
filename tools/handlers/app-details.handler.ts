@@ -1,8 +1,10 @@
 import { readJsonFromFile, resolvePath } from '../extensions'
-import { Provider } from '../provider'
+import { PostSrcBuildConfig } from '../models'
+import { ConfigHandler } from './config.handler'
 
 export class AppDetails {
 
+  private _pkgJsonPath: string
   private _appName: string | null = null
   public get appName(): string {
     if (!this._appName) this._appName = this._getAppName()
@@ -18,18 +20,20 @@ export class AppDetails {
     this._appVer = value
   }
 
-  constructor() { }
+  constructor(
+    private _config: ConfigHandler<PostSrcBuildConfig>
+  ) {
+    this._pkgJsonPath = this._config.config.packageJsonPath
+  }
 
   private _getAppName(): string {
-    const pkgJsonPath = Provider.getPostSrcBuildConfigHandler().config.packageJsonPath
-    const pkgJson: { [key: string]: any } = readJsonFromFile(resolvePath(pkgJsonPath))
+    const pkgJson: { [key: string]: any } = readJsonFromFile(resolvePath(this._pkgJsonPath))
     if (!pkgJson || !pkgJson.name) throw new Error('Package json is invalid.')
     return pkgJson.name.trim()
   }
 
   private _getAppVer(): string {
-    const pkgJsonPath = Provider.getPostSrcBuildConfigHandler().config.packageJsonPath
-    const pkgJson: { [key: string]: any } = readJsonFromFile(resolvePath(pkgJsonPath))
+    const pkgJson: { [key: string]: any } = readJsonFromFile(resolvePath(this._pkgJsonPath))
     if (!pkgJson || !pkgJson.version) throw new Error('Package json is invalid.')
     return pkgJson.version.trim()
   }

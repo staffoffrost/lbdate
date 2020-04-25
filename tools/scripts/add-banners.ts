@@ -1,15 +1,12 @@
 import { dirname } from 'path'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList, writeStrToFile } from '../extensions'
-import { assertNotEmpty } from '../helpers/assert-not-empty'
 import { BannerAdder } from '../models'
 import { Provider } from '../provider'
 import { hashFileName } from './hash-file-names'
 
 export default async function main(): Promise<void> {
   let config = Provider.getPostPgBuildConfigHandler().config.bannerAdder
-  if (!config) throw new Error('Banner adder was requested without configuration.')
   config = resolveConfigPaths(config)
-  assertNotEmpty(config)
   const hash = Provider.getHashHandler().hash
   const filteredFiles = getAllFilesFromDirectory(config.rootFolder).filter(file => {
     if (config!.excludedFiles.some(x => file === x

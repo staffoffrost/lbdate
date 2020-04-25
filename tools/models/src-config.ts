@@ -1,3 +1,4 @@
+import { FileCopyConfig } from './files-copy-config'
 import { LoggerConfig } from './logger-config'
 
 export interface PackageJsonConfig {
@@ -14,7 +15,7 @@ export interface PostSrcBuildConfig {
   buildFolder: string,
   packageJsonPath: string,
   packageLockJsonPath: string,
-  filesToCopy: string[],
+  filesToCopy: FileCopyConfig,
   npmGetVerCommand: string,
   buildPackageJsonConfig: PackageJsonConfig,
   rootPackageJsonConfig: PackageJsonConfig,

@@ -8,9 +8,7 @@ import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
   let config = Provider.getPostPgBuildConfigHandler().config.fileHasher
-  if (!config) throw new Error('File hasher was requested without configuration.')
   config = resolveConfigPaths(config)
-  assertNotEmpty(config)
   validateConfigPaths(config)
   const hash = Provider.getHashHandler().hash
   const allFiles = getAllFilesFromDirectory(config.rootFolder)
@@ -19,8 +17,8 @@ export default async function main(): Promise<void> {
     if (config.includedFiles.some(x => x === file)) {
       renameSync(file, hashFileName(file, hash))
     } else if (config.excludedSubFolders.some(x => dirname(file).includes(x)
-      && (config!.includedSubFolders.every(y => !dirname(file).includes(y))
-        || config!.includedSubFolders.some(y => dirname(file).includes(y)
+      && (config.includedSubFolders.every(y => !dirname(file).includes(y))
+        || config.includedSubFolders.some(y => dirname(file).includes(y)
           && x.length >= y.length)))
     ) {
       continue

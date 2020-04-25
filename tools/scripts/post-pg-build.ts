@@ -1,4 +1,5 @@
 import { POST_PG_BUILD_CONFIG } from '../configs'
+import { LoggerHandler } from '../handlers'
 import { Provider } from '../provider'
 import addBanners from './add-banners'
 import hashFileNames from './hash-file-names'
@@ -7,8 +8,8 @@ import replaceString from './replace-string-in-files'
 import verifyHashes from './verify-hashes'
 
 export default async function main(): Promise<void> {
-  setConfiguration()
   const logger = Provider.getLoggerHandler()
+  setConfiguration(logger)
   await replaceString()
   await hashFileNames()
   await verifyHashes()
@@ -17,9 +18,8 @@ export default async function main(): Promise<void> {
   logger.logSuccess('Post build procedure')
 }
 
-function setConfiguration(): void {
+function setConfiguration(logger: LoggerHandler): void {
   const config = Provider.getPostPgBuildConfigHandler()
   config.config = POST_PG_BUILD_CONFIG
-  const logger = Provider.getLoggerHandler()
   logger.config = POST_PG_BUILD_CONFIG.logger
 }

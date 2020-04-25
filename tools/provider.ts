@@ -1,4 +1,4 @@
-import { LOGGER_CONFIG } from './configs'
+import { LOGGER_CONFIG, POST_PG_BUILD_CONFIG, POST_SRC_BUILD_CONFIG } from './configs'
 import { ConfigHandler, LoggerHandler } from './handlers'
 import { AppDetails } from './handlers/app-details.handler'
 import { HashHandler } from './handlers/hash.handler'
@@ -10,13 +10,13 @@ export class Provider {
 
   public static getPostPgBuildConfigHandler = (): ConfigHandler<PostPgBuildConfig> => {
     if (!Provider.container[ConfigHandler.name]) {
-      Provider.container[ConfigHandler.name] = new ConfigHandler<PostPgBuildConfig>()
+      Provider.container[ConfigHandler.name] = new ConfigHandler<PostPgBuildConfig>(POST_PG_BUILD_CONFIG)
     }
     return Provider.container[ConfigHandler.name] as ConfigHandler<PostPgBuildConfig>
   }
   public static getPostSrcBuildConfigHandler = (): ConfigHandler<PostSrcBuildConfig> => {
     if (!Provider.container[ConfigHandler.name]) {
-      Provider.container[ConfigHandler.name] = new ConfigHandler<PostSrcBuildConfig>()
+      Provider.container[ConfigHandler.name] = new ConfigHandler<PostSrcBuildConfig>(POST_SRC_BUILD_CONFIG)
     }
     return Provider.container[ConfigHandler.name] as ConfigHandler<PostSrcBuildConfig>
   }
@@ -28,13 +28,13 @@ export class Provider {
   }
   public static getHashHandler = (): HashHandler => {
     if (!Provider.container[HashHandler.name]) {
-      Provider.container[HashHandler.name] = new HashHandler()
+      Provider.container[HashHandler.name] = new HashHandler(Provider.getPostPgBuildConfigHandler())
     }
     return Provider.container[HashHandler.name] as HashHandler
   }
   public static getAppDetailsHandler = (): AppDetails => {
     if (!Provider.container[AppDetails.name]) {
-      Provider.container[AppDetails.name] = new AppDetails()
+      Provider.container[AppDetails.name] = new AppDetails(Provider.getPostSrcBuildConfigHandler())
     }
     return Provider.container[AppDetails.name] as AppDetails
   }

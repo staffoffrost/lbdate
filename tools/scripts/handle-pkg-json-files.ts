@@ -6,8 +6,11 @@ import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
   const config = Provider.getPostSrcBuildConfigHandler().config
+  // root package.json
   handlePkgJson(config.rootFolder, config.packageJsonPath, config.rootPackageJsonConfig)
+  // build package.json
   handlePkgJson(config.rootFolder, config.packageJsonPath, config.buildPackageJsonConfig, config.buildFolder)
+  // root package-lock.json
   handlePkgJson(config.rootFolder, config.packageLockJsonPath, config.packageLockJsonConfig)
 }
 

@@ -29,11 +29,11 @@ export interface BannerAdder {
 
 export interface PostPgBuildConfig {
   logger: LoggerConfig,
-  hashLength?: number,
-  hashCharPool?: string,
-  minifyHtmlCommand?: string,
-  fileStringReplacer?: FileStringReplacer,
-  fileHasher?: {
+  hashLength: number,
+  hashCharPool: string,
+  minifyHtmlCommand: string,
+  fileStringReplacer: FileStringReplacer,
+  fileHasher: {
     rootFolder: string,
     fileExtensions: string[],
     excludedFiles: string[],
@@ -41,7 +41,7 @@ export interface PostPgBuildConfig {
     excludedSubFolders: string[],
     includedSubFolders: string[],
   },
-  hashVerifier?: {
+  hashVerifier: {
     rootFolder: string,
     indexHtml?: string,
     excludedFiles: string[],
@@ -55,5 +55,5 @@ export interface PostPgBuildConfig {
       extensionToCheck: string[],
     }
   },
-  bannerAdder?: BannerAdder
+  bannerAdder: BannerAdder
 }

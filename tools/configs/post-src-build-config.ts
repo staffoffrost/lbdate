@@ -1,16 +1,23 @@
 import { PostSrcBuildConfig } from '../models/src-config'
 import { LOGGER_CONFIG } from './logger-config'
 
+const rootFolder = './'
+const buildFolder = 'build'
+
 export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
   logger: LOGGER_CONFIG,
-  rootFolder: './',
-  buildFolder: 'build',
+  rootFolder,
+  buildFolder,
   packageJsonPath: 'package.json',
   packageLockJsonPath: 'package-lock.json',
-  filesToCopy: [
-    'README.md',
-    'LICENSE',
-  ],
+  filesToCopy: {
+    rootFolder,
+    targetFolder: buildFolder,
+    files: [
+      'README.md',
+      'LICENSE',
+    ],
+  },
   npmGetVerCommand: 'npm show [appName] version',
   buildPackageJsonConfig: {
     propertiesToDelete: [
