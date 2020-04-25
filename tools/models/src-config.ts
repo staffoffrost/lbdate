@@ -22,10 +22,9 @@ export interface PostSrcBuildConfig {
   packageLockJsonConfig: PackageJsonConfig,
 }
 
-export interface SrsBuildConfig {
+export interface SrcBuildConfig {
   logger: LoggerConfig,
   rootFolder: string,
   buildFolder: string,
-  srcFilesToCopy: FileCopyConfig,
-  tscFilesToCopy: FileCopyConfig,
+  filesToCopy: FileCopyConfig,
 }

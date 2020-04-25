@@ -1,5 +1,5 @@
-import { copyFileSync, existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
-import { readJsonSync, writeJsonSync } from 'fs-extra'
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
+import { copySync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { base } from 'path-extra'
 import { isString } from '../helpers'
 import { resolvePath } from './path'
@@ -59,7 +59,7 @@ export function isDirectory(resolvedPath: string): boolean {
 export function copyFilesList(filesList: string[], target: string): void {
   filesList.forEach(file => {
     const fileName = base(file, true)
-    copyFileSync(file, resolvePath(target, fileName))
+    copySync(file, resolvePath(target, fileName))
   })
 }
 

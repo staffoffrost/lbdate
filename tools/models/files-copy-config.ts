@@ -5,9 +5,9 @@ export interface FileCopyConfig {
   targetFolder: string,
   sourceFolder?: {
     name: string
-    excludedFiles: string[],
-    includedFiles: string[],
-    excludedSubFolder: string[],
-    includedSubFolder: string[],
+    excludedFiles?: string[],
+    includedFiles?: string[],
+    excludedSubFolder?: string[],
+    includedSubFolder?: string[],
   }
 }

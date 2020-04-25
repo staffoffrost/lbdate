@@ -1,8 +1,9 @@
 import { LOGGER_CONFIG, POST_PG_BUILD_CONFIG, POST_SRC_BUILD_CONFIG } from './configs'
+import { SRC_BUILD_CONFIG } from './configs/src-build-config'
 import { ConfigHandler, LoggerHandler } from './handlers'
 import { AppDetails } from './handlers/app-details.handler'
 import { HashHandler } from './handlers/hash.handler'
-import { PostPgBuildConfig, PostSrcBuildConfig } from './models'
+import { PostPgBuildConfig, PostSrcBuildConfig, SrcBuildConfig } from './models'
 
 export class Provider {
 
@@ -19,6 +20,12 @@ export class Provider {
       Provider.container[ConfigHandler.name] = new ConfigHandler<PostSrcBuildConfig>(POST_SRC_BUILD_CONFIG)
     }
     return Provider.container[ConfigHandler.name] as ConfigHandler<PostSrcBuildConfig>
+  }
+  public static getSrcBuildConfigHandler = (): ConfigHandler<SrcBuildConfig> => {
+    if (!Provider.container[ConfigHandler.name]) {
+      Provider.container[ConfigHandler.name] = new ConfigHandler<SrcBuildConfig>(SRC_BUILD_CONFIG)
+    }
+    return Provider.container[ConfigHandler.name] as ConfigHandler<SrcBuildConfig>
   }
   public static getLoggerHandler = (): LoggerHandler => {
     if (!Provider.container[LoggerHandler.name]) {
