@@ -141,11 +141,13 @@ Undo all changes done to your environment by _lbDate().init()_.
 - Multi platform support.
 - IE\*\*.
 
-> _Details_ The code is compiled by default to ES9 (EcmaScript 2018) to reduce the chance of unnecessary performance hit while still providing support for all versions of all major browsers from the last 2 years. If you need to use any other module type or EcmaScript version, please refer to the information below. **Remember**, if you're using a front end framework or any compiler, it should take care of downgrading the EcmaScript version for you.
+> _Details_ The code is compiled by default to ES9 (EcmaScript 2018) to reduce the chance of unnecessary performance hit while still providing support for all versions of all major browsers from the last 2 years. If you need to use any other module type or EcmaScript version, please refer to the information below. **Remember**, if you're using a front end framework or any other compiler, it should take care of downgrading the EcmaScript version for you.
 
 - For **es2015** import from 'lbdate/esm2015'.
 - For **es5** import from 'lbdate/esm5'.
 - For **CommonJS** import from 'lbdate/es2018', 'lbdate/es2015' or 'lbdate/es5'.
 - For pure Node applications, refer to CommonJS.
+- You can also use the source files directly from 'lbdate/src'.
+- Your framework or compiler might also support alias, so you could configure that importing from 'lbdate' would be the same as importing from 'lbdate/es2015'.
 
-\*\* For supporting IE, import or require from an es5 module as listed above and try to convince your managers to drop IE support.
+\*\* For supporting IE, import or require from any es5 module as listed above and try to convince your managers to drop IE support.
