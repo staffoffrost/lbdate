@@ -135,9 +135,17 @@ Undo all changes done to your environment by _lbDate().init()_.
 
     lbDate().restore()
 
-## Browser Support
+## Browser / Platform Support
 
-- Support guaranteed for all current major browsers that were updated in the last 2 years.
-- Support for ES5 may be added later as a different package or alternate imports paths may be provided.
+- All current major browsers versions from the last 2 years.
+- Multi platform support.
+- IE\*\*.
 
-> _Details_ The code is compiled to ES9 (EcmaScript 2018) to reduce the chance of unnecessary performance hit while still providing support for all versions of all major browsers from the last 2 years. If you need older browser support, you may need to recompile the code with TypeScript or Babel compiler to an older version.
+> _Details_ The code is compiled by default to ES9 (EcmaScript 2018) to reduce the chance of unnecessary performance hit while still providing support for all versions of all major browsers from the last 2 years. If you need to use any other module type or EcmaScript version, please refer to the information below. **Remember**, if you're using a front end framework or any compiler, it should take care of downgrading the EcmaScript version for you.
+
+- For **es2015** import from 'lbdate/esm2015'.
+- For **es5** import from 'lbdate/esm5'.
+- For **CommonJS** import from 'lbdate/es2018', 'lbdate/es2015' or 'lbdate/es5'.
+- For pure Node applications, refer to CommonJS.
+
+\*\* For supporting IE, import or require from an es5 module as listed above and try to convince your managers to drop IE support.
