@@ -1,18 +1,12 @@
-import { SRC_BUILD_CONFIG } from '../configs/src-build-config'
-import { LoggerHandler } from '../handlers'
-import { copyFiles } from '../handlers/files-copy.handler'
+import { runCommand } from '../handlers/cli-runner'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
+  const config = Provider.getSrcBuildConfigHandler().config
   const logger = Provider.getLoggerHandler()
-  setConfiguration(logger)
-  const copyConfig = Provider.getPostSrcBuildConfigHandler().config.filesToCopy
-  copyFiles(copyConfig)
+  logger.config = config.logger
+  await Promise.all(config.buildSets.map(async set => {
+    return runCommand(set.command, set.startInfoLog).then(() => logger.logInfo(set.endInfoLog))
+  }))
   logger.logSuccess('SRC build')
-}
-
-function setConfiguration(logger: LoggerHandler): void {
-  const config = Provider.getSrcBuildConfigHandler()
-  config.config = SRC_BUILD_CONFIG
-  logger.config = SRC_BUILD_CONFIG.logger
 }

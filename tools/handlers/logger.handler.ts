@@ -60,6 +60,14 @@ export class LoggerHandler {
     }
   }
 
+  public logInfo(msg: string): void {
+    if (!this._config.isActive) return
+    if (LogLevels.log === this._config.consoleLogLevel) {
+      console.log('\x1b[36m', msg, '\x1b[0m')
+      LoggerHandler._wasLastEmptyLine = false
+    }
+  }
+
   public logSuccess(msg: string, isFullMsg: boolean = false): void {
     if (!this._config.isActive) return
     if (!LoggerHandler._wasLastEmptyLine) this._logEmptyLine()

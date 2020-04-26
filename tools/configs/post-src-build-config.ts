@@ -3,6 +3,7 @@ import { LOGGER_CONFIG } from './logger-config'
 
 const rootFolder = './'
 const buildFolder = 'build'
+const sourceFolderName = 'src'
 
 export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
   logger: LOGGER_CONFIG,
@@ -10,14 +11,27 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
   buildFolder,
   packageJsonPath: 'package.json',
   packageLockJsonPath: 'package-lock.json',
-  filesToCopy: {
-    rootFolder,
-    targetFolder: buildFolder,
-    files: [
-      'README.md',
-      'LICENSE',
-    ],
-  },
+  filesToCopy: [
+    {
+      rootFolder,
+      targetFolder: buildFolder,
+      files: [
+        'README.md',
+        'LICENSE',
+      ],
+    },
+    {
+      rootFolder,
+      targetFolder: `${buildFolder}/${sourceFolderName}`,
+      sourceFolder: {
+        name: sourceFolderName,
+        excludedFileNamesByPattern: 'tsconfig.*.json',
+        excludedFiles: [
+          'tsconfig.json'
+        ],
+      }
+    }
+  ],
   npmGetVerCommand: 'npm show [appName] version',
   buildPackageJsonConfig: {
     propertiesToDelete: [

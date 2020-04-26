@@ -9,5 +9,6 @@ export interface FileCopyConfig {
     includedFiles?: string[],
     excludedSubFolder?: string[],
     includedSubFolder?: string[],
+    excludedFileNamesByPattern?: string,
   }
 }

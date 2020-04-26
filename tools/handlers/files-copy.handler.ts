@@ -1,8 +1,17 @@
 import { copySync } from 'fs-extra'
-import { copyFilesList, getAllFilesFromDirectory, isDirectory, isFile, resolvePath, resolvePathsList } from '../extensions'
+import { base } from 'path-extra'
+import { copyFilesList, isDirectory, isFile, resolvePath, resolvePathsList } from '../extensions'
 import { FileCopyConfig } from '../models/files-copy-config'
 
-export function copyFiles(config: FileCopyConfig): void {
+export function copyFiles(config: FileCopyConfig | FileCopyConfig[]): void {
+  if (Array.isArray(config)) {
+    config.forEach(x => _copyFiles(x))
+  } else {
+    _copyFiles(config)
+  }
+}
+
+function _copyFiles(config: FileCopyConfig): void {
   if (!config.files && !config.sourceFolder) {
     throw new Error("Can't initiate Files Copy Handler without files list or source folder.")
   }
@@ -25,6 +34,23 @@ export function copyFiles(config: FileCopyConfig): void {
         && sourceFolderConfig.includedFiles.some(x => path == resolvePath(rootFolder, sourceFolderConfig.name, x))) {
         return true
       }
+      if (sourceFolderConfig.excludedFileNamesByPattern) {
+        const baseFileName = base(path, /*include ext*/ true)
+        const patternParts = sourceFolderConfig.excludedFileNamesByPattern.split('.')
+        const fileParts = baseFileName.split('.')
+        let isMatch = false
+        if (patternParts.length == 2
+          && ((patternParts[0] == '**'
+            && baseFileName.endsWith('.' + patternParts[1]))
+            || (patternParts[1] == '**'
+              && baseFileName.startsWith('.' + patternParts[0])))
+        ) {
+          isMatch = true
+        } else {
+          isMatch = fileParts.every((part, i) => patternParts[i] === part || patternParts[i] === '*')
+        }
+        if (isMatch) return false
+      }
     }
     if (sourceFolderConfig.excludedSubFolder
       && isDirectory(path)
@@ -40,32 +66,4 @@ export function copyFiles(config: FileCopyConfig): void {
     return true
   }
   copySync(sourceFolderConfig.name, targetFolder, { filter: sourceFolderFilter })
-
-}
-
-
-function createListOfFiles(sourceFolderConfig: FileCopyConfig['sourceFolder'], rootFolder: string): string[] {
-  if (!sourceFolderConfig) return []
-  const sourcePath = resolvePath(rootFolder, sourceFolderConfig.name)
-  return getAllFilesFromDirectory(sourcePath).filter(file => {
-    if (sourceFolderConfig.excludedFiles
-      && sourceFolderConfig.excludedFiles.some(x => file == resolvePath(rootFolder, sourceFolderConfig.name, x))) {
-      return false
-    }
-    if (sourceFolderConfig.includedFiles
-      && sourceFolderConfig.includedFiles.some(x => file == resolvePath(rootFolder, sourceFolderConfig.name, x))) {
-      return true
-    }
-    if (sourceFolderConfig.excludedSubFolder
-      && sourceFolderConfig.excludedSubFolder.some(x =>
-        file.startsWith(resolvePath(rootFolder, sourceFolderConfig.name, x))
-        && (!sourceFolderConfig.includedSubFolder
-          || !sourceFolderConfig.includedSubFolder.every(y =>
-            file.startsWith(resolvePath(rootFolder, sourceFolderConfig.name, y))
-            && x.length > y.length)))
-    ) {
-      return false
-    }
-    return true
-  })
 }
