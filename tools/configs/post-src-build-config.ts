@@ -43,11 +43,31 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
     propertiesToAddOrUpdate: [
       {
         key: 'main',
-        value: './index.js'
+        value: './es2018/index.js'
       },
       {
-        key: 'typings',
-        value: './index.d.ts'
+        key: 'module',
+        value: './esm2018/index.js'
+      },
+      {
+        key: 'types',
+        value: './types/index.d.ts'
+      },
+      {
+        key: 'es2015',
+        value: './es2015/index.js'
+      },
+      {
+        key: 'esm2015',
+        value: './esm2015/index.js'
+      },
+      {
+        key: 'es5',
+        value: './es5/index.js'
+      },
+      {
+        key: 'esm5',
+        value: './esm5/index.js'
       },
     ]
   },

@@ -43,5 +43,10 @@ export const SRC_BUILD_CONFIG: SrcBuildConfig = {
       startInfoLog: createStartInfoLog('esm2018'),
       endInfoLog: createEndInfoLog('esm2018'),
     },
+    {
+      command: createCommand('types'),
+      startInfoLog: createStartInfoLog('types'),
+      endInfoLog: createEndInfoLog('types'),
+    },
   ],
 }
