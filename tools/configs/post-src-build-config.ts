@@ -26,6 +26,7 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
       sourceFolder: {
         name: sourceFolderName,
         excludedFileNamesByPattern: 'tsconfig.*.json',
+        excludeFilesThatStartsWith: 'rollup-',
         excludedFiles: [
           'tsconfig.json'
         ],

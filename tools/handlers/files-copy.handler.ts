@@ -34,8 +34,8 @@ function _copyFiles(config: FileCopyConfig): void {
         && sourceFolderConfig.includedFiles.some(x => path == resolvePath(rootFolder, sourceFolderConfig.name, x))) {
         return true
       }
+      const baseFileName = base(path, /*include ext*/ true)
       if (sourceFolderConfig.excludedFileNamesByPattern) {
-        const baseFileName = base(path, /*include ext*/ true)
         const patternParts = sourceFolderConfig.excludedFileNamesByPattern.split('.')
         const fileParts = baseFileName.split('.')
         let isMatch = false
@@ -50,6 +50,10 @@ function _copyFiles(config: FileCopyConfig): void {
           isMatch = fileParts.every((part, i) => patternParts[i] === part || patternParts[i] === '*')
         }
         if (isMatch) return false
+      }
+      if (sourceFolderConfig.excludeFilesThatStartsWith
+        && baseFileName.startsWith(sourceFolderConfig.excludeFilesThatStartsWith)) {
+        return false
       }
     }
     if (sourceFolderConfig.excludedSubFolder
