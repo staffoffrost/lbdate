@@ -149,5 +149,6 @@ Undo all changes done to your environment by _lbDate().init()_.
 - For pure Node applications, refer to CommonJS.
 - You can also use the source files directly from 'lbdate/src'.
 - Your framework or compiler might also support alias, so you could configure that importing from 'lbdate' would be the same as importing from 'lbdate/es2015'.
+- UMD bundles are also included in 'node_modules\lbdate\bundles'.
 
 \*\* For supporting IE, import or require from any es5 module as listed above and try to convince your managers to drop IE support.
