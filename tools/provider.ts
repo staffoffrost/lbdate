@@ -1,8 +1,5 @@
-import { LOGGER_CONFIG, POST_PG_BUILD_CONFIG, POST_SRC_BUILD_CONFIG } from './configs'
-import { SRC_BUILD_CONFIG } from './configs/src-build-config'
-import { ConfigHandler, LoggerHandler } from './handlers'
-import { AppDetails } from './handlers/app-details.handler'
-import { HashHandler } from './handlers/hash.handler'
+import { LOGGER_CONFIG, POST_PG_BUILD_CONFIG, POST_SRC_BUILD_CONFIG, SRC_BUILD_CONFIG } from './configs'
+import { AppDetails, ConfigHandler, HashHandler, LoggerHandler } from './handlers'
 import { PostPgBuildConfig, PostSrcBuildConfig, SrcBuildConfig } from './models'
 
 export class Provider {

@@ -2,10 +2,9 @@ import { dirname } from 'path'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList, writeStrToFile } from '../extensions'
 import { BannerAdder } from '../models'
 import { Provider } from '../provider'
-import { hashFileName } from './hash-file-names'
+import { hashFileName } from '../scripts/hash-file-names'
 
-export default async function main(): Promise<void> {
-  let config = Provider.getPostPgBuildConfigHandler().config.bannerAdder
+export function addBanners(config: BannerAdder): void {
   config = resolveConfigPaths(config)
   const hash = Provider.getHashHandler().hash
   const filteredFiles = getAllFilesFromDirectory(config.rootFolder).filter(file => {
@@ -26,9 +25,12 @@ export default async function main(): Promise<void> {
   filteredFiles.forEach(file => {
     const bannerSet = config!.bannerSets.find(x => file.endsWith(x.fileType))
     if (bannerSet) {
-      const banner = bannerSet.banner
+      if (bannerSet.banner.includes('[appVer]')) {
+        const appVer = Provider.getAppDetailsHandler().appVer
+        bannerSet.banner = bannerSet.banner.replace('[appVer]', appVer)
+      }
       let fileStr = readStrFromFile(file)
-      fileStr = `${banner}${config!.isSeparateRow ? '\n' : ''}${fileStr}`
+      fileStr = `${bannerSet.banner}${config!.isSeparateRow ? '\n' : ''}${fileStr}`
       writeStrToFile(file, fileStr)
     }
   })

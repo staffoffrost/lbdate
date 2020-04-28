@@ -1,3 +1,4 @@
+import { BannerAdder } from './banner-adder'
 import { LoggerConfig } from './logger-config'
 
 export interface StringReplacementSet {
@@ -13,18 +14,6 @@ export interface StringReplacementData {
 export interface FileStringReplacer {
   rootFolder: string,
   sets: StringReplacementData[]
-}
-
-export interface BannerAdder {
-  rootFolder: string,
-  isSeparateRow: boolean,
-  bannerSets: {
-    fileType: string,
-    banner: string
-  }[],
-  excludedFiles: string[],
-  excludedSubFolders: string[],
-  includedSubFolders: string[],
 }
 
 export interface PostPgBuildConfig {

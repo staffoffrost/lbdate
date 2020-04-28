@@ -1,6 +1,5 @@
 import { pathExistsSync } from 'fs-extra'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList } from '../extensions'
-import { assertNotEmpty } from '../helpers/assert-not-empty'
 import { PostPgBuildConfig } from '../models'
 import { Provider } from '../provider'
 import { hashFileName } from './hash-file-names'
@@ -56,7 +55,6 @@ function resolveConfigPaths(config: PostPgBuildConfig['hashVerifier']): PostPgBu
 }
 
 function validatePathsExist(config: PostPgBuildConfig['hashVerifier'], hash: string): void {
-  assertNotEmpty(config)
   const allFolderPaths = [
     config.rootFolder,
     config.excludedSubFolders,

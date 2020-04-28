@@ -1,3 +1,4 @@
+import { BannerAdder } from './banner-adder'
 import { FileCopyConfig } from './files-copy-config'
 import { LoggerConfig } from './logger-config'
 
@@ -20,6 +21,7 @@ export interface PostSrcBuildConfig {
   buildPackageJsonConfig: PackageJsonConfig,
   rootPackageJsonConfig: PackageJsonConfig,
   packageLockJsonConfig: PackageJsonConfig,
+  bannerAdder: BannerAdder,
 }
 
 export interface SrcBuildConfig {

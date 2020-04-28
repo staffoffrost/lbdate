@@ -1,4 +1,4 @@
-import { runCommand } from '../handlers/cli-runner'
+import { runCommand } from '../handlers'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {

@@ -1,6 +1,6 @@
+import { addBanners } from '../handlers/banner.handler'
 import { runCommand } from '../handlers/cli-runner'
 import { Provider } from '../provider'
-import addBanners from './add-banners'
 import hashFileNames from './hash-file-names'
 import replaceString from './replace-string-in-files'
 import verifyHashes from './verify-hashes'
@@ -13,6 +13,6 @@ export default async function main(): Promise<void> {
   await hashFileNames()
   await verifyHashes()
   await runCommand(config.minifyHtmlCommand)
-  await addBanners()
+  addBanners(config.bannerAdder)
   logger.logSuccess('Post build procedure')
 }

@@ -93,5 +93,18 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
         value: '[appVer]'
       },
     ]
+  },
+  bannerAdder: {
+    rootFolder: `${rootFolder}/${buildFolder}/bundles`,
+    isSeparateRow: true,
+    bannerSets: [
+      {
+        fileType: '.js',
+        banner: '/*! == LbDate version: [appVer] | Copyright (c) 2020 Leon Bernstein | StaffOfFrost | Released under the MIT license == */'
+      },
+    ],
+    excludedFiles: [],
+    excludedSubFolders: [],
+    includedSubFolders: [],
   }
 }

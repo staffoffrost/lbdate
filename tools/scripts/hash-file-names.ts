@@ -2,7 +2,6 @@ import { pathExistsSync, renameSync } from 'fs-extra'
 import { dirname } from 'path'
 import { fileNameWithPostfix } from 'path-extra'
 import { getAllFilesFromDirectory, resolvePath, resolvePathsList } from '../extensions'
-import { assertNotEmpty } from '../helpers/assert-not-empty'
 import { PostPgBuildConfig } from '../models'
 import { Provider } from '../provider'
 
@@ -29,7 +28,6 @@ export default async function main(): Promise<void> {
 }
 
 function resolveConfigPaths(config: PostPgBuildConfig['fileHasher']): PostPgBuildConfig['fileHasher'] {
-  assertNotEmpty(config)
   config.rootFolder = resolvePath(config.rootFolder)
   config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)
   config.includedFiles = resolvePathsList(config.includedFiles, config.rootFolder)
@@ -39,7 +37,6 @@ function resolveConfigPaths(config: PostPgBuildConfig['fileHasher']): PostPgBuil
 }
 
 function validateConfigPaths(config: PostPgBuildConfig['fileHasher']): void {
-  assertNotEmpty(config)
   const allPaths = [
     config.rootFolder,
     config.excludedFiles,
