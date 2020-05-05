@@ -2,7 +2,7 @@ import { dirname } from 'path'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList, writeStrToFile } from '../extensions'
 import { BannerAdderConfig } from '../models'
 import { Provider } from '../provider'
-import { hashFileName } from '../scripts/hash-file-names'
+import { hashFileName } from './hash-file-names.handler'
 
 export function addBanners(config: BannerAdderConfig): void {
   config = resolveConfigPaths(config)

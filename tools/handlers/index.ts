@@ -1,7 +1,12 @@
 export * from './app-details.handler'
+export * from './banner.handler'
 export * from './cli-runner'
 export * from './config.handler'
+export * from './file-string-replacer.handler'
 export * from './files-copy.handler'
+export * from './hash-file-names.handler'
 export * from './hash.handler'
 export * from './logger.handler'
+export * from './pkg-json.handler'
+export * from './version-increment.handler'
 

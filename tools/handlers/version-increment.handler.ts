@@ -1,12 +1,12 @@
 import { exec } from 'child_process'
+import { PostSrcBuildConfig } from '../models'
 import { Provider } from '../provider'
 
-export default async function main(): Promise<void> {
+export async function handleVersionIncrement(config: PostSrcBuildConfig): Promise<void> {
   let arg = process.argv[3]
   if (arg) arg = arg.substr(2)
   const doInclementVersion = arg === 'increment-version'
   if (!doInclementVersion) return
-  const config = Provider.getPostSrcBuildConfigHandler().config
   const appDetails = Provider.getAppDetailsHandler()
   if (config.npmGetVerCommand.includes('[appName]')) {
     config.npmGetVerCommand = config.npmGetVerCommand.replace('[appName]', appDetails.appName)

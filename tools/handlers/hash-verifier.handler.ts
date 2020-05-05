@@ -1,11 +1,10 @@
 import { pathExistsSync } from 'fs-extra'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList } from '../extensions'
-import { PostPgBuildConfig } from '../models'
+import { HashVerifierConfig } from '../models'
 import { Provider } from '../provider'
-import { hashFileName } from './hash-file-names'
+import { hashFileName } from './hash-file-names.handler'
 
-export default async function main(): Promise<void> {
-  let config = Provider.getPostPgBuildConfigHandler().config.hashVerifier
+export function verifyHashes(config: HashVerifierConfig): void {
   config = resolveConfigPaths(config)
   const hash = Provider.getHashHandler().hash
   validatePathsExist(config, hash)
@@ -42,7 +41,7 @@ export default async function main(): Promise<void> {
   }
 }
 
-function resolveConfigPaths(config: PostPgBuildConfig['hashVerifier']): PostPgBuildConfig['hashVerifier'] {
+function resolveConfigPaths(config: HashVerifierConfig): HashVerifierConfig {
   config.rootFolder = resolvePath(config.rootFolder)
   if (config.indexHtml) config.indexHtml = resolvePath(config.rootFolder, config.indexHtml)
   config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)
@@ -54,7 +53,7 @@ function resolveConfigPaths(config: PostPgBuildConfig['hashVerifier']): PostPgBu
   return config
 }
 
-function validatePathsExist(config: PostPgBuildConfig['hashVerifier'], hash: string): void {
+function validatePathsExist(config: HashVerifierConfig, hash: string): void {
   const allFolderPaths = [
     config.rootFolder,
     config.excludedSubFolders,

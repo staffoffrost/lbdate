@@ -2,11 +2,10 @@ import { pathExistsSync, renameSync } from 'fs-extra'
 import { dirname } from 'path'
 import { fileNameWithPostfix } from 'path-extra'
 import { getAllFilesFromDirectory, resolvePath, resolvePathsList } from '../extensions'
-import { PostPgBuildConfig } from '../models'
+import { FileHasherConfig, PostPgBuildConfig } from '../models'
 import { Provider } from '../provider'
 
-export default async function main(): Promise<void> {
-  let config = Provider.getPostPgBuildConfigHandler().config.fileHasher
+export function hashFileNames(config: FileHasherConfig): void {
   config = resolveConfigPaths(config)
   validateConfigPaths(config)
   const hash = Provider.getHashHandler().hash

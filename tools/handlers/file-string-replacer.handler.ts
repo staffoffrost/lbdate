@@ -1,9 +1,8 @@
 import { readStrFromFile, resolvePath, writeStrToFile } from '../extensions'
-import { StringReplacementSet } from '../models'
+import { FileStringReplacementConfig, StringReplacementSet } from '../models'
 import { Provider } from '../provider'
 
-export default async function main(): Promise<void> {
-  const config = Provider.getPostPgBuildConfigHandler().config.fileStringReplacement
+export function replaceStringsInFile(config: FileStringReplacementConfig): void {
   const hash = Provider.getHashHandler().hash
   config.sets.forEach(dataSet => {
     const filePath = resolvePath(config.rootFolder, dataSet.filePath)
