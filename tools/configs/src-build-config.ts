@@ -80,4 +80,9 @@ export const SRC_BUILD_CONFIG: SrcBuildConfig = {
       endInfoLog: createEndInfoLog('umd2015min'),
     },
   ],
+  relativeImportsVerifier: {
+    rootFolder: 'src',
+    excludedFiles: [],
+    fileExtension: '.ts'
+  }
 }

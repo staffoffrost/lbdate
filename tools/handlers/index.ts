@@ -9,5 +9,6 @@ export * from './hash-verifier.handler'
 export * from './hash.handler'
 export * from './logger.handler'
 export * from './pkg-json.handler'
+export * from './relative-imports-verifier.handler'
 export * from './version-increment.handler'
 
