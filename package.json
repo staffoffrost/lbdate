@@ -1,6 +1,6 @@
 {
   "name": "lbdate",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "JavaScript Date object serialization helper.",
   "author": "Leon Bernstein",
   "license": "MIT",
@@ -33,8 +33,8 @@
     "src:build": "run-s -s _src:build-script \"_src:post-build-script -- --increment-version\"",
     "src:publish": "cd build && npm publish",
     "src:CI-CD": "run-s -s lint test pg:build src:build src:publish git:*",
-    "git:stage&commit-ver-up": "git add . && git commit -S -m \"ver up\"",
-    "git:tag&push&push-tag": "git tag 1.0.0-beta.0 && git push && git push --tags"
+    "git:stage+commit-ver-up": "git add . && git commit -S -m \"ver up\"",
+    "git:tag+push+push-tag": "git tag 1.0.0-beta.1 && git push && git push --tags"
   },
   "dependencies": {},
   "devDependencies": {
