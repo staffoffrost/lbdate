@@ -3,7 +3,7 @@ import { StringReplacementSet } from '../models'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
-  const config = Provider.getPostPgBuildConfigHandler().config.fileStringReplacer
+  const config = Provider.getPostPgBuildConfigHandler().config.fileStringReplacement
   const hash = Provider.getHashHandler().hash
   config.sets.forEach(dataSet => {
     const filePath = resolvePath(config.rootFolder, dataSet.filePath)

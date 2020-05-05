@@ -1,4 +1,4 @@
-import { PostSrcBuildConfig } from '../models/src-config'
+import { PostSrcBuildConfig } from '../models'
 import { LOGGER_CONFIG } from './logger-config'
 
 const rootFolder = './'

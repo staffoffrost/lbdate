@@ -13,7 +13,7 @@ export const POST_PG_BUILD_CONFIG: PostPgBuildConfig = {
   hashCharPool: 'abcdefghijklmnopqrstvuwxyzABCDEFGHIJKLMNOPQRSTVUWXYZ0123456789',
   // tslint:disable-next-line: max-line-length
   minifyHtmlCommand: `html-minifier ${rootFolder}/${indexHtml} --collapse-whitespace --minify-js --minify-css -o ${rootFolder}/${indexHtml}`,
-  fileStringReplacer: {
+  fileStringReplacement: {
     rootFolder,
     sets: [
       {

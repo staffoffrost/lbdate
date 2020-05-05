@@ -1,5 +1,5 @@
 
-export interface BannerAdder {
+export interface BannerAdderConfig {
   rootFolder: string,
   isSeparateRow: boolean,
   bannerSets: {

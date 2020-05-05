@@ -1,10 +1,10 @@
 import { dirname } from 'path'
 import { getAllFilesFromDirectory, readStrFromFile, resolvePath, resolvePathsList, writeStrToFile } from '../extensions'
-import { BannerAdder } from '../models'
+import { BannerAdderConfig } from '../models'
 import { Provider } from '../provider'
 import { hashFileName } from '../scripts/hash-file-names'
 
-export function addBanners(config: BannerAdder): void {
+export function addBanners(config: BannerAdderConfig): void {
   config = resolveConfigPaths(config)
   const hash = Provider.getHashHandler().hash
   const filteredFiles = getAllFilesFromDirectory(config.rootFolder).filter(file => {
@@ -36,7 +36,7 @@ export function addBanners(config: BannerAdder): void {
   })
 }
 
-function resolveConfigPaths(config: BannerAdder): BannerAdder {
+function resolveConfigPaths(config: BannerAdderConfig): BannerAdderConfig {
   config.rootFolder = resolvePath(config.rootFolder)
   config.excludedFiles = resolvePathsList(config.excludedFiles, config.rootFolder)
   config.excludedSubFolders = resolvePathsList(config.excludedSubFolders, config.rootFolder)
