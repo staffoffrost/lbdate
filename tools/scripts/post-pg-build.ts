@@ -1,5 +1,4 @@
-import { addBanners, hashFileNames, replaceStringsInFile, runCommand } from '../handlers'
-import { verifyHashes } from '../handlers/hash-verifier.handler'
+import { addBanners, hashFileNames, replaceStringsInFile, runCommand, verifyHashes } from '../handlers'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
