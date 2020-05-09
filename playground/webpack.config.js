@@ -48,6 +48,7 @@ const PROD_CONFIG = {
       new TerserPlugin({
         test: /\.js(\?.*)?$/i,
         sourceMap: false,
+        extractComments: false,
         terserOptions: {
           mangle: true
         },
