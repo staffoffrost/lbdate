@@ -2,7 +2,7 @@
 
 ## src
 
-- [ ] Multiple module types support.
+- [x] Multiple module types support.
 - [x] Post build procedure refactoring.
 - [ ] Spec.
 - [ ] Single date toJSON support.
