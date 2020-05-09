@@ -82,7 +82,8 @@ export const SRC_BUILD_CONFIG: SrcBuildConfig = {
   ],
   relativeImportsVerifier: {
     rootFolder: 'src',
+    fileExtension: '.ts',
     excludedFiles: [],
-    fileExtension: '.ts'
+    excludedImports: [],
   }
 }
