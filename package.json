@@ -4,13 +4,13 @@
   "description": "JavaScript Date object serialization helper.",
   "author": "Leon Bernstein",
   "license": "MIT",
-  "homepage": "https://github.com/LeonBernstein/LbDate#readme",
+  "homepage": "https://github.com/LbJS/LbDate#readme",
   "repository": {
     "type": "git",
-    "url": "gti+https://github.com/LeonBernstein/LbDate.git"
+    "url": "gti+https://github.com/LbJS/LbDate.git"
   },
   "bugs": {
-    "url": "https://github.com/LeonBernstein/LbDate/issues"
+    "url": "https://github.com/LbJS/LbDate/issues"
   },
   "publishConfig": {
     "access": "public"
