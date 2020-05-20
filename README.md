@@ -119,15 +119,15 @@ The run method takes a function as a parameter and runs it immediately with the 
 
 ```typescript
 lbDate(options).run(() => {
-  result = JSON.parse(strResult);
+  strResult = JSON.stringify(someObject);
 });
 ```
 
 or
 
 ```typescript
-function parseResult(strResult) {
-  return lbDate(options).run(() => JSON.parse(strResult));
+function parseResult(someObject) {
+  return lbDate(options).run(() => JSON.stringify(someObject));
 }
 ```
 
