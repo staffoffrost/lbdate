@@ -21,7 +21,7 @@ export const POST_PG_BUILD_CONFIG: PostPgBuildConfig = {
         replacementSets: [
           {
             currStr: '<base href="/playground/www/">',
-            nextStr: '<base href="/playgrounds/lbdate/">'
+            nextStr: '<base href="/playground/">'
           },
           {
             currStr: 'src="./main.js"',
