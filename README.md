@@ -42,7 +42,9 @@ console.log(myStringObj);
 // {"date":"2020-04-01T03:00:00.000+03:00"}
 ```
 
-### [Click here to check our Playground.](https://staff-of-frost.web.app/playgrounds/lbdate/)
+## Playground
+
+### [Click here to check our Playground.](https://lbdate-dev.web.app/playground/)
 
 ## Why This Package Exist
 
