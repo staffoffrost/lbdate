@@ -74,7 +74,10 @@ export class AppComponent {
   }
 
   private async _setVersion(): Promise<void> {
-    const version = document.body.getAttribute('lbdate-version')
+    let version: string | null = null
+    try {
+      version = (await fetch('https://raw.githubusercontent.com/LbJS/LbDate/master/package.json').then(r => r.json())).version as string
+    } catch { }
     if (version) {
       setValueToElement(this._elements.lbDateVersion, version)
     } else {
