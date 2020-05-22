@@ -11,4 +11,4 @@
 ## playground
 
 - [x] Post build procedure refactoring.
-- [ ] Update ver using Firebase.
+- [x] Update ver using Firebase.
