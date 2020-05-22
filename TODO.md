@@ -11,3 +11,4 @@
 ## playground
 
 - [x] Post build procedure refactoring.
+- [x] Firebase analytics.
