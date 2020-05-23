@@ -48,9 +48,9 @@ console.log(myStringObj);
 
 ## Why This Package Exist
 
-- You have an old db that stores local time and the client is sending you UTC dates.
-- You may want to send date time offset with the date itself and avoid work around with headers, interceptors or unnecessary server side logic.
-- Basically you want to be in control about what JavaScript is doing with your dates when it stringifies them.
+- You may have an old DB that stores local time and the client is sending you UTC dates.
+- You may want to send date time offset with the date itself and avoid work around with http headers, interceptors or boilerplate server side logic.
+- Basically you may want to be in control about what JavaScript is doing with your dates when it stringifies them.
 
 ## How It Works
 
