@@ -13,7 +13,7 @@ module.exports = {
     '/spec/.*\\.spec.ts$'
   ],
   modulePathIgnorePatterns: [
-    '<rootDir>/lib/'
+    '<rootDir>/build/'
   ],
   reporters: [
     "default",
