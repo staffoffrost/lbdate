@@ -15,7 +15,7 @@ export interface LbDateActions {
    */
   init: () => void,
   /**
-   * Uses different serialization configurations in different sections in your app.
+   * Uses different serialization configurations in different sections of your app.
    * - This method takes a function as a parameter, and runs it immediately based on the provided options.
    * - The provided options are temporary and are scoped only for this run.
    * - The provided options will be merged with the global and the default options.
@@ -32,7 +32,7 @@ export interface LbDateActions {
   /**
    * Undo any changes made by **LbDate().init()** to your environment.
    * - Restores the native _toJSON_ method.
-   * - Removes the global options
+   * - Removes the global options.
    */
   restore: () => void,
   /**

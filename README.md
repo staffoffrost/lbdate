@@ -1,8 +1,8 @@
 # LbDate - _beta version_
 
-JavaScript Date's serialization helper. Provides an easy way of automatically adding time zone while JavaScript serializes your date objects.
+JavaScript Date's serialization helper. Provides an easy way of automatically adding time zone while JavaScript serializes date objects.
 
-LbDate and native JavaScript date's serialization make use of ISO 8601 standards. You may read about it here: <https://en.wikipedia.org/wiki/ISO_8601>
+LbDate and native JavaScript date's serialization, both make use of ISO 8601 standards. You can read about it here: <https://en.wikipedia.org/wiki/ISO_8601>
 
 ## Installation
 
@@ -12,7 +12,7 @@ npm i lbdate
 
 ## Example
 
-Native serialization (UTC):
+Native serialization:
 
 ```typescript
 const myObj = {
@@ -26,7 +26,7 @@ console.log(myStringObj);
 // {"date":"2020-04-01T00:00:00.000Z"}
 ```
 
-LbDate serialization (+TimeZoneOffset):
+LbDate serialization:
 
 ```typescript
 lbDate().init();
@@ -49,12 +49,12 @@ console.log(myStringObj);
 ## Why This Package Exist
 
 - You may have an old DB that stores local time and the client is sending you UTC dates.
-- You may want to send date time offset with the date itself and avoid work around with http headers, interceptors or boilerplate server side logic.
-- Basically you may want to be in control about what JavaScript is doing with your dates when it stringifies them.
+- You may want to send date time offset with the date itself and avoid work around with http headers, interceptors or boilerplate server side code.
+- You may just want to be in control about what JavaScript is doing with your dates when it stringifies them.
 
 ## How It Works
 
-LbDate will clone the native toJSON method to newly defined toNativeJSON method on the Date's object prototype. Then it will override the native toJSON method based on the given options.
+LbDate will clone the native toJSON method to the newly defined toNativeJSON method name (can be changed) on the Date's object prototype. Then it will override the native toJSON method based on the given options.
 
 ## Documentation
 
@@ -113,11 +113,11 @@ export {};
 
 ### Scoped Run
 
-The run method takes a function as a parameter and runs it immediately with the provided options.
+This method allows to use different serialization configurations in different sections of your app.
 
+- This method takes a function as a parameter, and runs it immediately based on the provided options.
 - The provided options are temporary and are scoped only for this run.
 - The provided options will be merged with the global and the default options.
-- Use this method if you want to use different time zone preferences for different sections in your app.
 
 ```typescript
 lbDate(options).run(() => {
@@ -135,13 +135,13 @@ function parseResult(someObject) {
 
 ### Get Current Configurations
 
-Get current global configuration that were set by the last init.
+Get the current global configuration set by the last **init**.
 
 ```typescript
 lbDate().getGlobalConfig();
 ```
 
-Get default configuration:
+Get the default LbDate configuration:
 
 ```typescript
 lbDate().getDefaultConfig();
@@ -149,7 +149,10 @@ lbDate().getDefaultConfig();
 
 ### Restore
 
-Undo all changes done to your environment by `lbDate().init()`.
+Undo any changes made by `LbDate().init()` to your environment.
+
+- Restores the native _toJSON_ method.
+- Removes the global options.
 
 ```typescript
 lbDate().restore();
@@ -163,7 +166,7 @@ lbDate().restore();
 - UMD bundles\* are included in 'node_modules\lbdate\bundles'.
 - IE11\*\* support.
 
-_\* Both ES5 and ES2015 UMD bundles are included and both have minified and non minified versions. In all bundles the global would be **lbDate**._
+_\* Both ES5 and ES2015 UMD bundles are included and both have minified and non-minified versions. In all bundles the global would be `lbDate`._
 
 _\*\* Please try to convince your managers to drop IE support._
 
