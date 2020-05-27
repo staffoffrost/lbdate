@@ -6,7 +6,10 @@
     "paths": {
       "lbdate": [
         "../src",
-      ]
+      ],
+      "module-provider": [
+        "module-provider"
+      ],
     }
   },
   "include": [

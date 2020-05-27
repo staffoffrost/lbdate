@@ -8,6 +8,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "^lbdate$": "<rootDir>/src",
+    "^module-provider$": "<rootDir>/spec/module-provider.ts",
   },
   testRegex: [
     '/spec/.*\\.spec.ts$'
@@ -21,7 +22,8 @@ module.exports = {
       "./node_modules/jest-html-reporter",
       {
         pageTitle: "Test Report",
-        theme: "darkTheme",
+        // theme: "darkTheme",
+        styleOverridePath: './darkTheme.css',
         outputPath: "./spec/test-results-output/test-report.html",
         includeFailureMsg: true,
         includeConsoleLog: true,
