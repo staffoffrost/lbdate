@@ -39,6 +39,10 @@ export function lbDate(): LbDateActions
  */
 export function lbDate(options: Partial<LbDateOptions>): LbDateActions
 export function lbDate(options?: Partial<LbDateOptions>): LbDateActions {
+  if (options) {
+    if (options.manualTimeZoneOffset) options.manualTimeZoneOffset = Math.round(options.manualTimeZoneOffset)
+    if (options.precision) options.manualTimeZoneOffset = Math.round(options.precision)
+  }
   const mergedOptions = objectAssign(getDefaultLbDateConfig(), getGlobalLbDateConfig(), options) as LbDateOptions
   let timezone = mergedOptions.timezone
   if (![TimeZoneOptions.auto, TimeZoneOptions.manual, TimeZoneOptions.none, TimeZoneOptions.utc].includes(timezone)) {

@@ -89,7 +89,7 @@ const enum TimeZoneOptions {
   - **UTC**: Will keep the \*\*'Z' letter at the end of the ISO string. This is actually the default behavior of JavaScript. \*"2020-04-01T00:30:15.123Z"
   - **none**: Will remove the \*\*'Z' symbol from the end of the ISO string and will not add any time zone to it. \*"2020-04-01T03:30:15.123"
   - **manual**: Will allow you to set the time zone manually using `manualTimeZoneOffset` option.
-- **manualTimeZoneOffset**: `{number}` (default = null) (range: -840 to 840) Allows you to configure manually the time zone offset from UTC in **Minutes**. For example: -90 minutes will result: \*"2020-04-01T02:00:15.123+01:30"
+- **manualTimeZoneOffset**: `{number}` (default = null) (range: -840 to 840) Allows you to configure manually the time zone offset in **Minutes**. The value should represent the number of minutes you need to add or subtract to reach UTC time. For example: -90 minutes will result: \*"2020-04-01T02:00:15.123+01:30"
 - **toNativeJsonName**: `{string}` (default = 'toNativeJSON') While LbDate is initializing, it will clone the native _toJSON_ method to this given name and will store it on the Date's prototype so you can still access the original method in your app if you need to. \*\*\*
 - **precision**: `{number}` (default = 3) (range: 0 to 3) The number of second fraction digits. For example, the value 2 will result: \*"2020-04-01T03:30:15.12+03:00"
 

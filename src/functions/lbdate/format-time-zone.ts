@@ -6,5 +6,5 @@ export function formatTimeZone(mins: number): string {
   const hoursStr = (hours - hours % 1).toString()
   const minsStr = (mins % 60).toString()
   const padTime = (n: string): string => n.length == 1 ? '0' + n : n
-  return `${isNegative ? '+' : '-'}${padTime(hoursStr)}:${padTime(minsStr)}`
+  return `${isNegative || mins == 0 ? '+' : '-'}${padTime(hoursStr)}:${padTime(minsStr)}`
 }
