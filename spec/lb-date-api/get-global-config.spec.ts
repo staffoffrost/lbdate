@@ -13,7 +13,7 @@ describe('LbDate getDefaultConfig():', () => {
     jest.resetModules()
   })
 
-  it("should return empty object if LbDate wasn't initialized first.", () => {
+  it("should return an empty object if LbDate wasn't initialized first.", () => {
     const config = lbDate().getGlobalConfig()
     expect(config).toStrictEqual({})
   })
