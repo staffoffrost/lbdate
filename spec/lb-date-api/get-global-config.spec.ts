@@ -150,4 +150,33 @@ describe('LbDate getDefaultConfig():', () => {
     expectedConfig.precision = 0
     expect(config).toStrictEqual(expectedConfig)
   })
+
+  it('should round precision option.', () => {
+    lbDate({
+      precision: 2.1,
+    }).init()
+    const config = lbDate().getGlobalConfig()
+    const expectedConfig: LbDateOptions = {
+      timezone: TimeZoneOptions.auto,
+      manualTimeZoneOffset: null,
+      toNativeJsonName: 'toNativeJSON',
+      precision: 2,
+    }
+    expect(config).toStrictEqual(expectedConfig)
+  })
+
+  it('should round manualTimeZoneOffset option.', () => {
+    lbDate({
+      timezone: TimeZoneOptions.manual,
+      manualTimeZoneOffset: 120.1,
+    }).init()
+    const config = lbDate().getGlobalConfig()
+    const expectedConfig: LbDateOptions = {
+      timezone: TimeZoneOptions.manual,
+      manualTimeZoneOffset: 120,
+      toNativeJsonName: 'toNativeJSON',
+      precision: 3,
+    }
+    expect(config).toStrictEqual(expectedConfig)
+  })
 })
