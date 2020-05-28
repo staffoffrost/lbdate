@@ -5,7 +5,7 @@ describe('LbDate getDefaultConfig():', () => {
   let lbDate: typeof lbDateFunc
 
   beforeEach(async () => {
-    lbDate = (await import('./module-provider')).lbDate
+    lbDate = (await import('module-provider')).lbDate
   })
 
   afterEach(() => {
