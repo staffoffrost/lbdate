@@ -4,6 +4,6 @@
 
 - [x] Multiple module types support.
 - [x] Spec.
-- [ ] CDN.
+- [x] CDN.
 - [ ] Single date toJSON support.
 - [ ] Spec JSON.stringify replacer support.
