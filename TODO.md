@@ -3,12 +3,7 @@
 ## src
 
 - [x] Multiple module types support.
-- [x] Post build procedure refactoring.
-- [ ] Spec.
+- [x] Spec.
+- [ ] CDN.
 - [ ] Single date toJSON support.
 - [ ] Spec JSON.stringify replacer support.
-
-## playground
-
-- [x] Post build procedure refactoring.
-- [x] Firebase analytics.
