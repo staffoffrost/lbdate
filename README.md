@@ -2,7 +2,7 @@
 
 JavaScript Date's serialization helper. Provides an easy way of automatically adding time zone while JavaScript serializes date objects.
 
-LbDate and native JavaScript date's serialization, both make use of ISO 8601 standards. You can read about it here: <https://en.wikipedia.org/wiki/ISO_8601>
+LbDate and native JavaScript date's serialization, both make use of ISO 8601 standards. You can read about it here: <https://en.wikipedia.org/wiki/ISO_8601>.
 
 ## Installation
 
