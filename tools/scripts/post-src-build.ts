@@ -6,6 +6,7 @@ export default async function main(): Promise<void> {
   const logger = Provider.getLoggerHandler()
   logger.config = config.logger
   await handleVersionIncrement(config)
+  replaceStringsInFile(config.fileStringReplacement)
   copyFiles(config.filesToCopy)
   // root package.json
   handlePkgJsonFile(config.rootFolder, config.packageJsonPath, config.rootPackageJsonConfig)
@@ -14,6 +15,5 @@ export default async function main(): Promise<void> {
   // root package-lock.json
   handlePkgJsonFile(config.rootFolder, config.packageLockJsonPath, config.packageLockJsonConfig)
   addBanners(config.bannerAdder)
-  replaceStringsInFile(config.fileStringReplacement)
   logger.logSuccess('Post SRC build')
 }
