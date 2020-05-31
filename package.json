@@ -31,8 +31,8 @@
     "_src:post-build-script": "ts-node -s tools/run.ts --post-src-build",
     "src:test-build": "run-s -s _src:build-script _src:post-build-script",
     "src:build": "run-s -s _src:build-script \"_src:post-build-script -- --increment-version\"",
-    "src:publish": "cd build && npm publish",
-    "src:CI-CD": "run-s -s lint test pg:build src:build src:publish git:*",
+    "src:publish": "cd build && npm publish && cd .. && ts-node -s tools/log-success.ts \"Publish\"",
+    "src:CI-CD": "run-s -s lint test pg:build src:build && npm run src:publish && run-s -s git:* && ts-node -s tools/log-success.ts \"CI-CD\"",
     "git:stage+commit-ver-up": "git add . && git commit -S -m \"ver up\"",
     "git:tag+push+push-tag": "git tag 1.0.1 && git push && git push --tags"
   },
