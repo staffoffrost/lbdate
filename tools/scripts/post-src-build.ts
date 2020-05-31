@@ -1,4 +1,4 @@
-import { addBanners, copyFiles, handlePkgJsonFile, handleVersionIncrement } from '../handlers'
+import { addBanners, copyFiles, handlePkgJsonFile, handleVersionIncrement, replaceStringsInFile } from '../handlers'
 import { Provider } from '../provider'
 
 export default async function main(): Promise<void> {
@@ -14,5 +14,6 @@ export default async function main(): Promise<void> {
   // root package-lock.json
   handlePkgJsonFile(config.rootFolder, config.packageLockJsonPath, config.packageLockJsonConfig)
   addBanners(config.bannerAdder)
+  replaceStringsInFile(config.fileStringReplacement)
   logger.logSuccess('Post SRC build')
 }

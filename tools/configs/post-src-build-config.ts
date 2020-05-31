@@ -106,5 +106,19 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
     excludedFiles: [],
     excludedSubFolders: [],
     includedSubFolders: [],
-  }
+  },
+  fileStringReplacement: {
+    rootFolder,
+    sets: [
+      {
+        filePath: 'README.md',
+        replacementSets: [
+          {
+            currStr: 'lbdate@[curAppVer]',
+            nextStr: 'lbdate@[nextAppVer]'
+          }
+        ]
+      }
+    ]
+  },
 }
