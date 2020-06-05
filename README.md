@@ -1,4 +1,4 @@
-# LbDate - _beta version_
+# LbDate
 
 JavaScript Date's serialization helper. Provides an easy way of automatically adding time zone while JavaScript serializes date objects.
 
