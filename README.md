@@ -144,13 +144,13 @@ function parseResult(someObject) {
 
 ### Get Current Configurations
 
-Get the current global configuration set by the last **init**.
+Get the current global configurations that were set by the last **init**.
 
 ```typescript
 lbDate().getGlobalConfig();
 ```
 
-Get the default LbDate configuration:
+Get the default LbDate configurations:
 
 ```typescript
 lbDate().getDefaultConfig();
@@ -158,7 +158,7 @@ lbDate().getDefaultConfig();
 
 ### Restore
 
-Undo any changes made by `LbDate().init()` to your environment.
+Undo any changes made by `lbDate().init()` to your environment.
 
 - Restores the native _toJSON_ method.
 - Removes the global options.
