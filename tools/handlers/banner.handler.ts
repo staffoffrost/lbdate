@@ -26,8 +26,8 @@ export function addBanners(config: BannerAdderConfig): void {
     const bannerSet = config!.bannerSets.find(x => file.endsWith(x.fileType))
     if (bannerSet) {
       if (bannerSet.banner.includes('[nextAppVer]')) {
-        const appVer = Provider.getAppDetailsHandler().nextAppVer
-        bannerSet.banner = bannerSet.banner.replace('[nextAppVer]', appVer)
+        const nextAppVer = Provider.getAppDetailsHandler().nextAppVer
+        bannerSet.banner = bannerSet.banner.replace('[nextAppVer]', nextAppVer)
       }
       let fileStr = readStrFromFile(file)
       fileStr = `${bannerSet.banner}${config!.isSeparateRow ? '\n' : ''}${fileStr}`
