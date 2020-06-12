@@ -42,9 +42,11 @@ function replaceStrings(
     if (!fileStr.includes(set.currStr)) {
       throw new Error(`Cannot replace ${set.currStr} because it wasn't found in this file: ${filePath}.`)
     }
-    do {
-      fileStr = fileStr.replace(set.currStr, set.nextStr)
-    } while (fileStr.includes(set.currStr))
+    if (set.currStr !== set.nextStr) {
+      do {
+        fileStr = fileStr.replace(set.currStr, set.nextStr)
+      } while (fileStr.includes(set.currStr))
+    }
   })
   return fileStr
 }
