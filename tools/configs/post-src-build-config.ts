@@ -83,6 +83,10 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
         key: 'scripts.git:tag+push+push-tag',
         value: 'git tag [nextAppVer] && git push && git push --tags'
       },
+      {
+        key: 'scripts.git:stage+commit-ver-up',
+        value: 'git add . && git commit -S -m \"[nextAppVer]\"'
+      },
     ]
   },
   packageLockJsonConfig: {
