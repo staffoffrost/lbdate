@@ -4,6 +4,22 @@ JavaScript Date's serialization helper. Provides an easy way of automatically ad
 
 LbDate and native JavaScript date's serialization, both make use of ISO 8601 standards. You can read about it here: <https://en.wikipedia.org/wiki/ISO_8601>.
 
+## New Features
+
+1. `lbDate` will also behave now as an object. So, if you don't need to pass any options, you can call the actions like this:
+
+   ```typescript
+   lbDate.init();
+   ```
+
+2. `lbDate` is now also exported as default, so you can import it like this:
+
+   ```typescript
+   import myCustomName from "lbdate";
+   // or
+   import { lbDate } from "lbdate";
+   ```
+
 ## Installation
 
 ```bach
@@ -38,7 +54,7 @@ console.log(myStringObj);
 LbDate serialization:
 
 ```typescript
-lbDate().init();
+lbDate.init();
 
 const myObj = {
   date: new Date(),
@@ -70,7 +86,7 @@ LbDate will clone the native toJSON method to the newly defined toNativeJSON met
 ### Initialization
 
 ```typescript
-import { lbDate } from "lbdate";
+import lbDate from "lbdate";
 
 lbDate({ precision: 0 }).init();
 ```
@@ -147,24 +163,24 @@ function parseResult(someObject) {
 Get the current global configurations that were set by the last **init**.
 
 ```typescript
-lbDate().getGlobalConfig();
+lbDate.getGlobalConfig();
 ```
 
 Get the default LbDate configurations:
 
 ```typescript
-lbDate().getDefaultConfig();
+lbDate.getDefaultConfig();
 ```
 
 ### Restore
 
-Undo any changes made by `lbDate().init()` to your environment.
+Undo any changes made by `lbDate.init()` to your environment.
 
 - Restores the native _toJSON_ method.
 - Removes the global options.
 
 ```typescript
-lbDate().restore();
+lbDate.restore();
 ```
 
 ## Browser / Platform Support
