@@ -1,4 +1,4 @@
-import { TimeZoneOptions } from './time-zone-options.enum'
+import { TimeZoneOptions } from '../config/time-zone-options.enum'
 
 /**
  * LbDate date serialization options.

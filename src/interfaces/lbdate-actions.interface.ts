@@ -1,4 +1,4 @@
-import { LbDateOptions } from './config/lbdate-options'
+import { LbDateOptions } from './lbdate-options.interface'
 
 export interface Run {
   (fn: () => void): void,
