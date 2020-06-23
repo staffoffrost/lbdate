@@ -12,4 +12,15 @@ describe('LbDate getDefaultConfig():', () => {
     }
     expect(config).toStrictEqual(expectedConfig)
   })
+
+  it('(object) should return the expected default configurations.', () => {
+    const config = lbDate.getDefaultConfig()
+    const expectedConfig: LbDateOptions = {
+      timezone: TimeZoneOptions.auto,
+      manualTimeZoneOffset: null,
+      toNativeJsonName: 'toNativeJSON',
+      precision: 3,
+    }
+    expect(config).toStrictEqual(expectedConfig)
+  })
 })

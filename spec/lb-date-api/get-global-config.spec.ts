@@ -18,6 +18,11 @@ describe('LbDate getDefaultConfig():', () => {
     expect(config).toStrictEqual({})
   })
 
+  it("(object) should return an empty object if LbDate wasn't initialized first.", () => {
+    const config = lbDate.getGlobalConfig()
+    expect(config).toStrictEqual({})
+  })
+
   it('should return the default configuration if not options were provided during initialization of LbDate.', () => {
     lbDate().init()
     const config = lbDate().getGlobalConfig()

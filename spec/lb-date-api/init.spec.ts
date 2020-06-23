@@ -21,6 +21,13 @@ describe('LbDate init():', () => {
     expect(date.toJSON()).toBe(expectedDateString)
   })
 
+  it('(object) should return serialized date with timezone offset and three decimal digits precision, if no options were provided.', () => {
+    lbDate.init()
+    const date = new Date(dateString)
+    const expectedDateString = '2000-01-01T02:00:00.000+02:00'
+    expect(date.toJSON()).toBe(expectedDateString)
+  })
+
   it('should return serialized date with timezone offset, if timezone option is set to auto.', () => {
     lbDate({
       timezone: TimeZoneOptions.auto

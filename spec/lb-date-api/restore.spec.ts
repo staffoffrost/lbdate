@@ -25,6 +25,18 @@ describe('LbDate restore():', () => {
     expect(config).toStrictEqual({})
   })
 
+  it('(object) should restore global configuration to an empty object.', () => {
+    lbDate({
+      timezone: TimeZoneOptions.manual,
+      manualTimeZoneOffset: 840,
+      toNativeJsonName: 'anotherToNativeJSON',
+      precision: 0,
+    }).init()
+    lbDate.restore()
+    const config = lbDate().getGlobalConfig()
+    expect(config).toStrictEqual({})
+  })
+
   it('should restore the native toJSON method.', () => {
     lbDate().init()
     lbDate().restore()
