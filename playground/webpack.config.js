@@ -50,19 +50,27 @@ const PROD_CONFIG = {
         sourceMap: false,
         extractComments: false,
         terserOptions: {
-          mangle: true
+          mangle: true,
+          output: {
+            comments: false,
+          },
         },
+        extractComments: false,
       })
     ],
   },
   plugins: [
-    new CopyPlugin([
-      {
-        from: 'playground/www/',
-        to: './',
-        ignore: ['main.js']
-      },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'playground/www/',
+          to: './',
+          globOptions: {
+            ignore: ['main.js']
+          }
+        },
+      ]
+    }),
   ],
   output: {
     filename: '[name].js',

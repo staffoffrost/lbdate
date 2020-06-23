@@ -85,7 +85,7 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
       },
       {
         key: 'scripts.git:stage+commit-ver-up',
-        value: 'git add . && git commit -S -m \"[nextAppVer]\"'
+        value: 'git add . && git commit -S -m \"version bump to [nextAppVer]\"'
       },
     ]
   },
