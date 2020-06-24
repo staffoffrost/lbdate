@@ -88,7 +88,9 @@ LbDate will clone the native toJSON method to the newly defined toNativeJSON met
 ```typescript
 import lbDate from "lbdate";
 
-lbDate({ precision: 0 }).init();
+lbDate({
+  precision: 0,
+}).init();
 ```
 
 ### Options
