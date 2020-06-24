@@ -131,4 +131,3 @@ const lbDate: LbDate = (() => {
 })()
 
 export { lbDate }
-export default lbDate
