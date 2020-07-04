@@ -191,11 +191,11 @@ lbDate.restore();
 - Node.JS support.
 - Source files are included in 'node_modules\lbdate\src'.
 - UMD bundles\* are included in 'node_modules\lbdate\bundles'.
-- IE11\*\* support (ES5 syntax) but polyfills like core-js will be required.
+- IE11\*\* ES5 syntax support.
 
 _\* Both ES5 and ES2015 UMD bundles are included and both have minified and non-minified versions. In all bundles the global would be `lbDate`._
 
-_\*\* Please try to convince your managers to drop IE support._
+_\*\* For IE11 you may need additional polyfills but if you're using a framework, they may already be included._
 
 ## Licence
 
