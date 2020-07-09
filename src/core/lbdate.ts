@@ -38,7 +38,7 @@ const lbDate: LbDate = (() => {
     const setDateToJsonMethod = (method: (key?: any) => string): void => {
       Date.prototype.toJSON = method
     }
-    const restoreToJsonFunctions = () => {
+    const restoreToJsonMethods = () => {
       if (lastToNativeJsonName) {
         setDateToJsonMethod(Date.prototype[lastToNativeJsonName])
         delete Date.prototype[lastToNativeJsonName]
@@ -85,7 +85,7 @@ const lbDate: LbDate = (() => {
     }
     return {
       init: () => {
-        restoreToJsonFunctions()
+        restoreToJsonMethods()
         lastToNativeJsonName = toNativeJsonName
         setGlobalLbDateOptions(mergedOptions)
         Date.prototype[toNativeJsonName] = cloneFunction(Date.prototype.toJSON)
@@ -113,7 +113,7 @@ const lbDate: LbDate = (() => {
         return jsonString!
       },
       restore: () => {
-        restoreToJsonFunctions()
+        restoreToJsonMethods()
         setGlobalLbDateOptions({})
       },
       getGlobalConfig: () => getGlobalLbDateConfig(),
