@@ -35,12 +35,12 @@ const lbDate: LbDate = (() => {
     if (precision > 3) precision = 3
     else if (precision < 0) precision = 0
     mergedOptions.precision = precision
-    const setDateToJson = (method: (key?: any) => string): void => {
+    const setDateToJsonMethod = (method: (key?: any) => string): void => {
       Date.prototype.toJSON = method
     }
     const restoreToJsonFunctions = () => {
       if (lastToNativeJsonName) {
-        setDateToJson(Date.prototype[lastToNativeJsonName])
+        setDateToJsonMethod(Date.prototype[lastToNativeJsonName])
         delete Date.prototype[lastToNativeJsonName]
         lastToNativeJsonName = null
       }
@@ -89,7 +89,7 @@ const lbDate: LbDate = (() => {
         lastToNativeJsonName = toNativeJsonName
         setGlobalLbDateOptions(mergedOptions)
         Date.prototype[toNativeJsonName] = cloneFunction(Date.prototype.toJSON)
-        setDateToJson(createToJson())
+        setDateToJsonMethod(createToJson())
       },
       run: <T = string | void>(fn: () => T): T => {
         const clonedToJson = cloneFunction(Date.prototype.toJSON) as (key?: any) => string
@@ -97,7 +97,7 @@ const lbDate: LbDate = (() => {
         if (!isSameToNativeJsonName) {
           Date.prototype[toNativeJsonName] = clonedToJson
         }
-        setDateToJson(createToJson())
+        setDateToJsonMethod(createToJson())
         let error: Error | null = null
         let jsonString: T
         try {
@@ -108,7 +108,7 @@ const lbDate: LbDate = (() => {
         if (!isSameToNativeJsonName) {
           delete Date.prototype[toNativeJsonName]
         }
-        setDateToJson(clonedToJson)
+        setDateToJsonMethod(clonedToJson)
         if (error) throw error
         return jsonString!
       },
@@ -131,3 +131,4 @@ const lbDate: LbDate = (() => {
 })()
 
 export { lbDate }
+
