@@ -91,6 +91,11 @@ const lbDate: LbDate = (() => {
         Date.prototype[toNativeJsonName] = cloneFunction(Date.prototype.toJSON)
         setDateToJsonMethod(createToJson())
       },
+      toJSON: createToJson(),
+      override: (date: Date): Date => {
+        date.toJSON = createToJson()
+        return date
+      },
       run: <T = string | void>(fn: () => T): T => {
         const clonedToJson = cloneFunction(Date.prototype.toJSON) as (key?: any) => string
         const isSameToNativeJsonName = toNativeJsonName === lastToNativeJsonName
@@ -122,10 +127,12 @@ const lbDate: LbDate = (() => {
   }
   const _o: LbDateActions = {
     init: () => _f().init(),
+    toJSON: _f().toJSON,
+    override: (date: Date) => _f().override(date),
     run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
     restore: () => _f().restore(),
     getGlobalConfig: () => _f().getGlobalConfig(),
-    getDefaultConfig: () => _f().getDefaultConfig()
+    getDefaultConfig: () => _f().getDefaultConfig(),
   }
   return objectAssign(_f, _o)
 })()

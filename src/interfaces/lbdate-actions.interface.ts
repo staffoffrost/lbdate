@@ -15,7 +15,20 @@ export interface LbDateActions {
    */
   init: () => void,
   /**
-   * Uses different serialization configurations in different sections of your app.
+   * This property allows you to override a single date object's `toJSON` method.
+   * @example
+   * const date = new Date()
+   * data.toJSON = lbDate(options).toJSON
+   */
+  toJSON: (this: Date) => string
+  /**
+   * This method allows you to override a single date object's `toJSON` method.
+   * @example
+   * const date = lbDate(options).override(new Date())
+   */
+  override: (date: Date) => Date
+  /**
+   * This method allows you to use different serialization configurations in different sections of your app
    * - This method takes a function as a parameter, and runs it immediately based on the provided options.
    * - The provided options are temporary and are scoped only for this run.
    * - The provided options will be merged with the global and the default options.

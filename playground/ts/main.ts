@@ -11,7 +11,7 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
-firebase.analytics()
+if (window.location.hostname.toLowerCase().includes('lbdate-dev')) firebase.analytics()
 
 onDomLoaded(() => {
   main()
@@ -21,4 +21,3 @@ function main(): void {
   const app = AppComponent.buildApp()
   app.init()
 }
-

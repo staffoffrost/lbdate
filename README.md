@@ -140,7 +140,7 @@ export {};
 
 ### Scoped Run
 
-This method allows to use different serialization configurations in different sections of your app.
+This method allows you to use different serialization configurations in different sections of your app.
 
 - This method takes a function as a parameter, and runs it immediately based on the provided options.
 - The provided options are temporary and are scoped only for this run.
