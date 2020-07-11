@@ -1,24 +1,29 @@
 # LbDate
 
-JavaScript Date's serialization helper. Provides an easy way of automatically adding time zone while JavaScript serializes date objects.
+JavaScript Date's serialization helper. Provides an easy way for keeping timezone after stringification and more.
 
-LbDate and native JavaScript date's serialization, both make use of ISO 8601 standards. You can read about it here: <https://en.wikipedia.org/wiki/ISO_8601>.
+LbDate uses ISO 8601 standards.
 
-## New Features
+## New Feature
 
-1. `lbDate` will also behave now as an object. So, if you don't need to pass any options, you can call the actions like this:
+Now you can override a single date's `toJSON` method:
 
-   ```typescript
-   lbDate.init();
-   ```
+```typescript
+const date = new Date();
+date.toJSON = lbDate.toJSON;
+console.log(date.toJSON());
 
-2. `lbDate` is now also exported as default, so you can import it like this:
+// "2020-04-01T03:00:00.000+03:00"
+```
 
-   ```typescript
-   import myCustomName from "lbdate";
-   // or
-   import { lbDate } from "lbdate";
-   ```
+Or, alternately you can use the new `override` method:
+
+```typescript
+const date = lbDate.override(new Date());
+console.log(date.toJSON());
+
+// "2020-04-01T03:00:00.000+03:00"
+```
 
 ## Installation
 
@@ -37,32 +42,10 @@ npm i lbdate
 
 ## Example
 
-Native serialization:
-
-```typescript
-const myObj = {
-  date: new Date(),
-};
-
-const myStringObj = JSON.stringify(myObj);
-
-console.log(myStringObj);
-
-// {"date":"2020-04-01T00:00:00.000Z"}
-```
-
-LbDate serialization:
-
 ```typescript
 lbDate.init();
-
-const myObj = {
-  date: new Date(),
-};
-
-const myStringObj = JSON.stringify(myObj);
-
-console.log(myStringObj);
+const result = JSON.stringify({ date: new Date() });
+console.log(result);
 
 // {"date":"2020-04-01T03:00:00.000+03:00"}
 ```
@@ -71,27 +54,36 @@ console.log(myStringObj);
 
 ### [Click here to check our Playground.](https://lbdate-dev.web.app/playground/)
 
-## Why This Package Exist
-
-- You may have an old DB that stores local time and the client is sending you UTC dates.
-- You may want to send date time offset with the date itself and avoid work around with http headers, interceptors or boilerplate server side code.
-- You may just want to be in control about what JavaScript is doing with your dates when it stringifies them.
-
-## How It Works
-
-LbDate will clone the native toJSON method to the newly defined toNativeJSON method name (can be changed) on the Date's object prototype. Then it will override the native toJSON method based on the given options.
-
 ## Documentation
 
 ### Initialization
 
+The `init` method will override the prototype of the Date's object. This is the preferred way to you lbDate if you want 'write once and forget'.
+
 ```typescript
 import lbDate from "lbdate";
 
-lbDate({
-  precision: 0,
-}).init();
+lbDate.init();
 ```
+
+Or with options:
+
+> If options are provided, they will be set as the new global options and may later be used for other LbDate's functionalities like the `run` or `override` methods.
+
+```typescript
+import lbDate from "lbdate";
+
+const options = {
+  precision: 0,
+  toNativeJsonName: "myNameForIt",
+  timezone: TimeZoneOptions.manual,
+  manualTimeZoneOffset: -120,
+};
+
+lbDate(options).init();
+```
+
+> Remember, the native method is store under different method name (that is configurable) and can be restored at any time by calling `lbDate.restore()`.
 
 ### Options
 
@@ -140,24 +132,59 @@ export {};
 
 ### Scoped Run
 
-This method allows you to use different serialization configurations in different sections of your app.
+This method allows you to use different serialization configurations for different sections of your app.
 
 - This method takes a function as a parameter, and runs it immediately based on the provided options.
 - The provided options are temporary and are scoped only for this run.
 - The provided options will be merged with the global and the default options.
 
 ```typescript
-lbDate(options).run(() => {
-  strResult = JSON.stringify(someObject);
-});
+const obj = {
+  date: new Date(),
+};
+
+function stringifyObject(o) {
+  return lbDate(options).run(() => JSON.stringify(o));
+}
+
+console.log(stringifyObject(obj));
+
+// {"date":"2020-04-01T03:00:00.000+03:00"}
 ```
 
-or
+### Single date's `toJSON` method override
+
+> If you don't want to override the date's prototype method by using `lbDate.init()` you can override a single date's `toJSON` method.
+
+Using the `toJSON` property:
 
 ```typescript
-function parseResult(someObject) {
-  return lbDate(options).run(() => JSON.stringify(someObject));
-}
+const date = new Date();
+date.toJSON = lbDate.toJSON;
+console.log(date.toJSON());
+
+// "2020-04-01T03:00:00.000+03:00"
+```
+
+Or with the `override` method:
+
+```typescript
+const date = lbDate.override(new Date());
+console.log(date.toJSON());
+
+// "2020-04-01T03:00:00.000+03:00"
+```
+
+Both possibilities can also be provided with options:
+
+- The provided options will be merged with the global and the default options.
+- The global options are the options provided by `lbDate(options).init()`. If those options weren't provided, then it will just use the default options for merging.
+
+```typescript
+const myDate = new Date();
+myDate.toJSON = lbDate(options).toJSON;
+// or
+const date = lbDate(options).override(new Date());
 ```
 
 ### Get Current Configurations
@@ -178,7 +205,7 @@ lbDate.getDefaultConfig();
 
 Undo any changes made by `lbDate.init()` to your environment.
 
-- Restores the native _toJSON_ method.
+- Restores the native `toJSON` method.
 - Removes the global options.
 
 ```typescript
