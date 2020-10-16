@@ -5,6 +5,12 @@ export interface Run {
   (fn: () => string): string,
 }
 
+export interface MomentObj {
+  prototype: {
+    toDate: (this: any) => Date,
+  }
+}
+
 /**
  * LbDate actions.
  */
@@ -13,7 +19,7 @@ export interface LbDateActions {
    * Sets the global configuration based on the provided options merged with LbDate defaults.
    * Then overrides the native Date's toJSON method based on the global configuration.
    */
-  init: () => void,
+  init: (moment?: MomentObj) => void,
   /**
    * This property allows you to override a single date object's `toJSON` method.
    * @example

@@ -1,10 +1,11 @@
 import { getDefaultLbDateConfig, getGlobalLbDateConfig, setGlobalLbDateOptions, TimeZoneOptions } from '../config'
-import { cloneDate, cloneFunction, formatTimeZone, objectAssign } from '../functions'
-import { LbDateOptions } from '../interfaces'
-import { LbDateActions } from '../interfaces/lbdate-actions.interface'
-import { LbDate } from '../interfaces/lbdate.interface'
+import { cloneDate, cloneFunction, formatTimeZone, momentToDate, objectAssign } from '../functions'
+import { LbDate, LbDateActions, LbDateOptions, MomentObj } from '../interfaces'
 
 let lastToNativeJsonName: string | null = null
+let momentRef: MomentObj | null = null
+// tslint:disable-next-line: ban-types
+let momentToDateMethodCache: ((this: any) => Date) | null = null
 
 const lbDate: LbDate = (() => {
   const _f: (options?: Partial<LbDateOptions>) => LbDateActions = (options?: Partial<LbDateOptions>): LbDateActions => {
@@ -84,12 +85,18 @@ const lbDate: LbDate = (() => {
       }
     }
     return {
-      init: () => {
+      init: (moment?: MomentObj) => {
         restoreToJsonMethods()
         lastToNativeJsonName = toNativeJsonName
         setGlobalLbDateOptions(mergedOptions)
         Date.prototype[toNativeJsonName] = cloneFunction(Date.prototype.toJSON)
-        setDateToJsonMethod(createToJson())
+        const toJsonMethod = createToJson()
+        setDateToJsonMethod(toJsonMethod)
+        if (moment) {
+          if (!momentRef) momentRef = moment
+          if (!momentToDateMethodCache) momentToDateMethodCache = cloneFunction(moment.prototype.toDate) as (this: any) => Date
+          momentRef.prototype.toDate = momentToDate(toJsonMethod)
+        }
       },
       toJSON: createToJson(),
       override: (date: Date): Date => {
@@ -120,13 +127,20 @@ const lbDate: LbDate = (() => {
       restore: () => {
         restoreToJsonMethods()
         setGlobalLbDateOptions({})
+        if (momentRef) {
+          if (momentToDateMethodCache) {
+            momentRef.prototype.toDate = momentToDateMethodCache
+            momentToDateMethodCache = null
+          }
+          momentRef = null
+        }
       },
       getGlobalConfig: () => getGlobalLbDateConfig(),
       getDefaultConfig: () => getDefaultLbDateConfig(),
     }
   }
   const _o: LbDateActions = {
-    init: () => _f().init(),
+    init: (moment?: MomentObj) => _f().init(moment),
     toJSON: _f().toJSON,
     override: (date: Date) => _f().override(date),
     run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
