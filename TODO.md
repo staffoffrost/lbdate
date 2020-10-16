@@ -6,5 +6,5 @@
 - [x] Spec.
 - [x] CDN.
 - [x] Single date toJSON support.
-- [ ] Moment support.
+- [x] Moment support.
 - [ ] JSON.stringify replacer support.
