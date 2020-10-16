@@ -6,23 +6,10 @@ LbDate uses ISO 8601 standards.
 
 ## New Feature
 
-Now you can override a single date's `toJSON` method:
+"Moment" support:
 
 ```typescript
-const date = new Date();
-date.toJSON = lbDate.toJSON;
-console.log(date.toJSON());
-
-// "2020-04-01T03:00:00.000+03:00"
-```
-
-Or, alternately you can use the new `override` method:
-
-```typescript
-const date = lbDate.override(new Date());
-console.log(date.toJSON());
-
-// "2020-04-01T03:00:00.000+03:00"
+lbDate.init(moment);
 ```
 
 ## Installation
@@ -84,6 +71,17 @@ lbDate(options).init();
 ```
 
 > Remember, the native method is store under different method name (that is configurable) and can be restored at any time by calling `lbDate.restore()`.
+
+"Moment" support:
+
+```typescript
+import lbDate from "lbdate";
+import moment from "moment";
+
+lbDate.init(moment);
+```
+
+> This will force "moment" to use LbDate's serialization automatically, resulting the same behavior for all date types in your application. Also, when using `lbDate.restore()` it will revert any changes done to "moment".
 
 ### Options
 
@@ -207,6 +205,7 @@ Undo any changes made by `lbDate.init()` to your environment.
 
 - Restores the native `toJSON` method.
 - Removes the global options.
+- Reverts changes done to "moment" if any.
 
 ```typescript
 lbDate.restore();
