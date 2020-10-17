@@ -19,8 +19,8 @@
   "sideEffects": false,
   "scripts": {
     "start": "npm run test:watch",
-    "pg:start": "webpack -d --progress --config playground/webpack.config.js --watch",
-    "_pg:build": "rimraf dist/* && webpack -p --progress --config playground/webpack.config.js && ts-node -s tools/log-success.ts \"Playground build\"",
+    "pg:start": "webpack --mode=\"development\" --progress --config playground/webpack.config.js --watch",
+    "_pg:build": "rimraf dist/* && webpack --mode=\"production\" --progress --config playground/webpack.config.js && ts-node -s tools/log-success.ts \"Playground build\"",
     "_pg:post-build-script": "ts-node -s tools/run.ts  --post-pg-build",
     "pg:build": "run-s -s --silent _pg:build _pg:post-build-script",
     "test": "jest && ts-node -s tools/log-success.ts \"Testing\"",
