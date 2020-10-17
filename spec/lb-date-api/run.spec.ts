@@ -1,17 +1,12 @@
-import { lbDate as lbDateFunc, TimeZoneOptions } from 'lbdate'
+import { lbDate as lbDate_type, TimeZoneOptions } from 'lbdate'
 
 describe('LbDate run():', () => {
 
-  let lbDate: typeof lbDateFunc
+  let lbDate: typeof lbDate_type
   const dateString = '2000-01-01T00:00:00.000Z'
 
   beforeEach(async () => {
     lbDate = (await import('module-provider')).lbDate
-  })
-
-  afterEach(() => {
-    lbDate().restore()
-    jest.resetModules()
   })
 
   it('should return serialized date with timezone offset and three decimal digits precision, if no options were provided.', () => {

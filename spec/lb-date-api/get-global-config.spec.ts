@@ -1,16 +1,11 @@
-import { lbDate as lbDateFunc, LbDateOptions, TimeZoneOptions } from 'lbdate'
+import { lbDate as lbDate_type, LbDateOptions, TimeZoneOptions } from 'lbdate'
 
 describe('LbDate getDefaultConfig():', () => {
 
-  let lbDate: typeof lbDateFunc
+  let lbDate: typeof lbDate_type
 
   beforeEach(async () => {
     lbDate = (await import('module-provider')).lbDate
-  })
-
-  afterEach(() => {
-    lbDate().restore()
-    jest.resetModules()
   })
 
   it("should return an empty object if LbDate wasn't initialized first.", () => {
@@ -81,10 +76,11 @@ describe('LbDate getDefaultConfig():', () => {
       timezone: TimeZoneOptions.manual,
       manualTimeZoneOffset: 840,
       toNativeJsonName: 'anotherToNativeJSON',
-      precision: 3,
+      precision: 2,
     }).init()
     config = lbDate().getGlobalConfig()
     expectedConfig.toNativeJsonName = 'anotherToNativeJSON'
+    expectedConfig.precision = 2
     expect(config).toStrictEqual(expectedConfig)
   })
 

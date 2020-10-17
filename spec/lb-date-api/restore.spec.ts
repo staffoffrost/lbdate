@@ -1,16 +1,11 @@
-import { lbDate as lbDateFunc, TimeZoneOptions } from 'lbdate'
+import { lbDate as lbDate_type, TimeZoneOptions } from 'lbdate'
 
 describe('LbDate restore():', () => {
 
-  let lbDate: typeof lbDateFunc
+  let lbDate: typeof lbDate_type
 
   beforeEach(async () => {
     lbDate = (await import('module-provider')).lbDate
-  })
-
-  afterEach(() => {
-    lbDate().restore()
-    jest.resetModules()
   })
 
   it('should restore global configuration to an empty object.', () => {
