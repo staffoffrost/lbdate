@@ -80,7 +80,8 @@ const lbDate: LbDate = (() => {
           }
         case TimeZoneOptions.utc:
           return function (this: Date): string {
-            return this[nativeToJsonFuncKey]()
+            const date = cloneDate(this)
+            return date[nativeToJsonFuncKey]()
           }
       }
     }
