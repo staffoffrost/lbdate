@@ -8,3 +8,4 @@
 - [x] Single date toJSON support.
 - [x] Moment support.
 - [ ] JSON.stringify replacer support.
+- [ ] `run`, `override` and `getReplacer` moment support.

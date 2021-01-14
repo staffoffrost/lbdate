@@ -125,6 +125,17 @@ const lbDate: LbDate = (() => {
         if (error) throw error
         return jsonString!
       },
+      getReplacer: (continuation?: (key: string, value: any) => any) => {
+        const toJSON = createToJson()
+        return (key: string, value: any) => {
+          if (value instanceof Date) {
+            const date: Date = cloneDate(value)
+            date.toJSON = toJSON
+            return date
+          }
+          return continuation ? continuation(key, value) : value
+        }
+      },
       restore: () => {
         restoreToJsonMethods()
         setGlobalLbDateOptions({})
@@ -145,6 +156,7 @@ const lbDate: LbDate = (() => {
     toJSON: _f().toJSON,
     override: (date: Date) => _f().override(date),
     run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
+    getReplacer: () => _f().getReplacer(),
     restore: () => _f().restore(),
     getGlobalConfig: () => _f().getGlobalConfig(),
     getDefaultConfig: () => _f().getDefaultConfig(),
