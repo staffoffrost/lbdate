@@ -33,35 +33,37 @@
       }
     },
     {
-      "type": "node",
+      "name": "Launch Jest",
       "request": "launch",
-      "name": "Debug Jest Tests",
+      "type": "node",
       "cwd": "${workspaceFolder}",
-      "args": [
+      "runtimeArgs": [
+        "--nolazy",
         "--inspect-brk",
         "${workspaceRoot}/node_modules/.bin/jest",
         "--no-cache",
         "--watch",
         "--runInBand",
         "--config",
-        "${workspaceRoot}/jest.config.js"
+        "${workspaceRoot}/jest.config.js",
+        "/${fileBasename}"
       ],
       "windows": {
-        "args": [
+        "runtimeArgs": [
+          "--nolazy",
           "--inspect-brk",
           "${workspaceRoot}/node_modules/jest/bin/jest.js",
           "--no-cache",
           "--watch",
           "--runInBand",
           "--config",
-          "${workspaceRoot}/jest.config.js"
+          "${workspaceRoot}/jest.config.js",
+          "/${fileBasename}"
         ],
       },
-      "runtimeArgs": [
-        "--nolazy"
-      ],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
     },
   ]
 }

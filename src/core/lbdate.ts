@@ -127,11 +127,12 @@ const lbDate: LbDate = (() => {
       },
       getReplacer: (continuation?: (key: string, value: any) => any) => {
         const toJSON = createToJson()
-        return (key: string, value: any) => {
-          if (value instanceof Date) {
-            const date: Date = cloneDate(value)
+        return function (this: any, key: string, value: any): any {
+          if (!key && continuation) continuation = continuation.bind(this)
+          if (this[key] instanceof Date) {
+            const date: Date = cloneDate(this[key])
             date.toJSON = toJSON
-            return date
+            value = date.toJSON()
           }
           return continuation ? continuation(key, value) : value
         }

@@ -51,7 +51,7 @@ export interface LbDateActions {
   /**
    * This method returns a replacer that could be user for `JSON.stringify` second argument.
    * - This replacer will handle date objects serialization using the provided options.
-   * - The method accepts a replacer continuation method for other data types other than Date.
+   * - The method accepts an optional replacer continuation method that will be called upon each replacer invoke.
    */
   getReplacer: (continuation?: (key: string, value: any) => any) => (key: string, value: any) => any,
   /**
