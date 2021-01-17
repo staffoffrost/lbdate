@@ -1,5 +1,5 @@
 import 'firebase/analytics'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import { AppComponent } from './components/app.component'
 import { onDomLoaded } from './utils/dom'
 
