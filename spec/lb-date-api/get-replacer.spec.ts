@@ -235,4 +235,26 @@ describe('LbDate getReplacer():', () => {
     }).getReplacer()
     expect(JSON.stringify(testSubject, replacer)).toBe(expectedResult)
   })
+
+  it('should call the continuation method if provided.', () => {
+    const expectedResult = JSON.stringify(Object.assign(partialTestSubject, {
+      date: '2000-01-01T02:00:00.000+02:00'
+    }))
+    const testSubject = Object.assign(partialTestSubject, {
+      date: new Date(dateString)
+    })
+    expect.assertions((Object.keys(testSubject).length + 1) * 2 + 2)
+    const replacer = jest.fn(function (this: any, key: string, value: any): any {
+      if (key) {
+        expect(Object.keys(testSubject).includes(key)).toBeTruthy()
+        expect(Object.values(testSubject).includes(this[key])).toBeTruthy()
+      } else {
+        expect(value).toBe(testSubject)
+        expect(this['']).toBe(testSubject)
+      }
+      return value
+    })
+    expect(JSON.stringify(testSubject, lbDate.getReplacer(replacer))).toBe(expectedResult)
+    expect(replacer).toBeCalledTimes(Object.keys(testSubject).length + 1)
+  })
 })

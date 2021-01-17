@@ -128,13 +128,12 @@ const lbDate: LbDate = (() => {
       getReplacer: (continuation?: (key: string, value: any) => any) => {
         const toJSON = createToJson()
         return function (this: any, key: string, value: any): any {
-          if (!key && continuation) continuation = continuation.bind(this)
           if (this[key] instanceof Date) {
             const date: Date = cloneDate(this[key])
             date.toJSON = toJSON
             value = date.toJSON()
           }
-          return continuation ? continuation(key, value) : value
+          return continuation ? continuation.call(this, key, value) : value
         }
       },
       restore: () => {
@@ -157,7 +156,7 @@ const lbDate: LbDate = (() => {
     toJSON: _f().toJSON,
     override: (date: Date) => _f().override(date),
     run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
-    getReplacer: () => _f().getReplacer(),
+    getReplacer: (continuation) => _f().getReplacer(continuation),
     restore: () => _f().restore(),
     getGlobalConfig: () => _f().getGlobalConfig(),
     getDefaultConfig: () => _f().getDefaultConfig(),
