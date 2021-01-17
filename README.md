@@ -4,7 +4,14 @@ JavaScript Date's serialization helper. Provides an easy way for keeping timezon
 
 LbDate uses ISO 8601 standards.
 
-## New Feature
+## New Features
+
+Replacer for `JSON.stringify`
+
+```typescript
+const replacer = lbDate.getReplacer();
+const str = JSON.stringify(myObj, replacer);
+```
 
 "Moment" support:
 
@@ -184,6 +191,18 @@ myDate.toJSON = lbDate(options).toJSON;
 // or
 const date = lbDate(options).override(new Date());
 ```
+
+### Get Replacer
+
+This methods allows you to generate a `replacer` functions that can be user with `JSON.stringify`.
+
+```typescript
+lbDate.getReplacer();
+//or
+lbDate(options).getReplacer();
+```
+
+> If you already using a replacer function of your own, you can combine your replacer with LbDate's replacer simply by providing it as an argument like this: `lbDate.getReplacer(myReplacer)`. Your replacer will be called every time after LbDate's replacer is called.
 
 ### Get Current Configurations
 
