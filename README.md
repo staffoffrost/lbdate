@@ -4,19 +4,14 @@ JavaScript Date's serialization helper. Provides an easy way for keeping timezon
 
 LbDate uses ISO 8601 standards.
 
-## New Features
-
-Replacer for `JSON.stringify`
+## Example
 
 ```typescript
-const replacer = lbDate.getReplacer();
-const str = JSON.stringify(myObj, replacer);
-```
+lbDate.init();
+const result = JSON.stringify({ date: new Date() });
+console.log(result);
 
-"Moment" support:
-
-```typescript
-lbDate.init(moment);
+// {"date":"2020-04-01T03:00:00.000+03:00"}
 ```
 
 ## Installation
@@ -33,16 +28,6 @@ npm i lbdate
 | <https://cdn.jsdelivr.net/npm/lbdate@1.4.2/bundles/lbdate.umd.min.js>     | ES2015 | Yes      |
 | <https://cdn.jsdelivr.net/npm/lbdate@1.4.2/bundles/lbdate.umd.es5.js>     | ES5    | No       |
 | <https://cdn.jsdelivr.net/npm/lbdate@1.4.2/bundles/lbdate.umd.es5.min.js> | ES5    | Yes      |
-
-## Example
-
-```typescript
-lbDate.init();
-const result = JSON.stringify({ date: new Date() });
-console.log(result);
-
-// {"date":"2020-04-01T03:00:00.000+03:00"}
-```
 
 ## Playground
 
