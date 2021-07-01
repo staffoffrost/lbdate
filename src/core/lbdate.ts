@@ -4,7 +4,6 @@ import { LbDate, LbDateActions, LbDateOptions, MomentObj } from '../interfaces'
 
 let lastToNativeJsonName: string | null = null
 let momentRef: MomentObj | null = null
-// tslint:disable-next-line: ban-types
 let momentToDateMethodCache: ((this: any) => Date) | null = null
 
 const lbDate: LbDate = (() => {
@@ -156,7 +155,7 @@ const lbDate: LbDate = (() => {
     toJSON: _f().toJSON,
     override: (date: Date) => _f().override(date),
     run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
-    getReplacer: (continuation) => _f().getReplacer(continuation),
+    getReplacer: (continuation?: (key: string, value: any) => any) => _f().getReplacer(continuation),
     restore: () => _f().restore(),
     getGlobalConfig: () => _f().getGlobalConfig(),
     getDefaultConfig: () => _f().getDefaultConfig(),
