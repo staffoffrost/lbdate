@@ -1,6 +1,6 @@
 # LbDate
 
-JavaScript Date's serialization helper. Provides an easy way for keeping timezone after stringification and more.
+JavaScript Date's serialization helper. Provides an easy way for keeping the timezone after stringification and much more.
 
 LbDate uses ISO 8601 standards.
 
@@ -31,13 +31,13 @@ npm i lbdate
 
 ## Playground
 
-### [Click here to check our Playground.](https://lbdate-dev.web.app/playground/)
+### [Click here to check the Playground.](https://lbdate-dev.web.app/playground/)
 
 ## Documentation
 
 ### Initialization
 
-The `init` method will override the prototype of the Date's object. This is the preferred way to you lbDate if you want 'write once and forget'.
+The `init` method will override the `toJSON` method that's on the JavaScript Date's prototype object and will allow you to manipulate the the serialization result. This is the preferred way to use lbDate if you want just to 'write once and forget'.
 
 ```typescript
 import lbDate from "lbdate";
@@ -45,9 +45,13 @@ import lbDate from "lbdate";
 lbDate.init();
 ```
 
-Or with options:
+> Remember, the native method is stored under different method name (which is configurable) and can be restored at any time by calling `lbDate.restore()`.
 
-> If options are provided, they will be set as the new global options and may later be used for other LbDate's functionalities like the `run` or `override` methods.
+Using options:
+
+- The `lbDate` object can also be called as a method and it can be provided with options for customized serialization.
+- Those options provided to `lbDate` will also extend the global and the default settings.
+- After providing `lbDate` with options and calling the `init` method, those options will be stored as the new global settings.
 
 ```typescript
 import lbDate from "lbdate";
@@ -62,7 +66,7 @@ const options = {
 lbDate(options).init();
 ```
 
-> Remember, the native method is store under different method name (that is configurable) and can be restored at any time by calling `lbDate.restore()`.
+> Note: calling `lbDate.init()` is the same as calling `lbDate().init()` with no options.
 
 "Moment" support:
 
@@ -73,7 +77,7 @@ import moment from "moment";
 lbDate.init(moment);
 ```
 
-> This will force "moment" to use LbDate's serialization automatically, resulting the same behavior for all date types in your application. Also, when using `lbDate.restore()` it will revert any changes done to "moment".
+> This will force "moment" to use LbDate's serialization automatically, resulting the same behavior serializing moment object. Also, when using `lbDate.restore()` it will revert any changes done to "moment".
 
 ### Options
 
@@ -93,13 +97,13 @@ const enum TimeZoneOptions {
 }
 ```
 
-- **timezone**: `{TimeZoneOptions or string}` Allows you to configure time zone related preferences. _Note:_ If you are not using TypeScript, you can configure `TimeZoneOptions` using strings. Like so: 'Auto', 'UTC', 'None' or 'Manual'.
+- **timezone**: `{TimeZoneOptions or string}` Allows you to configure time zone preferences. _Note:_ If you are not using TypeScript, you can configure `TimeZoneOptions` using strings. Like so: 'Auto', 'UTC', 'None' or 'Manual'.
   - **auto**: (default) Will add time zone offset to date's ISO string based on client's time zone. \*"2020-04-01T03:30:15.123+03:00"
   - **UTC**: Will keep the \*\*'Z' letter at the end of the ISO string. This is actually the default behavior of JavaScript. \*"2020-04-01T00:30:15.123Z"
   - **none**: Will remove the \*\*'Z' symbol from the end of the ISO string and will not add any time zone to it. \*"2020-04-01T03:30:15.123"
   - **manual**: Will allow you to set the time zone manually using `manualTimeZoneOffset` option.
 - **manualTimeZoneOffset**: `{number}` (default = null) (range: -840 to 840) Allows you to configure manually the time zone offset in **minutes**. The value should represent the number of minutes you need to add or subtract to reach UTC time. For example: -90 minutes will result: \*"2020-04-01T02:00:15.123+01:30"
-- **toNativeJsonName**: `{string}` (default = 'toNativeJSON') While LbDate is initializing, it will clone the native _toJSON_ method to this given name and will store it on the Date's prototype so you can still access the original method in your app if you need to. \*\*\*
+- **toNativeJsonName**: `{string}` (default = 'toNativeJSON') While LbDate is initializing, it will clone the native _toJSON_ method to this given name and will store it on the Date's prototype so you can still access the original method in your app if you need so. \*\*\*
 - **precision**: `{number}` (default = 3) (range: 0 to 3) The number of second fraction digits. For example, the value 2 will result: \*"2020-04-01T03:30:15.12+03:00"
 
 _\* Date used: `Wed Apr 01 2020 03:30:15 GMT+0300 (Israel Daylight Time) {}`._
@@ -144,7 +148,7 @@ console.log(stringifyObject(obj));
 
 ### Single date's `toJSON` method override
 
-> If you don't want to override the date's prototype method by using `lbDate.init()` you can override a single date's `toJSON` method.
+> If you don't want to override the date's prototype method by using `lbDate.init()` you can override the `toJSON` method of a single Date's object instance.
 
 Using the `toJSON` property:
 
@@ -165,10 +169,11 @@ console.log(date.toJSON());
 // "2020-04-01T03:00:00.000+03:00"
 ```
 
-Both possibilities can also be provided with options:
+Both functionalities can also be provided with options:
 
 - The provided options will be merged with the global and the default options.
-- The global options are the options provided by `lbDate(options).init()`. If those options weren't provided, then it will just use the default options for merging.
+
+> Remember: the global options are the options provided by `lbDate(options).init()`. If those options weren't provided, then it will just use the default options for extending.
 
 ```typescript
 const myDate = new Date();
@@ -179,7 +184,7 @@ const date = lbDate(options).override(new Date());
 
 ### Get Replacer
 
-This methods allows you to generate a `replacer` functions that can be user with `JSON.stringify`.
+This methods allows you to generate a `replacer` function that can be user with `JSON.stringify`.
 
 ```typescript
 lbDate.getReplacer();
@@ -187,17 +192,17 @@ lbDate.getReplacer();
 lbDate(options).getReplacer();
 ```
 
-> If you already using a replacer function of your own, you can combine your replacer with LbDate's replacer simply by providing it as an argument like this: `lbDate.getReplacer(myReplacer)`. Your replacer will be called every time after LbDate's replacer is called.
+> If you already using a replacer function of your own, you can combine your replacer with LbDate's replacer simply by providing it as an argument like so: `lbDate.getReplacer(myReplacer)`. Your replacer will be called every time after LbDate's replacer is called.
 
 ### Get Current Configurations
 
-Get the current global configurations that were set by the last **init**.
+Returns the current global configurations that were set by the last **init**.
 
 ```typescript
 lbDate.getGlobalConfig();
 ```
 
-Get the default LbDate configurations:
+Returns the default LbDate configurations:
 
 ```typescript
 lbDate.getDefaultConfig();
@@ -225,7 +230,7 @@ lbDate.restore();
 
 _\* Both ES5 and ES2015 UMD bundles are included and both have minified and non-minified versions. In all bundles the global would be `lbDate`._
 
-_\*\* For IE11 you may need additional polyfills but if you're using a framework, they may already be included._
+_\*\* For IE11 you may need additional polyfills._
 
 ## Licence
 
