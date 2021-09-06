@@ -37,7 +37,6 @@ function resolveManualTimeZoneOffset(manualTimeZoneOffset: number | null): numbe
 }
 
 function resolvePrecision(precision: number): number {
-  if (precision == null) return 3
   if (precision > 3) return 3
   if (precision < 0) return 0
   return precision

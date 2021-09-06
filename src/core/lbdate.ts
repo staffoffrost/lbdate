@@ -21,8 +21,8 @@ const lbDate: LbDate = (() => {
         const toJsonMethod = _createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
         if (moment) {
-          if (!momentRef) momentRef = moment
-          if (!momentToDateMethodCache) momentToDateMethodCache = cloneFunction(moment.prototype.toDate) as (this: any) => Date
+          momentRef = moment
+          momentToDateMethodCache = cloneFunction(moment.prototype.toDate) as (this: any) => Date
           momentRef.prototype.toDate = momentToDate(toJsonMethod)
         }
       },
@@ -65,13 +65,12 @@ const lbDate: LbDate = (() => {
       restore: () => {
         restoreDatesToJson(getLastToNativeJsonName(), setLastToNativeJsonName)
         setGlobalLbDateOptions({})
-        if (momentRef) {
-          if (momentToDateMethodCache) {
-            momentRef.prototype.toDate = momentToDateMethodCache
-            momentToDateMethodCache = null
-          }
-          momentRef = null
+        if (!momentRef) return
+        if (momentToDateMethodCache) {
+          momentRef.prototype.toDate = momentToDateMethodCache
+          momentToDateMethodCache = null
         }
+        momentRef = null
       },
       getGlobalConfig: () => getGlobalLbDateConfig(),
       getDefaultConfig: () => getDefaultLbDateConfig(),
