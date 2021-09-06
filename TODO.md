@@ -9,3 +9,4 @@
 - [x] Moment support.
 - [x] JSON.stringify replacer support.
 - [ ] `run`, `override` and `getReplacer` moment support.
+- [ ] Error logs for invalid arguments.
