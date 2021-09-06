@@ -6,6 +6,9 @@ module.exports = {
       tsconfig: './spec/tsconfig.json'
     }
   },
+  collectCoverageFrom: [
+    "src/**/*.ts",
+  ],
   moduleNameMapper: {
     "^lbdate$": "<rootDir>/src",
     "^module-provider$": "<rootDir>/spec/module-provider.ts",
