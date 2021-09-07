@@ -1,6 +1,6 @@
 import { createMergedLbdateOptions, getDefaultLbDateConfig, getGlobalLbDateConfig, setGlobalLbDateOptions } from '../config'
-import { cloneDate, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
-import { LbDate, LbDateActions, LbDateOptions, MomentObj } from '../interfaces'
+import { cloneDate, createMomentToDateMethod, isMoment, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
+import { LbDate, LbDateActions, LbDateOptions, MomentLike, MomentObj } from '../interfaces'
 import { getLastToNativeJsonName, setLastToNativeJsonName } from './last-to-native-json-name'
 import { restoreMomentsToDateMethod, setMoment } from './moment-handler'
 
@@ -8,27 +8,32 @@ const lbDate: LbDate = (() => {
   const _f: (options?: Partial<LbDateOptions>) => LbDateActions = (options?: Partial<LbDateOptions>): LbDateActions => {
     const mergedOptions: LbDateOptions = createMergedLbdateOptions(getLastToNativeJsonName(), options)
     const toNativeJsonName: string = mergedOptions.toNativeJsonName
-    const _createToJsonMethod: () => (this: Date) => string = () => toJsonMethodFactory(mergedOptions, getLastToNativeJsonName())
+    const createToJsonMethod: () => (this: Date) => string = () => toJsonMethodFactory(mergedOptions, getLastToNativeJsonName())
     return {
       init: (moment?: MomentObj) => {
         restoreDatesToJson(getLastToNativeJsonName(), setLastToNativeJsonName)
         setLastToNativeJsonName(toNativeJsonName)
         setGlobalLbDateOptions(mergedOptions)
         setMethodToDatesProto(toNativeJsonName, Date.prototype.toJSON)
-        const toJsonMethod: (this: Date) => string = _createToJsonMethod()
+        const toJsonMethod: (this: Date) => string = createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
         if (moment) setMoment(moment, toJsonMethod)
       },
-      toJSON: _createToJsonMethod(),
-      override: (date: Date): Date => {
-        date.toJSON = _createToJsonMethod()
+      toJSON: createToJsonMethod(),
+      override: <T extends Date | MomentLike>(date: T): T => {
+        const toJsonMethod = createToJsonMethod()
+        if (isMoment(date)) {
+          date.toDate = createMomentToDateMethod(toJsonMethod)
+        } else {
+          (<Date>date).toJSON = createToJsonMethod()
+        }
         return date
       },
       run: <T = string | void>(fn: () => T): T => {
         const originalToJson = Date.prototype.toJSON
         const isSameToNativeJsonName = toNativeJsonName === getLastToNativeJsonName()
         if (!isSameToNativeJsonName) setMethodToDatesProto(toNativeJsonName, originalToJson)
-        const toJsonMethod: (this: Date) => string = _createToJsonMethod()
+        const toJsonMethod: (this: Date) => string = createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
         let error: Error | null = null
         let jsonString: T
@@ -45,7 +50,7 @@ const lbDate: LbDate = (() => {
         return jsonString!
       },
       getReplacer: (continuation?: (key: string, value: any) => any) => {
-        const toJSON = _createToJsonMethod()
+        const toJSON = createToJsonMethod()
         return function (this: any, key: string, value: any): any {
           if (this[key] instanceof Date) {
             const date: Date = cloneDate(this[key])
@@ -67,7 +72,7 @@ const lbDate: LbDate = (() => {
   const _o: LbDateActions = {
     init: (moment?: MomentObj) => _f().init(moment),
     toJSON: _f().toJSON,
-    override: (date: Date) => _f().override(date),
+    override: <T extends Date | MomentLike>(date: T): T => _f().override(date),
     run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
     getReplacer: (continuation?: (key: string, value: any) => any) => _f().getReplacer(continuation),
     restore: () => _f().restore(),

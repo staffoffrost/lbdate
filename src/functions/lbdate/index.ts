@@ -1,4 +1,3 @@
-export * from './clone-date'
 export * from './create-moment-to-date-method'
 export * from './format-time-zone'
 export * from './override-dates-to-json'

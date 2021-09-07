@@ -1,6 +1,6 @@
 import { TimeZoneOptions } from '../../config'
 import { LbDateOptions } from '../../interfaces'
-import { cloneDate } from './clone-date'
+import { cloneDate } from '../helpers'
 import { formatTimeZone } from './format-time-zone'
 
 export function toJsonMethodFactory(mergedOptions: LbDateOptions, lastToNativeJsonName: string | null): (this: Date) => string {

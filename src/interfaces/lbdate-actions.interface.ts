@@ -1,4 +1,5 @@
 import { LbDateOptions } from './lbdate-options.interface'
+import { MomentLike } from './moment-like.interface'
 
 export interface Run {
   (fn: () => void): void,
@@ -32,7 +33,7 @@ export interface LbDateActions {
    * @example
    * const date = lbDate(options).override(new Date())
    */
-  override: (date: Date) => Date
+  override: <T extends Date | MomentLike>(date: T) => T
   /**
    * This method allows you to use different serialization configurations in different sections of your app
    * - This method takes a function as a parameter, and runs it immediately based on the provided options.
