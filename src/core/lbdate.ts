@@ -1,5 +1,5 @@
 import { createMergedLbdateOptions, getDefaultLbDateConfig, getGlobalLbDateConfig, setGlobalLbDateOptions } from '../config'
-import { cloneDate, cloneFunction, momentToDate, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
+import { cloneDate, momentToDate, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
 import { LbDate, LbDateActions, LbDateOptions, MomentObj } from '../interfaces'
 import { getLastToNativeJsonName, setLastToNativeJsonName } from './last-to-native-json-name'
 
@@ -16,13 +16,12 @@ const lbDate: LbDate = (() => {
         restoreDatesToJson(getLastToNativeJsonName(), setLastToNativeJsonName)
         setLastToNativeJsonName(toNativeJsonName)
         setGlobalLbDateOptions(mergedOptions)
-        const clonedToJson = cloneFunction(Date.prototype.toJSON)
-        setMethodToDatesProto(toNativeJsonName, clonedToJson)
+        setMethodToDatesProto(toNativeJsonName, Date.prototype.toJSON)
         const toJsonMethod = _createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
         if (moment) {
           momentRef = moment
-          momentToDateMethodCache = cloneFunction(moment.prototype.toDate) as (this: any) => Date
+          momentToDateMethodCache = moment.prototype.toDate
           momentRef.prototype.toDate = momentToDate(toJsonMethod)
         }
       },
@@ -32,9 +31,9 @@ const lbDate: LbDate = (() => {
         return date
       },
       run: <T = string | void>(fn: () => T): T => {
-        const clonedToJson = cloneFunction(Date.prototype.toJSON) as (key?: any) => string
+        const originalToJson = Date.prototype.toJSON
         const isSameToNativeJsonName = toNativeJsonName === getLastToNativeJsonName()
-        if (!isSameToNativeJsonName) setMethodToDatesProto(toNativeJsonName, clonedToJson)
+        if (!isSameToNativeJsonName) setMethodToDatesProto(toNativeJsonName, originalToJson)
         const toJsonMethod: (this: Date) => string = _createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
         let error: Error | null = null
@@ -47,7 +46,7 @@ const lbDate: LbDate = (() => {
         if (!isSameToNativeJsonName) {
           delete Date.prototype[toNativeJsonName]
         }
-        overrideDatesToJson(clonedToJson)
+        overrideDatesToJson(originalToJson)
         if (error) throw error
         return jsonString!
       },
