@@ -1,10 +1,8 @@
 import { createMergedLbdateOptions, getDefaultLbDateConfig, getGlobalLbDateConfig, setGlobalLbDateOptions } from '../config'
-import { cloneDate, momentToDate, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
+import { cloneDate, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
 import { LbDate, LbDateActions, LbDateOptions, MomentObj } from '../interfaces'
 import { getLastToNativeJsonName, setLastToNativeJsonName } from './last-to-native-json-name'
-
-let momentRef: MomentObj | null = null
-let momentToDateMethodCache: ((this: any) => Date) | null = null
+import { restoreMomentsToDateMethod, setMoment } from './moment-handler'
 
 const lbDate: LbDate = (() => {
   const _f: (options?: Partial<LbDateOptions>) => LbDateActions = (options?: Partial<LbDateOptions>): LbDateActions => {
@@ -17,13 +15,9 @@ const lbDate: LbDate = (() => {
         setLastToNativeJsonName(toNativeJsonName)
         setGlobalLbDateOptions(mergedOptions)
         setMethodToDatesProto(toNativeJsonName, Date.prototype.toJSON)
-        const toJsonMethod = _createToJsonMethod()
+        const toJsonMethod: (this: Date) => string = _createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
-        if (moment) {
-          momentRef = moment
-          momentToDateMethodCache = moment.prototype.toDate
-          momentRef.prototype.toDate = momentToDate(toJsonMethod)
-        }
+        if (moment) setMoment(moment, toJsonMethod)
       },
       toJSON: _createToJsonMethod(),
       override: (date: Date): Date => {
@@ -64,12 +58,7 @@ const lbDate: LbDate = (() => {
       restore: () => {
         restoreDatesToJson(getLastToNativeJsonName(), setLastToNativeJsonName)
         setGlobalLbDateOptions({})
-        if (!momentRef) return
-        if (momentToDateMethodCache) {
-          momentRef.prototype.toDate = momentToDateMethodCache
-          momentToDateMethodCache = null
-        }
-        momentRef = null
+        restoreMomentsToDateMethod()
       },
       getGlobalConfig: () => getGlobalLbDateConfig(),
       getDefaultConfig: () => getDefaultLbDateConfig(),
