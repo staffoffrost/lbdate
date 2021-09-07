@@ -27,7 +27,7 @@ export interface LbDateActions {
    * const date = new Date()
    * data.toJSON = lbDate(options).toJSON
    */
-  toJSON: (this: Date) => string
+  toJSON: (this: Date | MomentLike) => string
   /**
    * This method allows you to override a single date object's `toJSON` method.
    * @example

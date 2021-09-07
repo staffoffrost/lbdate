@@ -4,10 +4,10 @@ import { MomentObj } from '../interfaces'
 let momentRef: MomentObj | null = null
 let momentToDateMethodCache: ((this: any) => Date) | null = null
 
-export function setMoment(moment: MomentObj, toDateMethod: (this: Date) => string): void {
+export function setMoment(moment: MomentObj, dateToISOString: (this: Date) => string): void {
   momentRef = moment
   momentToDateMethodCache = momentRef.prototype.toDate
-  momentRef.prototype.toDate = createMomentToDateMethod(toDateMethod)
+  momentRef.prototype.toDate = createMomentToDateMethod(dateToISOString)
 }
 
 export function restoreMomentsToDateMethod(): void {

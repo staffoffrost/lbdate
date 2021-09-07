@@ -8,7 +8,7 @@ const lbDate: LbDate = (() => {
   const _f: (options?: Partial<LbDateOptions>) => LbDateActions = (options?: Partial<LbDateOptions>): LbDateActions => {
     const mergedOptions: LbDateOptions = createMergedLbdateOptions(getLastToNativeJsonName(), options)
     const toNativeJsonName: string = mergedOptions.toNativeJsonName
-    const createToJsonMethod: () => (this: Date) => string = () => toJsonMethodFactory(mergedOptions, getLastToNativeJsonName())
+    const createToJsonMethod = () => toJsonMethodFactory(mergedOptions, getLastToNativeJsonName())
     return {
       init: (moment?: MomentObj) => {
         restoreDatesToJson(getLastToNativeJsonName(), setLastToNativeJsonName)
