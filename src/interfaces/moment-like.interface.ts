@@ -3,6 +3,7 @@ export interface MomentLike {
   clone: () => MomentLike
   valueOf: () => number
   toDate: (this: MomentLike) => Date
+  toJSON: () => string
 }
 
 export interface InternalMomentLike extends MomentLike {

@@ -1,5 +1,5 @@
 import { createMergedLbdateOptions, getDefaultLbDateConfig, getGlobalLbDateConfig, setGlobalLbDateOptions } from '../config'
-import { cloneDate, createMomentToDateMethod, isMoment, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
+import { cloneDate, createMomentToDateMethod, isDate, isMoment, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
 import { LbDate, LbDateActions, LbDateOptions, MomentLike, MomentObj } from '../interfaces'
 import { getLastToNativeJsonName, setLastToNativeJsonName } from './last-to-native-json-name'
 import { restoreMomentsToDateMethod, setMoment } from './moment-handler'
@@ -52,10 +52,15 @@ const lbDate: LbDate = (() => {
       getReplacer: (continuation?: (key: string, value: any) => any) => {
         const toJSON = createToJsonMethod()
         return function (this: any, key: string, value: any): any {
-          if (this[key] instanceof Date) {
-            const date: Date = cloneDate(this[key])
+          const val = this[key]
+          if (isDate(val)) {
+            const date: Date = cloneDate(val)
             date.toJSON = toJSON
             value = date.toJSON()
+          } else if (isMoment(val)) {
+            const moment = val.clone()
+            moment.toJSON = toJSON
+            value = moment.toJSON()
           }
           return continuation ? continuation.call(this, key, value) : value
         }
