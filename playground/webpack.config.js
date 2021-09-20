@@ -47,7 +47,7 @@ const PROD_CONFIG = {
     minimizer: [
       new TerserPlugin({
         test: /\.js(\?.*)?$/i,
-        extractComments: false,
+        extractComments: () => false,
         // sourceMap: false,
         terserOptions: {
           mangle: true
