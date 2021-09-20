@@ -17,3 +17,7 @@ export function getCurrentToJsonMethodName(): string {
 export function isMethodInDatesPrototype(methodName: string): boolean {
   return !!Date.prototype[methodName]
 }
+
+export function capitalize(str: string): string {
+  return str && str[0].toUpperCase() + str.slice(1)
+}

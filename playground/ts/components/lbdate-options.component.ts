@@ -1,7 +1,7 @@
 import { lbDate, LbDateOptions, TimeZoneOptions } from 'lbdate'
 import { ObservablesService } from '../services/observables.service'
 import { addClassToElem, getElementById, getValueFromElement, hideElem, removeClassFromElem, setEventListener, setValueToElement, showElem } from '../utils/dom'
-import { getCurrentToJsonMethodName, isMethodInDatesPrototype, isNullable } from '../utils/helpers'
+import { capitalize, getCurrentToJsonMethodName, isMethodInDatesPrototype, isNullable } from '../utils/helpers'
 import { LbDateOptionsForm } from '../utils/lbdate-options-form.model'
 
 const IS_INVALID_CLASS = 'is-invalid'
@@ -37,6 +37,7 @@ export class LbDateOptionsComponent {
     this._setLbDateOptionsFields(formFieldsValues)
     this._validateFormFields()
     this._showHideScopedRun(formFieldsValues.isShowScopedRun)
+    this._setManualTimezoneDisabledState()
   }
 
   private _setDomeEvents(): void {
@@ -147,7 +148,8 @@ export class LbDateOptionsComponent {
   private _handleRandomFieldValidation(element: HTMLElement): void {
     const value = getValueFromElement(element)
     const id = element.id
-    const partialMethodName = id && id[0].toUpperCase() + id.slice(1)
+    this._setManualTimezoneDisabledState()
+    const partialMethodName = capitalize(id)
     if (!partialMethodName) return
     const methodName = '_validate' + partialMethodName
     if (this[methodName]) this[methodName](value)
@@ -209,5 +211,15 @@ export class LbDateOptionsComponent {
 
   private _setScopedRunSerializationResult(value: string | null): void {
     setValueToElement(this._elements.scopedRunCodeResult, value || '')
+  }
+
+  private _setManualTimezoneDisabledState(): void {
+    const timezoneInputElem = this._elements.manualTimeZoneOffsetInput
+    const timeZoneValue = this._elements.timeZoneInput.value
+    if (timeZoneValue == TimeZoneOptions.manual) {
+      if (timezoneInputElem.hasAttribute('disabled')) timezoneInputElem.removeAttribute('disabled')
+    } else if (!timezoneInputElem.hasAttribute('disabled')) {
+      timezoneInputElem.setAttribute('disabled', 'true')
+    }
   }
 }
