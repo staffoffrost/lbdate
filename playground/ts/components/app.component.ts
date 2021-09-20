@@ -87,6 +87,6 @@ export class AppComponent {
 
   private _setBaseUrl(): void {
     const baseUrl = document.getElementsByTagName('base')[0].href
-    window.history.pushState({}, document.title, baseUrl)
+    window.history.replaceState({}, document.title, baseUrl)
   }
 }
