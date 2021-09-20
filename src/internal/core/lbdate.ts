@@ -1,5 +1,5 @@
 import { createMergedLbdateOptions, getDefaultLbDateConfig, getGlobalLbDateConfig, setGlobalLbDateOptions } from '../config'
-import { cloneDate, createMomentToDateMethod, isDate, isMoment, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory } from '../functions'
+import { cloneDate, createMomentToDateMethod, isDate, isMoment, objectAssign, overrideDatesToJson, restoreDatesToJson, setMethodToDatesProto, toJsonMethodFactory, uuid } from '../functions'
 import { LbDate, LbDateActions, LbDateOptions, MomentLike, MomentObj } from '../interfaces'
 import { getLastToNativeJsonName, setLastToNativeJsonName } from './last-to-native-json-name'
 import { restoreMomentsToDateMethod, setMoment } from './moment-handler'
@@ -29,16 +29,21 @@ const lbDate: LbDate = (() => {
         }
         return date
       },
-      run: <T = string | void>(fn: () => T): T => {
+      run: <T = any>(fn: () => T, moment?: MomentObj): T => {
         const originalToJson = Date.prototype.toJSON
         const isSameToNativeJsonName = toNativeJsonName === getLastToNativeJsonName()
         if (!isSameToNativeJsonName) setMethodToDatesProto(toNativeJsonName, originalToJson)
         const toJsonMethod: (this: Date) => string = createToJsonMethod()
         overrideDatesToJson(toJsonMethod)
+        let guid: string | null = null
+        if (moment) {
+          guid = uuid()
+          setMoment(moment, toJsonMethod, guid)
+        }
         let error: Error | null = null
-        let jsonString: T
+        let result: T | undefined
         try {
-          jsonString = fn()
+          result = fn()
         } catch (e) {
           error = e
         }
@@ -46,8 +51,9 @@ const lbDate: LbDate = (() => {
           delete Date.prototype[toNativeJsonName]
         }
         overrideDatesToJson(originalToJson)
+        if (guid && moment) restoreMomentsToDateMethod(guid)
         if (error) throw error
-        return jsonString!
+        return result as T
       },
       getReplacer: (continuation?: (key: string, value: any) => any) => {
         const toJSON = createToJsonMethod()
@@ -78,7 +84,7 @@ const lbDate: LbDate = (() => {
     init: (moment?: MomentObj) => _f().init(moment),
     toJSON: _f().toJSON,
     override: <T extends Date | MomentLike>(date: T): T => _f().override(date),
-    run: <T = string | void>(fn: () => T): T => _f().run(fn) as any,
+    run: <T = any>(fn: () => T, moment?: MomentObj): T => _f().run(fn, moment),
     getReplacer: (continuation?: (key: string, value: any) => any) => _f().getReplacer(continuation),
     restore: () => _f().restore(),
     getGlobalConfig: () => _f().getGlobalConfig(),

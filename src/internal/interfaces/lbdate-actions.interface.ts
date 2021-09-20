@@ -1,11 +1,6 @@
 import { LbDateOptions } from './lbdate-options.interface'
 import { MomentLike } from './moment-like.interface'
 
-export interface Run {
-  (fn: () => void): void,
-  (fn: () => string): string,
-}
-
 export interface MomentObj {
   prototype: {
     toDate: (this: any) => Date,
@@ -48,7 +43,7 @@ export interface LbDateActions {
    *  return lbDate(options).run(() => JSON.parse(strResult))
    * }
    */
-  run: Run,
+  run: <T = any>(fn: () => T, moment?: MomentObj) => T,
   /**
    * This method returns a replacer that could be user for `JSON.stringify` second argument.
    * - This replacer will handle date objects serialization using the provided options.

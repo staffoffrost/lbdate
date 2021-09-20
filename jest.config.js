@@ -8,7 +8,7 @@ module.exports = {
   },
   collectCoverageFrom: [
     "src/**/*.ts",
-    "!src/interfaces/*",
+    "!src/internal/interfaces/*",
   ],
   moduleNameMapper: {
     "^lbdate$": "<rootDir>/src",
