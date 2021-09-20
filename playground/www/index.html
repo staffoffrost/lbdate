@@ -146,74 +146,6 @@
             <h3 class="mb-0">LbDate Playground</h3>
           </div>
           <div class="card-body">
-            <h5>Date Input and Result</h5>
-            <label class="card-title">Date Selection (Local)</label>
-            <form id="dateTimeSelectionForm">
-              <div id="dateSelectionCon"
-                   class="input-group mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text greyed-out">Datetime</span>
-                </div>
-                <input type="date"
-                       class="form-control"
-                       name="date"
-                       id="dateInput">
-                <input type="time"
-                       class="form-control"
-                       name="time"
-                       id="timeInput"
-                       step="2">
-              </div>
-            </form>
-            <label class="card-title">Serialization Result</label>
-            <div class="mb-2">
-              <input type="text"
-                     class="form-control"
-                     id="serializationResultField"
-                     tabindex="-1"
-                     readonly>
-              <small class="form-text text-white-50">
-                <span>This is the result of:</span>
-                <code
-                      class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span>&nbsp;<span class="text-success">Date</span><span class="text-light">().</span><span class="text-warning">toJSON</span><span class="text-light">()</span></code>
-              </small>
-            </div>
-            <div class="pt-1"
-                 id="scopedRunResult"
-                 style="display: none;">
-              <label class="card-title">Scoped Run Result</label>
-              <div class="mb-2">
-                <div class="input-group">
-                  <input type="text"
-                         class="form-control"
-                         id="scopedRunResultField"
-                         placeholder="Click Run"
-                         tabindex="-1"
-                         readonly>
-                  <div class="input-group-append">
-                    <button class="btn btn-info"
-                            type="button"
-                            id="scopedRunRequestBtn"
-                            style="border: 0;"
-                            tabindex="-1">Run</button>
-                  </div>
-                </div>
-                <small class="form-text text-white-50">See "Show Scoped Run" option below for more information about
-                  this value.</small>
-              </div>
-            </div>
-            <div class="mb-3 pt-4"
-                 id="dateTimeBtnsCon">
-              <button type="button"
-                      class="btn btn-outline-light btn-md-block"
-                      id="clearDateTimeBtn"
-                      tabindex="-1">Clear Date</button>
-              <button type="button"
-                      class="btn btn-info btn-md-block"
-                      id="setCurrentDateBtn"
-                      tabindex="-1">Date Now</button>
-            </div>
-            <hr>
             <h5 class="card-title">LbDate Options</h5>
             <h6 class="card-title">Status: <span id="activeStatus"
                     class="text-success">Active</span><span id="notActiveStatus"
@@ -273,6 +205,53 @@
                   <strong>0</strong> - <strong>3</strong>.</small>
               </div>
             </form>
+            <hr>
+            <h5>Date Input and Result</h5>
+            <label class="card-title">Date Selection (Local)</label>
+            <form id="dateTimeSelectionForm">
+              <div id="dateSelectionCon"
+                   class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text greyed-out">Datetime</span>
+                </div>
+                <input type="date"
+                       class="form-control"
+                       name="date"
+                       id="dateInput">
+                <input type="time"
+                       class="form-control"
+                       name="time"
+                       id="timeInput"
+                       step="2">
+              </div>
+            </form>
+            <label class="card-title"
+                   style="font-weight: 500;">Serialization Result:</label>
+            <div class="mb-2">
+              <input type="text"
+                     class="form-control bg-info border-info"
+                     style="font-weight: 500;"
+                     id="serializationResultField"
+                     tabindex="-1"
+                     readonly>
+              <small class="form-text text-white-50 mt-2">
+                <span>This is the result of:</span>
+                <code
+                      class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span>&nbsp;<span class="text-success">Date</span><span class="text-light">().</span><span class="text-warning">toJSON</span><span class="text-light">()</span></code>
+              </small>
+            </div>
+            <div class="mb-3 pt-4"
+                 id="dateTimeBtnsCon">
+              <button type="button"
+                      class="btn btn-outline-light btn-md-block"
+                      id="clearDateTimeBtn"
+                      tabindex="-1">Clear Date</button>
+              <button type="button"
+                      class="btn btn-info btn-md-block"
+                      id="setCurrentDateBtn"
+                      tabindex="-1">Date Now</button>
+            </div>
+            <hr>
             <div class="custom-control custom-checkbox mb-3 pt-2">
               <input type="checkbox"
                      class="custom-control-input"
@@ -280,6 +259,28 @@
               <label class="custom-control-label"
                      for="showScopedRunCheckbox"
                      style="user-select: none;">Show Scoped Run</label>
+            </div>
+            <div class="pt-1"
+                 id="scopedRunResult"
+                 style="display: none;">
+              <label class="card-title">Scoped Run Result</label>
+              <div class="mb-4">
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         id="scopedRunResultField"
+                         placeholder="Click Run"
+                         tabindex="-1"
+                         readonly>
+                  <div class="input-group-append">
+                    <button class="btn btn-info"
+                            type="button"
+                            id="scopedRunRequestBtn"
+                            style="border: 0;"
+                            tabindex="-1">Run</button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div id="scopedRunContent"
                  style="display: none;"
