@@ -175,7 +175,7 @@
                        placeholder="Default [null]"
                        min="-840"
                        max="840">
-                <small class="form-text text-white-50">Manual time zone option must be selected first to use this
+                <small class="form-text text-white-50">"Manual" Time Zone option must be selected to use this
                   feature. Valid range: <strong>-840</strong> - <strong>840</strong>.</small>
               </div>
               <div class="form-group">
@@ -187,9 +187,10 @@
                        placeholder="Default [toNativeJSON]"
                        autocomplete="off">
                 <small class="form-text text-white-50">
-                  <span>Run this in the console:</span>
+                  <span>Run this:</span>
                   <code
                         class="rounded py-1 px-2 bg-dark font-weight-bold d-inline-block mw-100"><span class="text-primary">new</span>&nbsp;<span class="text-success">Date</span><span class="text-light">().</span><span id="toNativeJsonMethodCode" class="text-warning">toNativeJSON</span><span class="text-light">()</span></code>
+                  <span>in the console.</span>
                 </small>
               </div>
               <div class="form-group">
@@ -297,10 +298,9 @@
                    class="bg-dark rounded"><code class="py-1 px-2 font-weight-bold d-inline-block mw-100 w-100"><span class="text-warning">lbDate</span><span class="text-light">({</span>&#xa;&nbsp;&nbsp;<span class="text-info">timezone</span><span class="text-light">:</span>&nbsp;<span class="text-success">TimeZoneOptions</span><span class="text-light">.</span><span class="text-info">manual</span><span class="text-light">,</span>&#xa;&nbsp;&nbsp;<span class="text-info">manualTimeZoneOffset</span><span class="text-light">:</span>&nbsp;<span class="text-light">-840</span>&#xa;<span class="text-light">}).</span><span class="text-warning">run</span><span class="text-light">(</span><span class="text-primary">() =></span>&nbsp;<span class="text-light">{</span>&#xa;&nbsp;&nbsp;<span class="text-primary">const</span>&nbsp;<span class="text-info">result</span>&nbsp;<span class="text-light">=</span>&nbsp;<span class="text-success">JSON</span><span class="text-light">.</span><span class="text-warning">stringify</span><span class="text-light">({</span>&nbsp;<span class="text-info">date</span><span class="text-light">:</span>&nbsp;<span class="text-primary">new</span>&nbsp;<span class="text-success">Date</span><span class="text-light">()</span>&nbsp;<span class="text-light">});&#xa;&nbsp;&nbsp;</span><span class="text-info">console</span><span class="text-light">.</span><span class="text-warning">log</span><span class="text-light">(</span><span class="text-info">result</span><span class="text-light">);</span>&#xa;<span class="text-light">});</span>&#xa;<span class="text-success">// will log:</span>&nbsp;<span id="scopedRunCodeResult" class="text-success">TODO</span></code></pre>
               <div style="margin-top: -1em;"
                    class="mb-3">
-                <small class="text-white-50">The scoped run result doesn't effect the global settings, but the global
-                  settings do effect the scoped run. None provided option's properties will be merged from global
-                  settings. Try changing precision option and see how it effects both scoped and non scoped
-                  serializations.</small>
+                <small class="text-white-50">The options provided to the run method do not effect the global options.
+                  But the global options do get merged with the options provided to the run method. Try changing the
+                  precision option to see how it effects the serializations below.</small>
               </div>
             </div>
             <div class="pt-3"
