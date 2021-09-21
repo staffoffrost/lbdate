@@ -46,7 +46,8 @@ export function toJsonMethodFactory(
     case TimeZoneOptions.utc:
       toJsonMethod = function (this: Date): string {
         const date = cloneDate(this)
-        return date[nativeToJsonFuncKey]()
+        const stringDate: string = date[nativeToJsonFuncKey]()
+        return stringDate.slice(0, -1 + charsToRemove) + 'Z'
       }
       break
   }

@@ -123,29 +123,33 @@ describe('LbDate init():', () => {
 
   it('should return serialized date with timezone offset and two decimal digits precision, if option precision was provided with value of 2.', () => {
     lbDate({
+      timezone: TimeZoneOptions.manual,
+      manualTimeZoneOffset: 900,
       precision: 2,
     }).init()
     const date = new Date(dateString)
-    const expectedDateString = '2000-01-01T02:00:00.00+02:00'
+    const expectedDateString = '1999-12-31T10:00:00.00-14:00'
     expect(date.toJSON()).toBe(expectedDateString)
   })
 
   // tslint:disable-next-line: max-line-length
   it('should return serialized date with timezone offset and one decimal digit precision, if option precision was provided with value of 1.', () => {
     lbDate({
+      timezone: TimeZoneOptions.none,
       precision: 1,
     }).init()
     const date = new Date(dateString)
-    const expectedDateString = '2000-01-01T02:00:00.0+02:00'
+    const expectedDateString = '2000-01-01T02:00:00.0'
     expect(date.toJSON()).toBe(expectedDateString)
   })
 
   it('should return serialized date with timezone offset and zero decimal digit precision, if option precision was provided with value of 0.', () => {
     lbDate({
+      timezone: TimeZoneOptions.utc,
       precision: 0,
     }).init()
     const date = new Date(dateString)
-    const expectedDateString = '2000-01-01T02:00:00+02:00'
+    const expectedDateString = '2000-01-01T00:00:00Z'
     expect(date.toJSON()).toBe(expectedDateString)
   })
 
@@ -278,29 +282,33 @@ describe('LbDate init():', () => {
 
   it('should return serialized date with timezone offset and two decimal digits precision, if option precision was provided with value of 2. +moment', () => {
     lbDate({
+      timezone: TimeZoneOptions.manual,
+      manualTimeZoneOffset: 900,
       precision: 2,
     }).init(moment)
     const date = new Date(dateString)
-    const expectedDateString = '2000-01-01T02:00:00.00+02:00'
+    const expectedDateString = '1999-12-31T10:00:00.00-14:00'
     expect(moment(date).toJSON()).toBe(expectedDateString)
   })
 
   // tslint:disable-next-line: max-line-length
   it('should return serialized date with timezone offset and one decimal digit precision, if option precision was provided with value of 1. +moment', () => {
     lbDate({
+      timezone: TimeZoneOptions.none,
       precision: 1,
     }).init(moment)
     const date = new Date(dateString)
-    const expectedDateString = '2000-01-01T02:00:00.0+02:00'
+    const expectedDateString = '2000-01-01T02:00:00.0'
     expect(moment(date).toJSON()).toBe(expectedDateString)
   })
 
   it('should return serialized date with timezone offset and zero decimal digit precision, if option precision was provided with value of 0. +moment', () => {
     lbDate({
+      timezone: TimeZoneOptions.utc,
       precision: 0,
     }).init(moment)
     const date = new Date(dateString)
-    const expectedDateString = '2000-01-01T02:00:00+02:00'
+    const expectedDateString = '2000-01-01T00:00:00Z'
     expect(moment(date).toJSON()).toBe(expectedDateString)
   })
 
