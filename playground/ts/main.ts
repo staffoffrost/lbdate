@@ -1,5 +1,5 @@
-import 'firebase/analytics'
-import firebase from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
+import { initializeApp } from 'firebase/app'
 import { AppComponent } from './components/app.component'
 import { onDomLoaded } from './utils/dom'
 
@@ -10,8 +10,8 @@ const firebaseConfig = {
   measurementId: 'G-B22TXSKFST'
 }
 
-firebase.initializeApp(firebaseConfig)
-if (window.location.hostname.toLowerCase().includes('lbdate-dev')) firebase.analytics()
+initializeApp(firebaseConfig, 'LbDate-Playground')
+if (window.location.hostname.toLowerCase().includes('lbdate-dev')) getAnalytics()
 
 onDomLoaded(() => {
   main()

@@ -81,7 +81,7 @@ function getBrowserId(): [string, number] {
   if (!result) {
     match = match[2] ?
       [match[1], match[2]] :
-      [navigator.appName, navigator.appVersion, '-?']
+      ['-?', '-?', '-?']
     temp = userAgent.match(/version\/(\d+)/i)
     if (temp != null) match.splice(1, 1, temp[1])
     result = match.join(' ').split(' ') as [string, string]
