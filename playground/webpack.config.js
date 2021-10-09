@@ -4,10 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
 /** @type {import('webpack').Configuration} */
-const COMMON_CONFIG = {
+const COMMON_MAIN_CONFIG = {
   entry: {
     main: './playground/ts/main.ts',
-    "loading-script": './playground/ts/loading-script.ts'
   },
   module: {
     rules: [
@@ -28,7 +27,34 @@ const COMMON_CONFIG = {
     alias: {
       lbdate: path.resolve(__dirname, '../src'),
     }
+  }
+}
+
+const COMMON_LOADING_SCRIPT_CONFIG = {
+  entry: {
+    "loading-script": './playground/ts/loading-script.ts'
   },
+  target: ['web', 'es5'],
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            configFile: 'playground/tsconfig.json',
+          }
+        }],
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    alias: {
+      lbdate: path.resolve(__dirname, '../src'),
+    }
+  }
 }
 
 /** @type {import('webpack').Configuration} */
@@ -79,4 +105,9 @@ const PROD_CONFIG = {
   }
 }
 
-module.exports = (env, argv) => merge(COMMON_CONFIG, argv.mode === 'production' ? PROD_CONFIG : DEV_CONFIG)
+
+
+module.exports = (env, argv) => [
+  merge(COMMON_MAIN_CONFIG, argv.mode === 'production' ? PROD_CONFIG : DEV_CONFIG),
+  merge(COMMON_LOADING_SCRIPT_CONFIG, argv.mode === 'production' ? PROD_CONFIG : DEV_CONFIG)
+]
