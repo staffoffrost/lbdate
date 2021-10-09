@@ -24,10 +24,10 @@ npm i lbdate
 
 | URL                                                                       | ES     | Minified |
 | ------------------------------------------------------------------------- | ------ | -------- |
-| <https://cdn.jsdelivr.net/npm/lbdate@1.4.4/bundles/lbdate.umd.js>         | ES2015 | No       |
-| <https://cdn.jsdelivr.net/npm/lbdate@1.4.4/bundles/lbdate.umd.min.js>     | ES2015 | Yes      |
-| <https://cdn.jsdelivr.net/npm/lbdate@1.4.4/bundles/lbdate.umd.es5.js>     | ES5    | No       |
-| <https://cdn.jsdelivr.net/npm/lbdate@1.4.4/bundles/lbdate.umd.es5.min.js> | ES5    | Yes      |
+| <https://cdn.jsdelivr.net/npm/lbdate@1.5.0/bundles/lbdate.umd.js>         | ES2015 | No       |
+| <https://cdn.jsdelivr.net/npm/lbdate@1.5.0/bundles/lbdate.umd.min.js>     | ES2015 | Yes      |
+| <https://cdn.jsdelivr.net/npm/lbdate@1.5.0/bundles/lbdate.umd.es5.js>     | ES5    | No       |
+| <https://cdn.jsdelivr.net/npm/lbdate@1.5.0/bundles/lbdate.umd.es5.min.js> | ES5    | Yes      |
 
 ## Playground
 
