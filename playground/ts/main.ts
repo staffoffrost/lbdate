@@ -10,8 +10,8 @@ const firebaseConfig = {
   measurementId: 'G-B22TXSKFST'
 }
 
-initializeApp(firebaseConfig, 'LbDate-Playground')
-if (window.location.hostname.toLowerCase().includes('lbdate-dev')) getAnalytics()
+const firebaseApp = initializeApp(firebaseConfig, 'LbDate-Playground')
+if (window.location.hostname.toLowerCase().includes('lbdate-dev')) getAnalytics(firebaseApp)
 
 onDomLoaded(() => {
   main()
