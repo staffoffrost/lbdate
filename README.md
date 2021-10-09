@@ -37,7 +37,7 @@ npm i lbdate
 
 ### Initialization
 
-The `init` method will override the `toJSON` method that's on the JavaScript Date's prototype object and will allow you to manipulate the the serialization result. This is the preferred way to use lbDate if you want just to 'write once and forget'.
+The `init` method will override the `toJSON` method that's on the JavaScript Date's prototype object and will allow you to manipulate the serialization result. This is the preferred way to use lbDate if you want just to 'write once and forget'.
 
 ```typescript
 import lbDate from "lbdate";
@@ -131,6 +131,7 @@ This method allows you to use different serialization configurations for differe
 - This method takes a function as a parameter, and runs it immediately based on the provided options.
 - The provided options are temporary and are scoped only for this run.
 - The provided options will be merged with the global and the default options.
+- Can be provided with a Moment's object as a second argument so that moments will also be effected.
 
 ```typescript
 const obj = {
@@ -169,9 +170,8 @@ console.log(date.toJSON());
 // "2020-04-01T03:00:00.000+03:00"
 ```
 
-Both functionalities can also be provided with options:
-
-- The provided options will be merged with the global and the default options.
+- Both functionalities can also be provided with options which will be merged with the global and the default options. Like so: `lbDate(options).override(date)`
+- Both can also be used on moment dates.
 
 > Remember: the global options are the options provided by `lbDate(options).init()`. If those options weren't provided, then it will just use the default options for extending.
 
@@ -185,6 +185,8 @@ const date = lbDate(options).override(new Date());
 ### Get Replacer
 
 This methods allows you to generate a `replacer` function that can be user with `JSON.stringify`.
+
+- Supports moment.
 
 ```typescript
 lbDate.getReplacer();
