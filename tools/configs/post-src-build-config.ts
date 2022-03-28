@@ -96,6 +96,10 @@ export const POST_SRC_BUILD_CONFIG: PostSrcBuildConfig = {
         key: 'version',
         value: '[nextAppVer]'
       },
+      {
+        key: 'packages..version',
+        value: '[nextAppVer]'
+      },
     ]
   },
   bannerAdder: {
