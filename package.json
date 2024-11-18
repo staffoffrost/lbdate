@@ -44,7 +44,7 @@
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.3",
     "copy-webpack-plugin": "^9.0.1",
-    "firebase": "^9.1.2",
+    "firebase": "^10.9.0",
     "fs-extra": "^10.0.0",
     "html-minifier": "^4.0.0",
     "jest": "^27.2.5",
